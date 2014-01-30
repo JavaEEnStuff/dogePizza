@@ -1,11 +1,16 @@
 package com.wow.doge.domain;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Customer {
@@ -13,16 +18,25 @@ public class Customer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private String firstName;
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private String lastName;
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private String emailAddress;
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private String password;
-	@JoinColumn(nullable=false)
+	
+	@OneToOne
 	private Address defaultAddress;
+
+	@JoinColumn
+	@OneToMany
+	private List<Gericht> favoriteGerichte;
+
+	public Customer() {
+		favoriteGerichte = new LinkedList<Gericht>();
+	}
 
 	public int getId() {
 		return id;

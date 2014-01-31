@@ -6,14 +6,15 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Gericht {
+public class Meal {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private String name;
 	private double rawPrice;
@@ -23,13 +24,13 @@ public class Gericht {
 	@OneToMany
 	private List<Size> possibleSizes;
 	@OneToMany
-	private List<Zutat> zutaten;
+	private List<Ingredient> zutaten;
 
 	// TODO Erweiterungsmöglichkeiten
 
-	public Gericht() {
+	public Meal() {
 		possibleSizes = new LinkedList<Size>();
-		zutaten = new LinkedList<Zutat>();
+		zutaten = new LinkedList<Ingredient>();
 	}
 
 	public String getName() {
@@ -88,11 +89,11 @@ public class Gericht {
 		this.id = id;
 	}
 
-	public List<Zutat> getZutaten() {
+	public List<Ingredient> getZutaten() {
 		return zutaten;
 	}
 
-	public void setZutaten(List<Zutat> zutaten) {
+	public void setZutaten(List<Ingredient> zutaten) {
 		this.zutaten = zutaten;
 	}
 

@@ -1,17 +1,25 @@
 package com.wow.doge.domain;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Order {
 
+	private static final SimpleDateFormat dateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd");
+	private static final SimpleDateFormat timestampFormat = new SimpleDateFormat(
+			"hh-mm-ss");
+
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
 	/** Datum + Lieferuhrzeit */
@@ -38,6 +46,14 @@ public class Order {
 
 	public void setDate(long date) {
 		this.date = date;
+	}
+
+	public String getDeliveryDate() {
+		return dateFormat.format(new Date(date));
+	}
+
+	public String getDeliveryTime() {
+		return timestampFormat.format(new Date(date));
 	}
 
 	public Address getAddress() {

@@ -2,13 +2,14 @@ package com.wow.doge.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Zutat {
+public class Ingredient {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private String name;
 

@@ -1,9 +1,15 @@
 package com.wow.doge.domain;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 public class OrderPosition {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	private Gericht gericht;
+	private Meal meal;
 	private Size size;
 
 	public int getId() {
@@ -14,12 +20,12 @@ public class OrderPosition {
 		this.id = id;
 	}
 
-	public Gericht getGericht() {
-		return gericht;
+	public Meal getGericht() {
+		return meal;
 	}
 
-	public void setGericht(Gericht gericht) {
-		this.gericht = gericht;
+	public void setGericht(Meal gericht) {
+		this.meal = gericht;
 	}
 
 	public Size getSize() {
@@ -34,14 +40,14 @@ public class OrderPosition {
 	 * @return Zusammengesetzter Preis aus Grundpreis * Größenanpassung
 	 */
 	public double getPrice() {
-		return gericht.getRawPrice() * size.getPriceMultiplicator();
+		return meal.getRawPrice() * size.getPriceMultiplicator();
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("OrderPosition [id=").append(id).append(", gericht=")
-				.append(gericht).append(", size=").append(size).append("]");
+				.append(meal).append(", size=").append(size).append("]");
 		return builder.toString();
 	}
 

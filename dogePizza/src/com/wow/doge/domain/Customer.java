@@ -32,10 +32,10 @@ public class Customer {
 
 	@JoinColumn
 	@OneToMany
-	private List<Gericht> favoriteGerichte;
+	private List<Meal> favoriteGerichte;
 
 	public Customer() {
-		favoriteGerichte = new LinkedList<Gericht>();
+		favoriteGerichte = new LinkedList<Meal>();
 	}
 
 	public int getId() {

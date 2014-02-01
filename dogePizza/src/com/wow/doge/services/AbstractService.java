@@ -3,6 +3,7 @@ package com.wow.doge.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
@@ -10,7 +11,10 @@ import org.hibernate.criterion.Criterion;
 import com.wow.doge.hibernate.HibernateUtil;
 
 public abstract class AbstractService<T> {
-	
+
+	private Logger logger = Logger.getLogger(AbstractService.class);
+
+	/** Klasse zum Casten */
 	protected abstract Class<T> getHibernateClass();
 
 	public void delete(T object) {
@@ -32,12 +36,10 @@ public abstract class AbstractService<T> {
 	}
 
 	/**
-	 * Sucht eine Sehenswürdigkeit anhand ihres Primärschlüssels aus der
-	 * Datenbank.
+	 * Sucht ein bestimmtes Objekt mit einer ID aus der Datenbank
 	 * 
 	 * @param id
-	 *            Der Primärschlüssel der zu suchenden Sehenswürdigkeit.
-	 * @return Die gefundene Sehenswürdigkeit oder null.
+	 * @return das gefundene Objekt oder null.
 	 */
 	public T get(int id) {
 		Session session = null;
@@ -49,7 +51,8 @@ public abstract class AbstractService<T> {
 			session.getTransaction().commit();
 			return sight;
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
+			// TODO: errorHandling
 			return null;
 		} finally {
 			HibernateUtil.closeSession(session);
@@ -67,12 +70,13 @@ public abstract class AbstractService<T> {
 		try {
 			session = HibernateUtil.getSessionFactory().getCurrentSession();
 			session.beginTransaction();
-			
+
 			List<T> resultList = (ArrayList<T>) session.createCriteria(getHibernateClass()).list();
 			session.getTransaction().commit();
 			return resultList;
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
+			// TODO: errorHandling
 			return null;
 		} finally {
 			HibernateUtil.closeSession(session);
@@ -80,10 +84,10 @@ public abstract class AbstractService<T> {
 	}
 
 	/**
-	 * @param searchString 
+	 * @param searchString
 	 * @return all found Objects
 	 */
-	public List<T> getList(Criterion...criterions) {
+	public List<T> getList(Criterion... criterions) {
 		Session session = null;
 
 		try {
@@ -91,14 +95,15 @@ public abstract class AbstractService<T> {
 			session.beginTransaction();
 
 			Criteria criteria = session.createCriteria(getHibernateClass());
-			for(Criterion nextCriterion : criterions){
+			for (Criterion nextCriterion : criterions) {
 				criteria.add(nextCriterion);
 			}
-			List<T>resultList = (ArrayList<T>) criteria.list();
+			List<T> resultList = (ArrayList<T>) criteria.list();
 			session.getTransaction().commit();
 			return resultList;
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
+			// TODO: errorHandling
 			return null;
 		} finally {
 			HibernateUtil.closeSession(session);
@@ -110,7 +115,7 @@ public abstract class AbstractService<T> {
 	 * selbstständig, ob ein Objekt neu in die Datenbank eingefügt oder dort
 	 * aktualisiert werden muss.
 	 * 
-	 * @param t Objekt to save
+	 * @param t Object to save
 	 */
 	public void saveOrUpdate(T t) {
 		Session session = null;
@@ -122,7 +127,8 @@ public abstract class AbstractService<T> {
 			session.flush();
 			session.getTransaction().commit();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
+			// TODO: errorHandling
 		} finally {
 			HibernateUtil.closeSession(session);
 		}

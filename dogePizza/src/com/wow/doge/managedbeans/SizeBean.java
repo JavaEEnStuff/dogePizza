@@ -1,43 +1,93 @@
 package com.wow.doge.managedbeans;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
+
+import org.apache.log4j.Logger;
 
 import com.wow.doge.domain.Size;
+import com.wow.doge.services.SizeService;
 
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class SizeBean {
+	private Logger logger = Logger.getLogger(SizeBean.class);
 
 	private Size size;
-	
-	public SizeBean(){
-		
+
+	public SizeBean() {
+		size = new Size();
 	}
 
 	public int getId() {
 		return size.getId();
 	}
+
 	public void setId(int id) {
 		size.setId(id);
 	}
+
 	public String getName() {
 		return size.getName();
 	}
+
 	public void setName(String name) {
 		size.setName(name);
 	}
+
 	public String getDescription() {
 		return size.getDescription();
 	}
+
 	public void setDescription(String description) {
-		this.setDescription(description);
+		size.setDescription(description);
 	}
+
 	public double getPriceMultiplicator() {
 		return size.getPriceMultiplicator();
 	}
+
 	public void setPriceMultiplicator(double priceMultiplicator) {
 		size.setPriceMultiplicator(priceMultiplicator);
+	}
+
+	public List<Size> getAllSizes() {
+		logger.info("Lade alle Sizes");
+		SizeService service = new SizeService();
+		List<Size> list = service.getList();
+		if (list==null) {
+			return new ArrayList<Size>();
+		} else {
+			return list;
+		}
+	}
+
+	public String showSize() {
+		return "showSize.xhtml";
+	}
+
+	public String createSize() {
+		return "createSize.xhtml";
+	}
+
+	public String changeSize() {
+		return "changeSize";
+	}
+
+	public String deleteSize() {
+		SizeService service = new SizeService();
+		service.delete(size);
+		return "";
+	}
+
+	public String save() {
+		logger.info("Versuche service zu speichern!");
+		SizeService service = new SizeService();
+		service.saveOrUpdate(size);
+		return "sizeList.xhtml";
 	}
 
 	@Override

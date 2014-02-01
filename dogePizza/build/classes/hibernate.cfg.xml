@@ -20,5 +20,6 @@
 		<property name="hibernate.hbm2ddl.auto">update</property>
 
 		<mapping class="com.wow.doge.domain.Ingredient" />
+		<mapping class="com.wow.doge.domain.Size" />
 	</session-factory>
 </hibernate-configuration>    

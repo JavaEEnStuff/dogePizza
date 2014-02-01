@@ -4,8 +4,7 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
-import javax.faces.event.ActionEvent;
+import javax.faces.bean.RequestScoped;
 
 import org.apache.log4j.Logger;
 
@@ -13,14 +12,15 @@ import com.wow.doge.domain.Ingredient;
 import com.wow.doge.services.IngredientService;
 
 @ManagedBean
-@SessionScoped
-public class IngredientBean {
+@RequestScoped
+public class ShowIngredientBean {
 	
-	private static final Logger logger = Logger.getLogger(IngredientBean.class);
+	private static final Logger logger = Logger.getLogger(ShowIngredientBean.class);
 
+	@ManagedProperty(value="#{param.ingredientToShow}")
 	private Ingredient ingredient;
 
-	public IngredientBean() {
+	public ShowIngredientBean() {
 		ingredient = new Ingredient();
 	}
 

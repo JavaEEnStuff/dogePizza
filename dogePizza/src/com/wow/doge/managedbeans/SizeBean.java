@@ -1,5 +1,8 @@
 package com.wow.doge.managedbeans;
 
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+
 import com.wow.doge.domain.Size;
 
 @ManagedBean

@@ -9,6 +9,7 @@ import org.apache.log4j.PropertyConfigurator;
 public class StartupListener implements ServletContextListener{
 
 	Logger logger = Logger.getLogger(StartupListener.class);
+	
 	@Override
 	public void contextDestroyed(ServletContextEvent sce) {
 	}

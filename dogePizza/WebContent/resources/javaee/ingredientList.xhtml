@@ -10,18 +10,28 @@
 	<h1>Zutaten</h1>
 	<f:view>
 		<h:form>
-			<h:dataTable value="#{}" var="o">
+			<h:dataTable value="#{ingredientBean.allIngredients}" var="o">
 				<h:column>
-					<!-- column header -->
 					<f:facet name="header">ID</f:facet>
 					<!-- row record -->
 					<h:outputText value="#{o.id}">macht nix </h:outputText>
 				</h:column>
 				<h:column>
-					<!-- column header -->
 					<f:facet name="header">Name</f:facet>
 					<!-- row record -->
 					<h:outputText value="#{o.name}">macht nix </h:outputText>
+				</h:column>
+				<h:column>
+					<f:facet name="header">Anzeigen</f:facet>
+					<!-- row record -->
+					<h:commandButton value="Ok" action="#{ingredientBean.showIngredient}">
+						<f:param name="ingredientToShow" value="{o}"/>
+					</h:commandButton>
+				</h:column>
+				<h:column>
+					<f:facet name="header">Ändern</f:facet>
+					<!-- row record -->
+					<h:commandButton value="Ok" action="#{ingredientBean.changeIngredient}"/>
 				</h:column>
 			</h:dataTable>
 		</h:form>

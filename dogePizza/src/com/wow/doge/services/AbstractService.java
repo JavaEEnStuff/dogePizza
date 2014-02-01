@@ -80,12 +80,8 @@ public abstract class AbstractService<T> {
 	}
 
 	/**
-	 * Sucht alle Sehenswürdigkeiten aus der Datenbank, deren Name dem
-	 * Suchstring entspricht.
-	 * 
-	 * @param searchString
-	 *            Der Suchstring.
-	 * @return Alle passenden Sehenswürdigkeiten.
+	 * @param searchString 
+	 * @return all found Objects
 	 */
 	public List<T> getList(Criterion...criterions) {
 		Session session = null;
@@ -114,16 +110,15 @@ public abstract class AbstractService<T> {
 	 * selbstständig, ob ein Objekt neu in die Datenbank eingefügt oder dort
 	 * aktualisiert werden muss.
 	 * 
-	 * @param sight
-	 *            Die zu speichernde Sehenswürdigkeit.
+	 * @param t Objekt to save
 	 */
-	public void save(T sight) {
+	public void saveOrUpdate(T t) {
 		Session session = null;
 
 		try {
 			session = HibernateUtil.getSessionFactory().getCurrentSession();
 			session.beginTransaction();
-			session.saveOrUpdate(sight);
+			session.saveOrUpdate(t);
 			session.flush();
 			session.getTransaction().commit();
 		} catch (Exception e) {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
 import org.apache.log4j.Logger;
@@ -17,6 +18,10 @@ public class SizeBean {
 	private Logger logger = Logger.getLogger(SizeBean.class);
 
 	private Size size;
+	
+	@ManagedProperty("#{param.sizeId}")
+	private int sizeId;
+	
 
 	public SizeBean() {
 		size = new Size();
@@ -53,6 +58,14 @@ public class SizeBean {
 	public void setPriceMultiplicator(double priceMultiplicator) {
 		size.setPriceMultiplicator(priceMultiplicator);
 	}
+	
+	public int getSizeId() {
+		return sizeId;
+	}
+
+	public void setSizeId(int sizeId) {
+		this.sizeId = sizeId;
+	}
 
 	public List<Size> getAllSizes() {
 		logger.info("Lade alle Sizes");
@@ -78,8 +91,11 @@ public class SizeBean {
 	}
 
 	public String deleteSize() {
+		logger.info("Versuche Size zu löschen: "+sizeId);
 		SizeService service = new SizeService();
-		service.delete(size);
+		Size sizeToDelete = service.get(sizeId);
+		logger.info("Vollständiges Objekt: "+sizeToDelete);
+		service.delete(sizeToDelete);
 		return "";
 	}
 

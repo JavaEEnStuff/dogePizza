@@ -25,20 +25,24 @@
 				</h:column>
 				<h:column>
 					<f:facet name="header">Anzeigen</f:facet>
-					<h:commandButton value="Ok" action="#{sizeBean.showSize}" />
+					<h:commandButton value="Ok" action="#{sizeBean.showSize}">
+						<f:param name="sizeId" value="#{o.id}" />
+					</h:commandButton>
 				</h:column>
 				<h:column>
 					<f:facet name="header">Ändern</f:facet>
-					<h:commandButton value="Ok" action="#{sizeBean.changeSize}" />
+					<h:commandButton value="Ok" action="#{sizeBean.changeSize}">
+						<f:param name="sizeId" value="#{o.id}" />
+					</h:commandButton>
 				</h:column>
 				<h:column>
 					<f:facet name="header">Löschen</f:facet>
-					<h:commandButton value="Ok" action="#{sizeBean.deleteSize}" >
-						<f:param name="sizeId" value="#{o.id}"/>
+					<h:commandButton value="Ok" action="#{sizeBean.deleteSize}">
+						<f:param name="sizeId" value="#{o.id}" />
 					</h:commandButton>
 				</h:column>
 			</h:dataTable>
-			<h:commandButton value="Anlegen" action="#{sizeBean.createSize}"/>
+			<h:commandButton value="Anlegen" action="#{sizeBean.createSize}" />
 		</h:form>
 	</f:view>
 </h:body>

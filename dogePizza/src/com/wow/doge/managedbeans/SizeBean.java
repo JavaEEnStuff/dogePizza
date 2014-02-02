@@ -15,6 +15,7 @@ import com.wow.doge.services.SizeService;
 @ManagedBean
 @RequestScoped
 public class SizeBean {
+	
 	private Logger logger = Logger.getLogger(SizeBean.class);
 
 	private Size size;
@@ -79,6 +80,9 @@ public class SizeBean {
 	}
 
 	public String showSize() {
+		logger.info("Versuche Size anzuzeigen: "+sizeId);
+		SizeService service = new SizeService();
+		size = service.get(sizeId);
 		return "showSize.xhtml";
 	}
 
@@ -87,7 +91,11 @@ public class SizeBean {
 	}
 
 	public String changeSize() {
-		return "changeSize";
+		logger.info("Starte Size-Ändern-Maske: "+sizeId);
+		SizeService service = new SizeService();
+		size = service.get(sizeId);
+		logger.info("Size gefunden: "+size);
+		return "changeSize.xhtml";
 	}
 
 	public String deleteSize() {
@@ -100,7 +108,7 @@ public class SizeBean {
 	}
 
 	public String save() {
-		logger.info("Versuche service zu speichern!");
+		logger.info("Versuche Size zu speichern! "+size);
 		SizeService service = new SizeService();
 		service.saveOrUpdate(size);
 		return "sizeList.xhtml";

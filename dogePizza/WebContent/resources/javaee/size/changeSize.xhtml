@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Größe anlegen</title>
+</h:head>
+<h:body>
+	<h1>Größe anlegen</h1>
+	<f:view>
+		<h:form>
+			<table>
+				<tr>
+					<td><h:outputLabel value="Name " /></td>
+					<td><h:inputText value="#{sizeBean.name}" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel value="Beschreibung " /></td>
+					<td><h:inputTextarea value="#{sizeBean.description}" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel value="Preismultiplikator " /></td>
+					<td><h:inputText value="#{sizeBean.priceMultiplicator}" /></td>
+				</tr>
+			</table>
+			<h:inputHidden value="#{sizeBean.id}" />
+			<h:commandButton value="Speichern" action="#{sizeBean.save}"></h:commandButton>
+		</h:form>
+	</f:view>
+</h:body>
+</html>

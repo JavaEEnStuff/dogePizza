@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Zutaten</title>
+</h:head>
+<h:body>
+	<h1>Benutzer</h1>
+	<f:view>
+		<h:form>
+			<h:dataTable value="#{userAdministrationBean.allUsers}" var="o">
+				<h:column>
+					<f:facet name="header">ID</f:facet>
+					<!-- row record -->
+					<h:outputText value="#{o.id}">macht nix </h:outputText>
+				</h:column>
+				<h:column>
+					<f:facet name="header">Name</f:facet>
+					<!-- row record -->
+					<h:outputText value="#{o.firstName} #{o.lastName}">macht nix </h:outputText>
+				</h:column>
+				<h:column>
+					<f:facet name="header">Admin</f:facet>
+					<!-- row record -->
+					<h:outputText value="#{o.admin?'Ja':'Nein'}">macht nix </h:outputText>
+				</h:column>
+			</h:dataTable>
+		</h:form>
+	</f:view>
+</h:body>
+</html>

@@ -12,8 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-@Entity
-public class Customer {
+@Entity(name="dogePizzaUser")
+public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,16 +26,20 @@ public class Customer {
 	private String emailAddress;
 	@Column(nullable = false)
 	private String password;
-	
+	@Column(nullable = false)
+	private boolean isAdmin;
+
 	@OneToOne
 	private Address defaultAddress;
 
 	@JoinColumn
 	@OneToMany
-	private List<Meal> favoriteGerichte;
+	private List<Meal> favoriteMeals;
 
-	public Customer() {
-		favoriteGerichte = new LinkedList<Meal>();
+	public User() {
+		favoriteMeals = new LinkedList<Meal>();
+		isAdmin = false;
+		defaultAddress = new Address();
 	}
 
 	public int getId() {
@@ -86,13 +90,35 @@ public class Customer {
 		this.defaultAddress = defaultAddress;
 	}
 
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
+	public List<Meal> getFavoriteMeals() {
+		return favoriteMeals;
+	}
+
+	public void setFavoriteMeals(List<Meal> favoriteMeals) {
+		this.favoriteMeals = favoriteMeals;
+	}
+
+	public void addFavoriteMeals(Meal... newFavoriteMeals) {
+		for (Meal nextMeal : newFavoriteMeals) {
+			this.favoriteMeals.add(nextMeal);
+		}
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Customer [id=").append(id).append(", firstName=")
 				.append(firstName).append(", lastName=").append(lastName)
 				.append(", emailAddress=").append(emailAddress)
-				.append(", password=").append(password)
+				.append(", password=*********")
 				.append(", defaultAddress=").append(defaultAddress).append("]");
 		return builder.toString();
 	}

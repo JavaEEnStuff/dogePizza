@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Anmeldung</title>
+</h:head>
+<h:body>
+	<h1>Anmeldung</h1>
+	<f:view>
+		<h:form>
+			<table>
+				<tr>
+					<td><h:outputLabel value="Vorname: " /></td>
+					<td><h:inputText value="#{userSignUpBean.firstName}" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel value="Nachname: " /></td>
+					<td><h:inputText value="#{userSignUpBean.lastName}" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel value="Email: " /></td>
+					<td><h:inputText value="#{userSignUpBean.emailAddress}" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel value="Passwort: " /></td>
+					<td><h:inputSecret value="#{userSignUpBean.password}" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel value="Passwort wiederholen: " /></td>
+					<td><h:inputSecret value="#{userSignUpBean.passwordToCheck}" /></td>
+				</tr>
+			</table>
+			<br/>
+			<h2>Adresse</h2>
+			<table>
+				<tr>
+					<td><h:outputLabel value="Postleitzahl " /></td>
+					<td><h:inputText value="#{userSignUpBean.zipCode}" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel value="Ort: " /></td>
+					<td><h:inputText value="#{userSignUpBean.city}" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel value="Straße: " /></td>
+					<td><h:inputText value="#{userSignUpBean.streetName}" /></td>
+					<td><h:inputText value="#{userSignUpBean.number}" /></td>
+				</tr>
+			</table>
+			<h:commandButton value="Anmelden" action="#{userSignUpBean.tryToSignUp}"></h:commandButton>
+		</h:form>
+	</f:view>
+</h:body>
+</html>

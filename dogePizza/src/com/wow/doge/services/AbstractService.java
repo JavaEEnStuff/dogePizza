@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 
@@ -126,7 +127,10 @@ public abstract class AbstractService<T> {
 			session.saveOrUpdate(t);
 			session.flush();
 			session.getTransaction().commit();
-		} catch (Exception e) {
+		} catch(HibernateException e){
+			logger.error("HibernateException", e);
+			e.printStackTrace();
+		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			// TODO: errorHandling
 		} finally {

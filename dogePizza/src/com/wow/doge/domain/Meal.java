@@ -1,6 +1,5 @@
 package com.wow.doge.domain;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,13 +23,13 @@ public class Meal {
 	@OneToMany
 	private List<Size> possibleSizes;
 	@OneToMany
-	private List<Ingredient> zutaten;
+	private List<Ingredient> ingredients;
 
 	// TODO Erweiterungsmöglichkeiten
 
 	public Meal() {
 		possibleSizes = new LinkedList<Size>();
-		zutaten = new LinkedList<Ingredient>();
+		ingredients = new LinkedList<Ingredient>();
 	}
 
 	public String getName() {
@@ -89,12 +88,12 @@ public class Meal {
 		this.id = id;
 	}
 
-	public List<Ingredient> getZutaten() {
-		return zutaten;
+	public List<Ingredient> getIngredients() {
+		return ingredients;
 	}
 
-	public void setZutaten(List<Ingredient> zutaten) {
-		this.zutaten = zutaten;
+	public void setIngredients(List<Ingredient> zutaten) {
+		this.ingredients = zutaten;
 	}
 
 	@Override
@@ -104,9 +103,9 @@ public class Meal {
 				.append(name).append(", price=").append(rawPrice)
 				.append(", vegeterian=").append(vegeterian)
 				.append(", description=").append(description)
-				.append(", image=").append(Arrays.toString(image))
+				.append(", image=").append(image!=null)
 				.append(", possibleSizes=").append(possibleSizes)
-				.append(", zutaten=").append(zutaten).append("]");
+				.append(", zutaten=").append(ingredients).append("]");
 		return builder.toString();
 	}
 

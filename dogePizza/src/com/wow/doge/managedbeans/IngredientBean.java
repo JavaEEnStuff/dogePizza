@@ -3,7 +3,8 @@ package com.wow.doge.managedbeans;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 
 import org.apache.log4j.Logger;
 
@@ -11,13 +12,17 @@ import com.wow.doge.domain.Ingredient;
 import com.wow.doge.services.IngredientService;
 
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class IngredientBean {
-	
+
 	private static final Logger logger = Logger.getLogger(IngredientBean.class);
 
-	private Ingredient ingredient;
 
+	@ManagedProperty("#{param.ingredientId}")
+	private int ingredientId;
+
+	private Ingredient ingredient;
+	
 	public IngredientBean() {
 		ingredient = new Ingredient();
 	}
@@ -38,29 +43,57 @@ public class IngredientBean {
 		ingredient.setName(name);
 	}
 
+	public int getIngredientId() {
+		return ingredientId;
+	}
+
+	public void setIngredientId(int ingredientId) {
+		this.ingredientId = ingredientId;
+	}
+
 	@Override
 	public String toString() {
 		return ingredient.toString();
 	}
-	
-	public List<Ingredient> getAllIngredients(){
+
+	public List<Ingredient> getAllIngredients() {
 		IngredientService service = new IngredientService();
 		return service.getList();
 	}
-	
+
 	public String save() {
-		logger.info("Versuche Ingredient zu speichern...");
+		logger.info("Versuche Ingredient zu speichern... "+ingredient);
 		IngredientService service = new IngredientService();
 		service.saveOrUpdate(ingredient);
-		
+
 		return "ingredientList.xhtml";
 	}
-	
-	public String showIngredient(){
+
+	public String showIngredient() {
+		IngredientService service = new IngredientService();
+		ingredient = service.get(ingredientId);
 		return "showIngredient.xhtml";
 	}
-	
-	public String changeIngredient(){
+
+	public String changeIngredient() {
+		IngredientService service = new IngredientService();
+		ingredient = service.get(ingredientId);
+		logger.info("Versuche Ingredient zu aendern: "+ingredient);
 		return "changeIngredient.xhtml";
+	}
+
+	public String deleteIngredient() {
+		IngredientService service = new IngredientService();
+		Ingredient ingredientToDelete = service.get(ingredientId);
+		service.delete(ingredientToDelete);
+		return ingredientList();
+	}
+
+	public String createIngredient() {
+		return "createIngredient.xhtml";
+	}
+
+	public String ingredientList() {
+		return "ingredientList.xhtml";
 	}
 }

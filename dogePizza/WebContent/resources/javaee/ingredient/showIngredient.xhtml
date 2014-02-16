@@ -1,8 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
 	<title>Zutat</title>
 </h:head>
@@ -13,13 +11,14 @@
 			<table>
 				<tr>
 					<td><h:outputLabel value="ID" /></td>
-					<td><h:outputLabel value="#{showIngredientBean.id}" /></td>
+					<td><h:outputLabel value="#{ingredientBean.id}" /></td>
 				</tr>
 				<tr>
 					<td><h:outputLabel value="Name: " /></td>
-					<td><h:outputLabel value="#{showIngredientBean.name}" /></td>
+					<td><h:outputLabel value="#{ingredientBean.name}" /></td>
 				</tr>
 			</table>
+			<h:commandButton value="Zurück" action="#{ingredientBean.ingredientList}" />
 		</h:form>
 	</f:view>
 </h:body>

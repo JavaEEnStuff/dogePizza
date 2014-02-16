@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,7 +23,7 @@ public class Meal {
 	private byte[] image;
 	@OneToMany
 	private List<Size> possibleSizes;
-	@OneToMany
+	@OneToMany(fetch=FetchType.EAGER)
 	private List<Ingredient> ingredients;
 
 	// TODO Erweiterungsmöglichkeiten

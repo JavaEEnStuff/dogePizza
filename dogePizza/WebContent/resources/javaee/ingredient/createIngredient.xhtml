@@ -16,7 +16,8 @@
 					<td><h:inputText value="#{ingredientBean.name}" /></td>
 				</tr>
 			</table>
-			<h:commandButton value="Speichern" action="#{ingredientBean.save}"></h:commandButton>
+			<h:commandButton value="Speichern" action="#{ingredientBean.save}"/>
+			<h:commandButton value="Zurück" action="#{ingredientBean.ingredientList}"/>
 		</h:form>
 	</f:view>
 </h:body>

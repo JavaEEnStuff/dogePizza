@@ -31,10 +31,7 @@ public class Ingredient {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Zutat [id=").append(id).append(", name=").append(name)
-				.append("]");
-		return builder.toString();
+		return "Ingredient [id=" + id + ", name=" + name + "]";
 	}
 
 }

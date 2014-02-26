@@ -10,7 +10,7 @@
 	<h1>Menüs</h1>
 	<f:view>
 		<h:form>
-			<h:dataTable value="#{mealBean.allMeals}" var="o">
+			<h:dataTable value="#{mealBean.allMeals}" var="o" border="1">
 				<h:column>
 					<f:facet name="header">ID</f:facet>
 					<h:outputText value="#{o.id}" />

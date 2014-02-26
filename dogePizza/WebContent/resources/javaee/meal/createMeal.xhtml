@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Menü anlegen</title>
+</h:head>
+<h:body>
+	<h1>Menü anlegen</h1>
+	<f:view>
+		<h:form>
+			<table>
+				<tr>
+					<td><h:outputLabel value="Name " /></td>
+					<td><h:inputText value="#{mealBean.name}" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel value="Beschreibung " /></td>
+					<td><h:inputTextarea value="#{mealBean.description}" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel value="Preis " /></td>
+					<td><h:inputText value="#{mealBean.rawPrice}" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel value="Vegetarisch " /></td>
+					<td><h:selectBooleanCheckbox value="#{mealBean.vegeterian}" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel value="Zutaten " /></td>
+					<td><h:selectManyListbox value="#{mealBean.ingredientIds}">
+							<f:selectItems value="#{mealBean.allIngredients}"  />
+						</h:selectManyListbox></td>
+				</tr>
+			</table>
+			<h:commandButton value="Speichern" action="#{mealBean.saveMeal}"></h:commandButton>
+			<h:commandButton value="Zurück" action="#{mealBean.mealList}"></h:commandButton>
+		</h:form>
+	</f:view>
+</h:body>
+</html>

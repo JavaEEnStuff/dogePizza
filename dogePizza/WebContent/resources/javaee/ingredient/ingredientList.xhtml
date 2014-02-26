@@ -1,8 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
 	<title>Zutaten</title>
 </h:head>
@@ -25,15 +23,25 @@
 					<f:facet name="header">Anzeigen</f:facet>
 					<!-- row record -->
 					<h:commandButton value="Ok" action="#{ingredientBean.showIngredient}">
-						<f:param name="ingredientToShow" value="#{o}"/>
+						<f:param name="ingredientId" value="#{o.id}" />
 					</h:commandButton>
 				</h:column>
 				<h:column>
 					<f:facet name="header">Ändern</f:facet>
 					<!-- row record -->
-					<h:commandButton value="Ok" action="#{ingredientBean.changeIngredient}"/>
+					<h:commandButton value="Ok" action="#{ingredientBean.changeIngredient}">
+						<f:param name="ingredientId" value="#{o.id}" />
+					</h:commandButton>
+				</h:column>
+				<h:column>
+					<f:facet name="header">Löschen</f:facet>
+					<!-- row record -->
+					<h:commandButton value="Ok" action="#{ingredientBean.deleteIngredient}">
+						<f:param name="ingredientId" value="#{o.id}" />
+					</h:commandButton>
 				</h:column>
 			</h:dataTable>
+			<h:commandButton value="Anlegen" action="#{ingredientBean.createIngredient}" />
 		</h:form>
 	</f:view>
 </h:body>

@@ -1,6 +1,5 @@
 package com.wow.doge.managedbeans;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -15,14 +14,13 @@ import com.wow.doge.services.SizeService;
 @ManagedBean
 @RequestScoped
 public class SizeBean {
-	
+
 	private Logger logger = Logger.getLogger(SizeBean.class);
 
 	private Size size;
-	
+
 	@ManagedProperty("#{param.sizeId}")
 	private int sizeId;
-	
 
 	public SizeBean() {
 		size = new Size();
@@ -59,7 +57,7 @@ public class SizeBean {
 	public void setPriceMultiplicator(double priceMultiplicator) {
 		size.setPriceMultiplicator(priceMultiplicator);
 	}
-	
+
 	public int getSizeId() {
 		return sizeId;
 	}
@@ -71,16 +69,11 @@ public class SizeBean {
 	public List<Size> getAllSizes() {
 		logger.info("Lade alle Sizes");
 		SizeService service = new SizeService();
-		List<Size> list = service.getList();
-		if (list==null) {
-			return new ArrayList<Size>();
-		} else {
-			return list;
-		}
+		return service.getList();
 	}
 
 	public String showSize() {
-		logger.info("Versuche Size anzuzeigen: "+sizeId);
+		logger.info("Versuche Size anzuzeigen: " + sizeId);
 		SizeService service = new SizeService();
 		size = service.get(sizeId);
 		return "showSize.xhtml";
@@ -91,24 +84,24 @@ public class SizeBean {
 	}
 
 	public String changeSize() {
-		logger.info("Starte Size-Ändern-Maske: "+sizeId);
+		logger.info("Starte Size-Ändern-Maske: " + sizeId);
 		SizeService service = new SizeService();
 		size = service.get(sizeId);
-		logger.info("Size gefunden: "+size);
+		logger.info("Size gefunden: " + size);
 		return "changeSize.xhtml";
 	}
 
 	public String deleteSize() {
-		logger.info("Versuche Size zu löschen: "+sizeId);
+		logger.info("Versuche Size zu löschen: " + sizeId);
 		SizeService service = new SizeService();
 		Size sizeToDelete = service.get(sizeId);
-		logger.info("Vollständiges Objekt: "+sizeToDelete);
+		logger.info("Vollständiges Objekt: " + sizeToDelete);
 		service.delete(sizeToDelete);
 		return "";
 	}
 
 	public String save() {
-		logger.info("Versuche Size zu speichern! "+size);
+		logger.info("Versuche Size zu speichern! " + size);
 		SizeService service = new SizeService();
 		service.saveOrUpdate(size);
 		return "sizeList.xhtml";

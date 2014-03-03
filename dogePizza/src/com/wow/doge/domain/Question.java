@@ -13,7 +13,7 @@ public class Question {
 	private int id;
 	private String title;
 	private String description;
-	private int answerCount;
+	private int answerCount = 0;
 	//Answers coming soon
 	
 	

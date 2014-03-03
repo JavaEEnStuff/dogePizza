@@ -10,20 +10,22 @@
 	<h1>Fragen</h1>
 	<f:view>
 		<h:form>
-			<h:dataTable value="#{userAdministrationBean.allUsers}" var="o" border="1">
+			<h:dataTable value="#{questionBean.allQuestions}" var="o" border="1">
 				<h:column>
 					<f:facet name="headerID">ID</f:facet>
-					<h:outputText></h:outputText>
+					<h:outputText value="#{o.id}"></h:outputText>
 				</h:column>
 				<h:column>
 					<f:facet name="headerTitle">Titel</f:facet>
-					<h:outputText></h:outputText>
+					<h:outputText value="#{o.title}"></h:outputText>
 				</h:column>
 				<h:column>
 					<f:facet name="headerAnswerCount">Anzahl antworten</f:facet>
-					<h:outputText></h:outputText>
+					<h:outputText value="#{o.answerCount}"></h:outputText>
 				</h:column>
 			</h:dataTable>
+			<br/>
+			<h:commandButton value="Frage erstellen" action="#{questionBean.addQuestion}"/>
 		</h:form>
 	</f:view>
 </h:body>

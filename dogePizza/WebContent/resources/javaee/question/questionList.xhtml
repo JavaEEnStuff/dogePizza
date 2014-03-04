@@ -12,16 +12,34 @@
 		<h:form>
 			<h:dataTable value="#{questionBean.allQuestions}" var="o" border="1">
 				<h:column>
-					<f:facet name="headerID">ID</f:facet>
+					<f:facet name="header">ID</f:facet>
 					<h:outputText value="#{o.id}"></h:outputText>
 				</h:column>
 				<h:column>
-					<f:facet name="headerTitle">Titel</f:facet>
+					<f:facet name="header">Titel</f:facet>
 					<h:outputText value="#{o.title}"></h:outputText>
 				</h:column>
 				<h:column>
-					<f:facet name="headerAnswerCount">Anzahl antworten</f:facet>
+					<f:facet name="header">Anzahl antworten</f:facet>
 					<h:outputText value="#{o.answerCount}"></h:outputText>
+				</h:column>
+				<h:column>
+					<f:facet name="header">Anzeigen</f:facet>
+					<h:commandButton value="Ok" action="#{questionBean.showQuestion}">
+						<f:param name="questionId" value="#{o.id}" />
+					</h:commandButton>
+				</h:column>
+				<h:column>
+					<f:facet name="header">Bearbeiten</f:facet>
+					<h:commandButton value="Ok" action="#{questionBean.editQuestion}">
+						<f:param name="questionId" value="#{o.id}" />
+					</h:commandButton>
+				</h:column>
+				<h:column>
+					<f:facet name="header">Antworten</f:facet>
+					<h:commandButton value="Ok" action="#{questionBean.createAnswer}">
+						<f:param name="questionId" value="#{o.id}" />
+					</h:commandButton>
 				</h:column>
 			</h:dataTable>
 			<br/>

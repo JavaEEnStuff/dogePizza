@@ -19,6 +19,9 @@ import com.wow.doge.services.QuestionService;
 public class QuestionBean {
 	private static final Logger logger = Logger.getLogger(MealBean.class);
 
+	//@ManagedProperty("#{param.questionId}")
+	//private int questionId;
+	
 	private Question question;
 
 	public QuestionBean() {
@@ -72,5 +75,11 @@ public class QuestionBean {
 	public List<Question> getAllQuestions() {
 		QuestionService service = new QuestionService();
 		return service.getList();
+	}
+	
+	public String showQuestion() {
+		QuestionService service = new QuestionService();
+		question = service.get(questionId);
+		return "showQuestion.xhtml";
 	}
 }

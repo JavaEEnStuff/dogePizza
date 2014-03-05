@@ -9,18 +9,16 @@ import javax.faces.bean.RequestScoped;
 
 import org.apache.log4j.Logger;
 
-import com.wow.doge.domain.Ingredient;
 import com.wow.doge.domain.Question;
-import com.wow.doge.services.IngredientService;
 import com.wow.doge.services.QuestionService;
 
 @ManagedBean
 @RequestScoped
 public class QuestionBean {
-	private static final Logger logger = Logger.getLogger(MealBean.class);
+	private static final Logger logger = Logger.getLogger(QuestionBean.class);
 
-	//@ManagedProperty("#{param.questionId}")
-	//private int questionId;
+	@ManagedProperty("#{param.questionId}")
+	private int questionId;
 	
 	private Question question;
 
@@ -54,6 +52,14 @@ public class QuestionBean {
 	
 	public void setAnswerCount(int answerCount) {
 		question.setAnswerCount(answerCount);
+	}
+	
+	public int getQuestionId() {
+		return questionId;
+	}
+
+	public void setQuesstionId(int questionId) {
+		this.questionId = questionId;
 	}
 	
 	public String addQuestion() {

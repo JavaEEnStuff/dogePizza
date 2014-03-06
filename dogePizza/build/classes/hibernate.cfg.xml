@@ -25,5 +25,6 @@
 		<mapping class="com.wow.doge.domain.Address" />
 		<mapping class="com.wow.doge.domain.Meal" />
 		<mapping class="com.wow.doge.domain.Question"/>
+		<mapping class="com.wow.doge.domain.Answer"/>
 	</session-factory>
 </hibernate-configuration>    

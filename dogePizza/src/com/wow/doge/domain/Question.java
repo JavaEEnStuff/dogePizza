@@ -1,9 +1,14 @@
 package com.wow.doge.domain;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Question {
@@ -14,8 +19,12 @@ public class Question {
 	private String title;
 	private String description;
 	private int answerCount = 0;
-	//Answers coming soon
+	@OneToMany(fetch=FetchType.EAGER)
+	private List<Answer> answers;
 	
+	public Question() {
+		answers = new LinkedList<Answer>();
+	}
 	
 	public int getId() {
 		return id;
@@ -42,4 +51,21 @@ public class Question {
 		this.answerCount = answerCount;
 	}
 	
+	public List<Answer> getAnswers() {
+		return answers;
+	}
+
+	public void setAnswers(List<Answer> answers) {
+		this.answers = answers;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Frage [id=").append(id).append(", title=")
+				.append(title).append(", description=").append(description)
+				.append(", answerCount=").append(answerCount)
+				.append(", answers=").append(answers).append("]");
+		return builder.toString();
+	}
 }

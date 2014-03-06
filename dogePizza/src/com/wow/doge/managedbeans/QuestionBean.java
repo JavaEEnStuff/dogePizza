@@ -1,6 +1,5 @@
 package com.wow.doge.managedbeans;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -28,6 +27,10 @@ public class QuestionBean {
 	
 	public int getId() {
 		return question.getId();
+	}
+	
+	public void setId(int id) {
+		question.setId(id);
 	}
 	
 	public String getTitle() {
@@ -58,7 +61,7 @@ public class QuestionBean {
 		return questionId;
 	}
 
-	public void setQuesstionId(int questionId) {
+	public void setQuestionId(int questionId) {
 		this.questionId = questionId;
 	}
 	

@@ -91,4 +91,11 @@ public class QuestionBean {
 		question = service.get(questionId);
 		return "showQuestion.xhtml";
 	}
+	
+	public String changeQuestion() {
+		QuestionService service = new QuestionService();
+		question = service.get(questionId);
+		logger.info("Versuche Question zu aendern: "+question);
+		return "changeQuestion.xhtml";
+	}
 }

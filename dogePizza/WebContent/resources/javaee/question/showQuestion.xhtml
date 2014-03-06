@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Frage</title>
+</h:head>
+<h:body>
+	<h1>Frage anzeigen</h1>
+	<f:view>
+		<h:form>
+			<table border="1">
+				<tr>
+					<td><h:outputLabel value="ID" /></td>
+					<td><h:outputLabel value="#{questionBean.id}" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel value="Titel: " /></td>
+					<td><h:outputLabel value="#{questionBean.title}" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel value="Beschreibung: " /></td>
+					<td><h:outputText value="#{questionBean.description}" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel value="Antwortzahl: " /></td>
+					<td><h:outputLabel value="#{questionBean.answerCount}" /></td>
+				</tr>
+			</table>
+			<h:commandButton value="Zurück" action="#{questionBean.questionList}" />
+		</h:form>
+	</f:view>
+</h:body>
+</html>

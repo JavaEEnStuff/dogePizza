@@ -25,4 +25,12 @@ public class Answer {
 	public void setText(String text) {
 		this.text = text;
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Antwort [id=").append(id).append(", text=")
+				.append(text).append("]");
+		return builder.toString();
+	}
 }

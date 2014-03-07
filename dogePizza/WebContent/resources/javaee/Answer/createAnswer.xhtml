@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+<title>Antwort erstellen</title>
+</h:head>
+<h:body>
+	<h1>Antwort erstellen</h1>
+	<f:view>
+		<h:form>
+			<table>
+				<tr>
+					<td><h:outputLabel value="Titel " /></td>
+					<td><h:outputLabel value="#{answerBean.questionTitle}" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel value="Beschreibung " /></td>
+					<td><h:outputText value="#{answerBean.questionDescription}" /></td>
+				</tr>	
+				<tr>
+					<td><h:outputLabel value="Antwort " /></td>
+					<td><h:inputTextarea value="#{answerBean.text}" /></td>
+				</tr>			
+			</table>
+			<br/>
+			<h:inputHidden value="#{answerBean.questionId}" />
+			<h:commandButton value="Speichern" action="#{answerBean.save}"/>
+			<h:commandButton value="Zurück" action="#{questionBean.questionList}"/>
+		</h:form>
+	</f:view>
+</h:body>
+</html>

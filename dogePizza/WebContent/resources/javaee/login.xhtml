@@ -1,15 +1,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
 	<title>Login</title>
 </h:head>
 <h:body>
 	<h1>Login</h1>
 	<f:view>
-		<h:form>Later bitcheeees
+		<h:form>
+			<h:outputLabel for="usernameInput">Email-Adresse: </h:outputLabel>
+			<h:inputText id="usernameInput" value="#{loginBean.loginEmail}" required="true" />
+			<br />
+			<h:outputLabel for="passwordInput">Passwort:</h:outputLabel>
+			<h:inputSecret id="passwordInput" value="#{loginBean.password}" required="true" />
+			<br />
+			<h:commandButton value="Login" action="#{loginBean.login}" />
 		</h:form>
 	</f:view>
 </h:body>

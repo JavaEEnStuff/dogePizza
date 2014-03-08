@@ -1,6 +1,7 @@
 package com.wow.doge.services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -89,6 +90,29 @@ public abstract class AbstractService<T> {
 	 * @return all found Objects
 	 */
 	public List<T> getList(Criterion... criterions) {
+		Session session = null;
+
+		try {
+			session = HibernateUtil.getSessionFactory().getCurrentSession();
+			session.beginTransaction();
+
+			Criteria criteria = session.createCriteria(getHibernateClass());
+			for (Criterion nextCriterion : criterions) {
+				criteria.add(nextCriterion);
+			}
+			List<T> resultList = (ArrayList<T>) criteria.list();
+			session.getTransaction().commit();
+			return resultList;
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			// TODO: errorHandling
+			return null;
+		} finally {
+			HibernateUtil.closeSession(session);
+		}
+	}
+	
+	public List<T> getList(Collection<Criterion> criterions) {
 		Session session = null;
 
 		try {

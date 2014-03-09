@@ -1,21 +1,59 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
 	<title>Login</title>
+	<link rel="shortcut icon" href="../img/logo_icon.ico" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<!-- Bootstrap -->
+	<link href="../css/bootstrap.min.css" rel="stylesheet" />
+
+	<!-- Custom styles for this template -->
+	<link href="../css/theme.css" rel="stylesheet" />
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </h:head>
 <h:body>
-	<h1>Login</h1>
-	<f:view>
-		<h:form>
-			<h:outputLabel for="usernameInput">Email-Adresse: </h:outputLabel>
-			<h:inputText id="usernameInput" value="#{loginBean.loginEmail}" required="true" />
-			<br />
-			<h:outputLabel for="passwordInput">Passwort:</h:outputLabel>
-			<h:inputSecret id="passwordInput" value="#{loginBean.password}" required="true" />
-			<br />
-			<h:commandButton value="Login" action="#{loginBean.login}" />
-		</h:form>
-	</f:view>
+	<div class="container theme-showcase" role="main">
+		<div class="jumbotron">
+			<h1>Login</h1>
+			<f:view>
+				<h:form>
+					<div class="input-group">
+					
+					<h:outputLabel for="usernameInput" class="input-group-addon">Email-Adresse: </h:outputLabel>
+					<h:inputText id="usernameInput" class="form-control" value="#{loginBean.loginEmail}"
+						required="true" />
+						</div>
+					<br />
+					<div class="input-group">
+					<h:outputLabel for="passwordInput" class="input-group-addon">Passwort: </h:outputLabel>
+					<h:inputSecret id="passwordInput" class="form-control" value="#{loginBean.password}"
+						required="true" />
+						</div>
+					<br />
+					<h:commandButton class="btn btn-default" value="Login"
+						action="#{loginBean.login}" />
+				</h:form>
+			</f:view>
+		</div>
+	</div>
+
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/docs.min.js"></script>
 </h:body>
 </html>

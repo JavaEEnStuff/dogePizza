@@ -1,0 +1,26 @@
+@CHARSET "ISO-8859-1";
+
+body {
+	padding-top: 70px;
+	padding-bottom: 30px;
+	background-image: url('../img/background.jpg');
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+}
+
+.theme-dropdown .dropdown-menu {
+	position: static;
+	display: block;
+	margin-bottom: 20px;
+}
+
+.theme-showcase>p>.btn {
+	margin: 5px 0;
+}
+
+img {
+	position: absolute;
+	top: 90px;
+	right: 430px;
+}

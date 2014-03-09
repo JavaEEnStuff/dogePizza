@@ -61,8 +61,8 @@ public class StartupListener implements ServletContextListener{
 	    service.saveOrUpdate(meals);
 	    
 	    Menu questions = new Menu();
-	    questions.setName("Menüs");
-	    questions.setText("Menüs verwalten");
+	    questions.setName("Fragen");
+	    questions.setText("Fragen verwalten");
 	    questions.setAdminMenu(true);
 	    questions.setLink("/dogePizza/resources/javaee/question/questionList.xhtml");
 	    questions.setLoginRequired(true);

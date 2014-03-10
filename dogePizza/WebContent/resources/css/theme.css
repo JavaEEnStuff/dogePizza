@@ -19,6 +19,15 @@ body {
 	margin: 5px 0;
 }
 
+h:body {
+	padding-top: 70px;
+	padding-bottom: 30px;
+	background-image: url('../img/background.jpg');
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+}
+
 img {
 	position: absolute;
 	top: 90px;
@@ -43,4 +52,8 @@ img {
 	right: 460px;
 	width: 20em;
 	heigth: 20em;
+}
+
+.btn{
+	margin-bottom:10px;
 }

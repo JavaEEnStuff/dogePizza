@@ -24,3 +24,23 @@ img {
 	top: 90px;
 	right: 430px;
 }
+
+.input-group-addon {
+	width: 12em;
+	text-align: left;
+}
+
+.form-control {
+	width: 20em;
+}
+
+.input-group {
+	width: 40em;
+}
+
+.img-circle {
+	top: 240px;
+	right: 460px;
+	width: 20em;
+	heigth: 20em;
+}

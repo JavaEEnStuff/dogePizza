@@ -4,53 +4,91 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
-	<title>Anmeldung</title>
+	<title>Registrierung</title>
+	<link rel="shortcut icon" href="../../img/logo_icon.ico" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<!-- Bootstrap -->
+	<link href="../../css/bootstrap.min.css" rel="stylesheet" />
+
+	<!-- Custom styles for this template -->
+	<link href="../../css/theme.css" rel="stylesheet" />
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </h:head>
 <h:body>
-	<h1>Anmeldung</h1>
-	<f:view>
-		<h:form>
-			<table border="1">
-				<tr>
-					<td><h:outputLabel value="Vorname: " /></td>
-					<td><h:inputText value="#{userSignUpBean.firstName}" /></td>
-				</tr>
-				<tr>
-					<td><h:outputLabel value="Nachname: " /></td>
-					<td><h:inputText value="#{userSignUpBean.lastName}" /></td>
-				</tr>
-				<tr>
-					<td><h:outputLabel value="Email: " /></td>
-					<td><h:inputText value="#{userSignUpBean.emailAddress}" /></td>
-				</tr>
-				<tr>
-					<td><h:outputLabel value="Passwort: " /></td>
-					<td><h:inputSecret value="#{userSignUpBean.password}" /></td>
-				</tr>
-				<tr>
-					<td><h:outputLabel value="Passwort wiederholen: " /></td>
-					<td><h:inputSecret value="#{userSignUpBean.passwordToCheck}" /></td>
-				</tr>
-			</table>
-			<br/>
-			<h2>Adresse</h2>
-			<table>
-				<tr>
-					<td><h:outputLabel value="Postleitzahl " /></td>
-					<td><h:inputText value="#{userSignUpBean.zipCode}" /></td>
-				</tr>
-				<tr>
-					<td><h:outputLabel value="Ort: " /></td>
-					<td><h:inputText value="#{userSignUpBean.city}" /></td>
-				</tr>
-				<tr>
-					<td><h:outputLabel value="Straße: " /></td>
-					<td><h:inputText value="#{userSignUpBean.streetName}" /></td>
-					<td><h:inputText value="#{userSignUpBean.number}" /></td>
-				</tr>
-			</table>
-			<h:commandButton value="Anmelden" action="#{userSignUpBean.tryToSignUp}"></h:commandButton>
-		</h:form>
-	</f:view>
+	<div class="container theme-showcase" role="main">
+		<div class="jumbotron">
+			<h1>Registrierung</h1>
+			<br />
+			<f:view>
+				<h:form>
+					<div class="media">
+						<img class="img-circle" alt="doge" src="../../img/doge.jpeg" />
+					</div>
+					<div class="input-group">
+						<h:outputLabel value="Vorname: " class="input-group-addon" />
+						<h:inputText class="form-control"
+							value="#{userSignUpBean.firstName}" />
+					</div>
+					<div class="input-group">
+						<h:outputLabel class="input-group-addon" value="Nachname: " />
+						<h:inputText class="form-control"
+							value="#{userSignUpBean.lastName}" />
+					</div>
+					<div class="input-group">
+						<h:outputLabel class="input-group-addon" value="Email: " />
+						<h:inputText class="form-control"
+							value="#{userSignUpBean.emailAddress}" />
+					</div>
+					<div class="input-group">
+						<h:outputLabel class="input-group-addon" value="Passwort: " />
+						<h:inputSecret class="form-control"
+							value="#{userSignUpBean.password}" />
+					</div>
+					<div class="input-group">
+						<h:outputLabel class="input-group-addon"
+							value="Passwort wiederholen: " />
+						<h:inputSecret class="form-control"
+							value="#{userSignUpBean.passwordToCheck}" />
+					</div>
+
+					<h2>Adresse</h2>
+					<div class="input-group">
+						<h:outputLabel class="input-group-addon" value="Postleitzahl " />
+						<h:inputText class="form-control" value="#{userSignUpBean.zipCode}" />
+					</div>
+					<div class="input-group">
+						<h:outputLabel class="input-group-addon" value="Ort: " />
+						<h:inputText class="form-control" value="#{userSignUpBean.city}" />
+					</div>
+					<div class="input-group">
+						<h:outputLabel class="input-group-addon" value="Straße: " />
+						<h:inputText class="form-control" value="#{userSignUpBean.streetName}" />
+					</div>
+					<div class="input-group">
+					 <h:outputLabel class="input-group-addon" value="Hausnummer: "/>
+					 <h:inputText class="form-control" value="#{userSignUpBean.number}" />
+					</div>
+					<br/>
+					<h:commandButton class="btn btn-default" value="Registrieren"
+						action="#{userSignUpBean.tryToSignUp}"></h:commandButton>
+				</h:form>
+			</f:view>
+		</div>
+	</div>
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="../../js/bootstrap.min.js"></script>
+	<script src="../../js/docs.min.js"></script>
 </h:body>
 </html>

@@ -22,7 +22,7 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </h:head>
-<body>
+<h:body>
 	<!-- Fixed navbar -->
 	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 		<div class="container">
@@ -62,45 +62,41 @@
 
 			<f:view>
 				<h:form>
-					<h:dataTable class="table table-hover table-condensed"
-						value="#{ingredientBean.allIngredients}" var="o" border="1">
+					<h:dataTable class="table table-hover table-condensed" value="#{ingredientBean.allIngredients}" var="o" border="1">
 						<h:column>
 							<f:facet name="header">ID</f:facet>
 							<!-- row record -->
-							<h:outputText value="#{o.id}">macht nix </h:outputText>
+							<h:outputText value="#{o.id}" />
 						</h:column>
 						<h:column>
 							<f:facet name="header">Name</f:facet>
 							<!-- row record -->
-							<h:outputText value="#{o.name}">macht nix </h:outputText>
+							<h:outputText value="#{o.name}" />
 						</h:column>
 						<h:column>
 							<f:facet name="header">Anzeigen</f:facet>
 							<!-- row record -->
-							<h:commandButton value="Ok"
-								action="#{ingredientBean.showIngredient}">
+							<h:commandButton value="Ok" action="#{ingredientBean.showIngredient}">
 								<f:param name="ingredientId" value="#{o.id}" />
 							</h:commandButton>
 						</h:column>
 						<h:column>
 							<f:facet name="header">Ändern</f:facet>
 							<!-- row record -->
-							<h:commandButton value="Ok"
-								action="#{ingredientBean.changeIngredient}">
+							<h:commandButton value="Ok" action="#{ingredientBean.changeIngredient}">
 								<f:param name="ingredientId" value="#{o.id}" />
 							</h:commandButton>
 						</h:column>
 						<h:column>
 							<f:facet name="header">Löschen</f:facet>
 							<!-- row record -->
-							<h:commandButton value="Ok"
-								action="#{ingredientBean.deleteIngredient}">
+							<h:commandButton value="Ok" action="#{ingredientBean.deleteIngredient}">
 								<f:param name="ingredientId" value="#{o.id}" />
 							</h:commandButton>
 						</h:column>
 					</h:dataTable>
-					<h:commandButton value="Anlegen"
-						action="#{ingredientBean.createIngredient}" />
+					<br />
+					<h:commandButton value="Anlegen" action="#{ingredientBean.createIngredient}"/>
 				</h:form>
 			</f:view>
 		</div>
@@ -113,5 +109,5 @@
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script src="../../js/bootstrap.min.js"></script>
 	<script src="../../js/docs.min.js"></script>
-</body>
+</h:body>
 </html>

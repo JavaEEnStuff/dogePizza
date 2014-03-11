@@ -74,7 +74,7 @@ public class StartupListener implements ServletContextListener {
 		ingredients.setName("Zutaten");
 		ingredients.setText("Zutaten verwalten");
 		ingredients.setAdminMenu(true);
-		ingredients.setLink("/dogePizza/resources/javaee/ingredient/ingredientList.xhtml");
+		ingredients.setLink("/dogePizza/resources/javaee/ingredient/ingredientList.jsf");
 		ingredients.setLoginRequired(true);
 		service.saveOrUpdate(ingredients);
 
@@ -82,7 +82,7 @@ public class StartupListener implements ServletContextListener {
 		sizes.setName("Größen");
 		sizes.setText("Größen verwalten");
 		sizes.setAdminMenu(true);
-		sizes.setLink("/dogePizza/resources/javaee/size/sizeList.xhtml");
+		sizes.setLink("/dogePizza/resources/javaee/size/sizeList.jsf");
 		sizes.setLoginRequired(true);
 		service.saveOrUpdate(sizes);
 
@@ -90,7 +90,7 @@ public class StartupListener implements ServletContextListener {
 		meals.setName("Menüs");
 		meals.setText("Menüs verwalten");
 		meals.setAdminMenu(true);
-		meals.setLink("/dogePizza/resources/javaee/meal/mealList.xhtml");
+		meals.setLink("/dogePizza/resources/javaee/meal/mealList.jsf");
 		meals.setLoginRequired(true);
 		service.saveOrUpdate(meals);
 
@@ -98,7 +98,7 @@ public class StartupListener implements ServletContextListener {
 		questions.setName("Fragen");
 		questions.setText("Fragen verwalten");
 		questions.setAdminMenu(true);
-		questions.setLink("/dogePizza/resources/javaee/question/questionList.xhtml");
+		questions.setLink("/dogePizza/resources/javaee/question/questionList.jsf");
 		questions.setLoginRequired(true);
 		service.saveOrUpdate(questions);
 
@@ -106,7 +106,7 @@ public class StartupListener implements ServletContextListener {
 		user.setName("Benutzer");
 		user.setText("Benutzer verwalten");
 		user.setAdminMenu(true);
-		user.setLink("/dogePizza/resources/javaee/user/userList.xhtml");
+		user.setLink("/dogePizza/resources/javaee/user/userList.jsf");
 		user.setLoginRequired(true);
 		service.saveOrUpdate(user);
 		logger.info("Menüs erstellt");

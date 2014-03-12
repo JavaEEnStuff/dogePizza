@@ -41,13 +41,6 @@
 					<li><a href="../../../about.html">Über doge</a></li>
 					<li><a href="../../../contact.html">doge kontaktieren</a></li>
 					<li><a href="../../../error.html">Logout</a></li>
-					<!-- <li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown">Bestellen<b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="#">Pizza</a></li>
-							<li><a href="#">Pasta</a></li>
-							<li><a href="#">Wer bin ich?</a></li>
-						</ul></li> -->
 				</ul>
 			</div>
 			<!--/.nav-collapse -->
@@ -62,7 +55,8 @@
 
 			<f:view>
 				<h:form>
-					<h:dataTable class="table table-hover table-condensed" value="#{ingredientBean.allIngredients}" var="o" border="1">
+					<h:dataTable class="table table-hover table-condensed"
+						value="#{ingredientBean.allIngredients}" var="o">
 						<h:column>
 							<f:facet name="header">ID</f:facet>
 							<!-- row record -->
@@ -76,27 +70,30 @@
 						<h:column>
 							<f:facet name="header">Anzeigen</f:facet>
 							<!-- row record -->
-							<h:commandButton value="Ok" action="#{ingredientBean.showIngredient}">
+							<h:commandButton class="btn btn-info btn-xs btn-width"
+								value="Anzeigen" action="#{ingredientBean.showIngredient}">
 								<f:param name="ingredientId" value="#{o.id}" />
 							</h:commandButton>
 						</h:column>
 						<h:column>
 							<f:facet name="header">Ändern</f:facet>
 							<!-- row record -->
-							<h:commandButton value="Ok" action="#{ingredientBean.changeIngredient}">
+							<h:commandButton class="btn btn-warning btn-xs btn-width"
+								value="Ändern" action="#{ingredientBean.changeIngredient}">
 								<f:param name="ingredientId" value="#{o.id}" />
 							</h:commandButton>
 						</h:column>
 						<h:column>
 							<f:facet name="header">Löschen</f:facet>
 							<!-- row record -->
-							<h:commandButton value="Ok" action="#{ingredientBean.deleteIngredient}">
+							<h:commandButton class="btn btn-danger btn-xs btn-width"
+								value="Löschen" action="#{ingredientBean.deleteIngredient}">
 								<f:param name="ingredientId" value="#{o.id}" />
 							</h:commandButton>
 						</h:column>
 					</h:dataTable>
-					<br />
-					<h:commandButton value="Anlegen" action="#{ingredientBean.createIngredient}"/>
+					<h:commandButton class="btn btn-default" value="Anlegen"
+						action="#{ingredientBean.createIngredient}" />
 				</h:form>
 			</f:view>
 		</div>

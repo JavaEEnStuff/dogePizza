@@ -28,16 +28,15 @@
 			<h1>Login</h1>
 			<f:view>
 				<h:form>
-					<div class="input-group">
+					<div class="input-group input-group-width">
 					
-					<h:outputLabel for="usernameInput" class="input-group-addon">Email-Adresse: </h:outputLabel>
-					<h:inputText id="usernameInput" class="form-control" value="#{loginBean.loginEmail}"
+					<h:outputLabel for="usernameInput" class="input-group-addon input-group-addon-width">Email-Adresse: </h:outputLabel>
+					<h:inputText id="usernameInput" class="form-control form-control-width" value="#{loginBean.loginEmail}"
 						required="true" />
 						</div>
-					<br />
-					<div class="input-group">
-					<h:outputLabel for="passwordInput" class="input-group-addon">Passwort: </h:outputLabel>
-					<h:inputSecret id="passwordInput" class="form-control" value="#{loginBean.password}"
+					<div class="input-group input-group-width">
+					<h:outputLabel for="passwordInput" class="input-group-addon input-group-addon-width">Passwort: </h:outputLabel>
+					<h:inputSecret id="passwordInput" class="form-control form-control-width" value="#{loginBean.password}"
 						required="true" />
 						</div>
 					<br />

@@ -28,23 +28,29 @@ h:body {
 	background-position: center;
 }
 
+.btn-width{
+	width:80px;	
+}
+
 img {
 	position: absolute;
-	top: 90px;
-	right: 430px;
+	top: 7em;
+	right: 30em;
 }
 
-.input-group-addon {
+.input-group-width {
+	padding-bottom: 5px;
+	width: 40em;
+}
+
+.input-group-addon-width {
 	width: 12em;
 	text-align: left;
+	width: 12em;
 }
 
-.form-control {
+.form-control-width {
 	width: 20em;
-}
-
-.input-group {
-	width: 40em;
 }
 
 .img-circle {
@@ -54,6 +60,14 @@ img {
 	heigth: 20em;
 }
 
-.btn{
-	margin-bottom:10px;
+.btn-margin-bottom{
+	margin-bottom: 5px;
+}
+
+.5px-margin-bottom{
+	margin-bottom: 5px;
+}
+
+.5px-margin-right{
+	margin-right: 5px;
 }

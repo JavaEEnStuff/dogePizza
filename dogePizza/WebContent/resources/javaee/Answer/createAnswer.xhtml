@@ -26,6 +26,7 @@
 			</table>
 			<br/>
 			<h:inputHidden value="#{answerBean.questionId}" />
+			<h:inputHidden value="#{answerBean.answerId}" />
 			<h:commandButton value="Speichern" action="#{answerBean.save}"/>
 			<h:commandButton value="Zurück" action="#{questionBean.questionList}"/>
 		</h:form>

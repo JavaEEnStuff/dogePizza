@@ -12,9 +12,9 @@ import com.wow.doge.domain.User;
 public class SessionBean {
 	private Logger logger = Logger.getLogger(SessionBean.class);
 
-	private User loggedInUser;
+	private User loggedInUser=null;
 	private long loginTime;
-
+	
 	public User getLoggedInUser() {
 		return loggedInUser;
 	}
@@ -25,12 +25,26 @@ public class SessionBean {
 		loginTime = System.currentTimeMillis();
 	}
 	
-	public void logout(){
-		logger.info("Benutzer " + loggedInUser.getEmailAddress() + " wird abgemeldet!");
-		logger.info("Dauer der Anmeldung: "+(System.currentTimeMillis()-loginTime)/1000);
-		this.loggedInUser = null;
+	public String loginLogout() {
+		logger.info("loggedIn: " + loggedInUser);
+		if (userIsLoggedIn()) {
+			logger.info("Benutzer " + loggedInUser.getEmailAddress() + " wird abgemeldet!");
+			logger.info("Dauer der Anmeldung: " + (System.currentTimeMillis() - loginTime) / 1000);
+			this.loggedInUser = null;
+			return "main.jsf";
+		} else {
+			return "login.jsf";
+		}
 	}
 	
+	public String getUserName(){
+		if(userIsLoggedIn()){
+			return "Hallo "+loggedInUser.getFirstName()+" "+loggedInUser.getLastName();
+		} else {
+			return "";
+		}
+	}
+
 	public boolean userIsLoggedIn(){
 		return loggedInUser!=null;
 	}
@@ -38,6 +52,10 @@ public class SessionBean {
 	@Override
 	public String toString() {
 		return "SessionBean [loggedInUser=" + loggedInUser + "]";
+	}
+	
+	public String getLoginText(){
+		return userIsLoggedIn()?"Logout":"Login";
 	}
 
 }

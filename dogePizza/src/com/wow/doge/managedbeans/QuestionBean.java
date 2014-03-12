@@ -70,7 +70,7 @@ public class QuestionBean {
 	}
 	
 	public String questionList() {
-		return "questionList.xhtml";
+		return "/resources/javaee/question/questionList.xhtml";
 	}
 	
 	public String save() {

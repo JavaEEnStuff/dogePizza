@@ -22,11 +22,13 @@ public class AnswerBean {
 
 	@ManagedProperty("#{param.questionId}")
 	private int questionId;
+	
 	private Answer answer;
 	private Question question;
 	
 	public AnswerBean() {
 		answer = new Answer();
+		question = new Question();
 	}
 
 	public int getAnswerId() {
@@ -72,7 +74,7 @@ public class AnswerBean {
 	public String createAnswer() {
 		QuestionService service = new QuestionService();
 		question = service.get(questionId);
-		return "../Answer/createAnswer.xhtml";
+		return "/resources/javaee/Answer/createAnswer.xhtml";
 	}
 	
 	public String save() {
@@ -80,8 +82,9 @@ public class AnswerBean {
 		AnswerService answerService = new AnswerService();
 		answerService.saveOrUpdate(answer);
 		
-		logger.info("Versuche Question zu speichern... "+ question);		
 		QuestionService questionService = new QuestionService();
+		question = questionService.get(questionId);
+		logger.info("Versuche Question zu speichern... "+ question);	
 		List<Answer> answers = question.getAnswers();
 		answers.add(answer);
 		question.setAnswers(answers);
@@ -90,6 +93,6 @@ public class AnswerBean {
 		question.setAnswerCount(answerCount);
 		questionService.saveOrUpdate(question);
 		
-		return "questionList.xhtml";
+		return "/resources/javaee/question/questionList.xhtml";
 	}
 }

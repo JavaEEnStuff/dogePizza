@@ -53,16 +53,19 @@
 		<!-- Main jumbotron for a primary marketing message or call to action -->
 		<div class="jumbotron">
 			<h2>Zutat anlegen</h2>
+			<br/>
 			<f:view>
-				<h:form>
-					<div class="input-group" style="margin-bottom:5px">
-						<h:outputLabel class="input-group-addon" value="Name " />
-						<h:inputText class="form-control" value="#{ingredientBean.name}" />
+				<h:form class="form-horizontal" role="form">
+					<div class="form-group">
+						<h:outputLabel class="col-sm-1 control-label" value="Name " />
+						<div class="col-sm-11">
+							<h:inputText class="form-control" value="#{ingredientBean.name}" />
+						</div>
 					</div>
-					<h:commandButton class="btn btn-default" style="margin-right:5px" value="Speichern"
-						action="#{ingredientBean.save}" />
-					<h:commandButton class="btn btn-default" value="Zurück"
-						action="#{ingredientBean.ingredientList}" />
+						<h:commandButton class="btn btn-default" style="margin-right:5px"
+							value="Speichern" action="#{ingredientBean.save}" />
+						<h:commandButton class="btn btn-default" value="Zurück"
+							action="#{ingredientBean.ingredientList}" />
 				</h:form>
 			</f:view>
 		</div>

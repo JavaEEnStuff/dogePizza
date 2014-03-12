@@ -35,6 +35,14 @@ public class MealBean {
 		ingredientIds = new LinkedList<String>();
 	}
 
+	public void setId(int id) {
+		meal.setId(id);
+	}
+
+	public int getId() {
+		return meal.getId();
+	}
+
 	public String getName() {
 		return meal.getName();
 	}
@@ -118,8 +126,8 @@ public class MealBean {
 	public List<String> getIngredientIds() {
 		return ingredientIds;
 	}
-	
-	public List<SelectItem> getIngredientsAsSelectItems(){
+
+	public List<SelectItem> getIngredientsAsSelectItems() {
 		IngredientSelectItemHelper helper = new IngredientSelectItemHelper();
 		return helper.asSelectItemList(meal.getIngredients());
 	}

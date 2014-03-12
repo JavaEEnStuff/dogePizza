@@ -18,10 +18,9 @@ import com.wow.doge.services.QuestionService;
 public class AnswerBean {
 	private static final Logger logger = Logger.getLogger(IngredientBean.class);
 
-
-	@ManagedProperty("#{param.answerId}")
 	private int answerId;
 
+	@ManagedProperty("#{param.questionId}")
 	private int questionId;
 	private Answer answer;
 	private Question question;

@@ -1,33 +1,97 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
 	<title>Frage</title>
+	<link rel="shortcut icon" href="../../img/logo_icon.ico" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<!-- Bootstrap -->
+	<link href="../../css/bootstrap.min.css" rel="stylesheet" />
+
+	<!-- Custom styles for this template -->
+	<link href="../../css/theme.css" rel="stylesheet" />
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
 </h:head>
 <h:body>
-	<h1>Frage anzeigen</h1>
-	<f:view>
-		<h:form>
-			<table border="1">
-				<tr>
-					<td><h:outputLabel value="ID" /></td>
-					<td><h:outputLabel value="#{questionBean.id}" /></td>
-				</tr>
-				<tr>
-					<td><h:outputLabel value="Titel: " /></td>
-					<td><h:outputLabel value="#{questionBean.title}" /></td>
-				</tr>
-				<tr>
-					<td><h:outputLabel value="Beschreibung: " /></td>
-					<td><h:outputText value="#{questionBean.description}" /></td>
-				</tr>
-				<tr>
-					<td><h:outputLabel value="Antwortzahl: " /></td>
-					<td><h:outputLabel value="#{questionBean.answerCount}" /></td>
-				</tr>
-			</table>
-			<h:commandButton value="Zurück" action="#{questionBean.questionList}" />
-		</h:form>
-	</f:view>
+	<!-- Fixed navbar -->
+	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="../../../index.html">dogePizza</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li><a href="../../../index.html">Home</a></li>
+					<li><a href="../../../about.html">Über doge</a></li>
+					<li><a href="../../../contact.html">doge kontaktieren</a></li>
+					<li><a href="../../../error.html">Logout</a></li>
+				</ul>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</div>
+	<div class="container theme-showcase" role="main">
+
+		<!-- Main jumbotron for a primary marketing message or call to action -->
+		<div class="jumbotron">
+			<h2>Frage anzeigen</h2>
+			<br/>
+			<f:view>
+				<h:form class="form-horizontal" role="form">
+
+					<div class="form-group">
+						<h:outputLabel class="col-sm-2 control-label" value="ID " />
+						<div class="col-sm-10">
+							<h:outputText class="form-control" value="#{questionBean.id}" />
+						</div>
+					</div>
+					<div class="form-group">
+						<h:outputLabel class="col-sm-2 control-label" value="Titel " />
+						<div class="col-sm-10">
+							<h:outputText class="form-control" value="#{questionBean.title}" />
+						</div>
+					</div>
+					<div class="form-group">
+						<h:outputLabel class="col-sm-2 control-label" value="Beschreibung " />
+						<div class="col-sm-10">
+							<h:outputText class="form-control" value="#{questionBean.description}" />
+						</div>
+					</div>
+					<div class="form-group">
+						<h:outputLabel class="col-sm-2 control-label" value="Antwortzahl " />
+						<div class="col-sm-10">
+							<h:outputText class="form-control" value="#{questionBean.answerCount}" />
+						</div>
+					</div>
+					<h:commandButton class="btn btn-default" value="Zurück"
+						action="#{questionBean.questionList}" />
+				</h:form>
+			</f:view>
+		</div>
+	</div>
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="../../js/bootstrap.min.js"></script>
+	<script src="../../js/docs.min.js"></script>
 </h:body>
 </html>

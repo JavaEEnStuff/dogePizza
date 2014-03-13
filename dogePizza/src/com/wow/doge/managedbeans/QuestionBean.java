@@ -1,5 +1,6 @@
 package com.wow.doge.managedbeans;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -8,6 +9,7 @@ import javax.faces.bean.RequestScoped;
 
 import org.apache.log4j.Logger;
 
+import com.wow.doge.domain.Answer;
 import com.wow.doge.domain.Question;
 import com.wow.doge.services.QuestionService;
 
@@ -83,7 +85,13 @@ public class QuestionBean {
 	
 	public List<Question> getAllQuestions() {
 		QuestionService service = new QuestionService();
-		return service.getList();
+		List<Question> questionList = service.getList();
+		List<Question> questionListUnique = new LinkedList<Question>();
+		for (Question q : questionList) {
+			if (!(questionListUnique.contains(q)))
+					questionListUnique.add(q);
+		}
+		return questionListUnique;
 	}
 	
 	public String showQuestion() {
@@ -97,5 +105,9 @@ public class QuestionBean {
 		question = service.get(questionId);
 		logger.info("Versuche Question zu aendern: "+question);
 		return "changeQuestion.xhtml";
+	}
+	
+	public List<Answer> getAllAnswers() {
+		return question.getAnswers();
 	}
 }

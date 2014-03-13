@@ -1,14 +1,16 @@
 package com.wow.doge.domain;
 
-import java.util.LinkedList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Meal {
@@ -21,16 +23,17 @@ public class Meal {
 	private boolean vegeterian;
 	private String description;
 	private byte[] image;
-	@OneToMany
-	private List<Size> possibleSizes;
-	@OneToMany(fetch=FetchType.EAGER)
-	private List<Ingredient> ingredients;
+	@ManyToMany(fetch = FetchType.EAGER)
+	private Set<Ingredient> ingredients;
+	@ManyToMany(mappedBy = "favoriteMeals", fetch=FetchType.LAZY)
+	private Set<User> favoredBy;
+	@ManyToMany(fetch=FetchType.EAGER)
+	private Set<Size> possibleSizes;
 
 	// TODO Erweiterungsmöglichkeiten
 
 	public Meal() {
-		possibleSizes = new LinkedList<Size>();
-		ingredients = new LinkedList<Ingredient>();
+		ingredients = new HashSet<Ingredient>();
 	}
 
 	public String getName() {
@@ -73,14 +76,6 @@ public class Meal {
 		this.image = image;
 	}
 
-	public List<Size> getPossibleSizes() {
-		return possibleSizes;
-	}
-
-	public void setPossibleSizes(List<Size> possibleSizes) {
-		this.possibleSizes = possibleSizes;
-	}
-
 	public int getId() {
 		return id;
 	}
@@ -89,25 +84,33 @@ public class Meal {
 		this.id = id;
 	}
 
-	public List<Ingredient> getIngredients() {
+	public Set<Ingredient> getIngredients() {
 		return ingredients;
 	}
 
-	public void setIngredients(List<Ingredient> zutaten) {
-		this.ingredients = zutaten;
+	public void setIngredients(Set<Ingredient> ingredients) {
+		this.ingredients = ingredients;
+	}
+	
+	public void setIngredients(List<Ingredient> ingredientsAsList) {
+		ingredients = new HashSet<>();
+		for(Ingredient nextIng :ingredientsAsList){
+			ingredients.add(nextIng);
+		}
+	}
+
+	public Set<User> getFavoredBy() {
+		return favoredBy;
+	}
+
+	public void setFavoredBy(Set<User> favoredBy) {
+		this.favoredBy = favoredBy;
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Gericht [id=").append(id).append(", name=")
-				.append(name).append(", price=").append(rawPrice)
-				.append(", vegeterian=").append(vegeterian)
-				.append(", description=").append(description)
-				.append(", image=").append(image!=null)
-				.append(", possibleSizes=").append(possibleSizes)
-				.append(", zutaten=").append(ingredients).append("]");
-		return builder.toString();
+		return "Meal [id=" + id + ", name=" + name + ", rawPrice=" + rawPrice + ", vegeterian=" + vegeterian + ", description=" + description + ", image="
+				+ Arrays.toString(image) + ", ingredients=" + ingredients + "]";
 	}
 
 }

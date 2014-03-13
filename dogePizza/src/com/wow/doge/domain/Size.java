@@ -1,9 +1,13 @@
 package com.wow.doge.domain;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Size {
@@ -14,6 +18,12 @@ public class Size {
 	private String name;
 	private String description;
 	private double priceMultiplicator;
+
+	@ManyToMany(mappedBy = "possibleSizes", fetch = FetchType.LAZY)
+	private List<Meal> meals;
+
+	public Size() {
+	}
 
 	public int getId() {
 		return id;
@@ -47,13 +57,19 @@ public class Size {
 		this.priceMultiplicator = priceMultiplicator;
 	}
 
+	public List<Meal> getMeals() {
+		return meals;
+	}
+
+	public void setMeals(List<Meal> meals) {
+		this.meals = meals;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Size [id=").append(id).append(", name=").append(name)
-				.append(", description=").append(description)
-				.append(", priceMultiplicator=").append(priceMultiplicator)
-				.append("]");
+		builder.append("Size [id=").append(id).append(", name=").append(name).append(", description=").append(description).append(", priceMultiplicator=")
+				.append(priceMultiplicator).append("]");
 		return builder.toString();
 	}
 

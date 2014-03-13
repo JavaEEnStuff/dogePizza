@@ -2,6 +2,7 @@ package com.wow.doge.services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -9,6 +10,7 @@ import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 
 import com.wow.doge.hibernate.HibernateUtil;
 
@@ -37,6 +39,57 @@ public abstract class AbstractService<T> {
 		}
 	}
 
+	/**
+	 * Sucht ein bestimmtes Objekt mit einer ID aus der Datenbank
+	 * 
+	 * @param id
+	 * @return das gefundene Objekt oder null.
+	 */
+	public List<T> whereIdsIn(List<Integer> ids) {
+		Session session = null;
+
+		try {
+			session = HibernateUtil.getSessionFactory().getCurrentSession();
+			session.beginTransaction();
+			Criteria criteria = session.createCriteria(getHibernateClass());
+			if (ids == null || ids.isEmpty()) {
+				return new LinkedList<T>();
+			}
+			criteria.add(Restrictions.in("id", ids));
+			List<T> sight = (List<T>) criteria.list();
+			session.getTransaction().commit();
+			return sight;
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			// TODO: errorHandling
+			return null;
+		} finally {
+			HibernateUtil.closeSession(session);
+		}
+	}
+	
+	public List<T> whereIdsNotIn(List<Integer> ids) {
+		Session session = null;
+
+		try {
+			session = HibernateUtil.getSessionFactory().getCurrentSession();
+			session.beginTransaction();
+			Criteria criteria = session.createCriteria(getHibernateClass());
+			if (ids != null && !ids.isEmpty()) {
+				criteria.add(Restrictions.not(Restrictions.in("id", ids)));
+			}
+			List<T> sight = (List<T>) criteria.list();
+			session.getTransaction().commit();
+			return sight;
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			// TODO: errorHandling
+			return null;
+		} finally {
+			HibernateUtil.closeSession(session);
+		}
+	}
+	
 	/**
 	 * Sucht ein bestimmtes Objekt mit einer ID aus der Datenbank
 	 * 

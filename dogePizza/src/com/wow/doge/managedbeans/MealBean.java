@@ -25,14 +25,15 @@ public class MealBean {
 	private static final Logger logger = Logger.getLogger(MealBean.class);
 
 	private Meal meal;
-	private List<String> ingredientIds;
+	// die ausgewählten Ids (rechte Seite, aber nur die, die selektiert wurden)
+	private List<String> selectedIngredientIds;
 
 	@ManagedProperty("#{param.mealId}")
 	private int mealId;
 
 	public MealBean() {
 		meal = new Meal();
-		ingredientIds = new LinkedList<String>();
+		selectedIngredientIds = new LinkedList<>();
 	}
 
 	public void setId(int id) {
@@ -83,26 +84,15 @@ public class MealBean {
 		meal.setImage(image);
 	}
 
-	public List<Size> getPossibleSizes() {
-		return meal.getPossibleSizes();
-	}
-
-	public void setPossibleSizes(List<Size> possibleSizes) {
-		meal.setPossibleSizes(possibleSizes);
-	}
-
-	public List<Ingredient> getIngredients() {
-		return meal.getIngredients();
-	}
-
-	public void setIngredients(List<Ingredient> ingredients) {
-		meal.setIngredients(ingredients);
-	}
-
 	public List<SelectItem> getAllIngredients() {
 		IngredientService service = new IngredientService();
 		IngredientSelectItemHelper helper = new IngredientSelectItemHelper();
-		return helper.asSelectItemList(service.getList());
+		List<SelectItem> asSelectItemList = helper.asSelectItemList(service.getList());
+		return asSelectItemList;
+	}
+
+	public String deleteSelectedIngredients() {
+		return "";
 	}
 
 	public List<Size> getAllSizes() {
@@ -112,7 +102,9 @@ public class MealBean {
 
 	public List<Meal> getAllMeals() {
 		MealService service = new MealService();
-		return service.getList();
+		List<Meal> list = service.getList();
+		logger.info("meals: "+list);
+		return list;
 	}
 
 	public int getMealId() {
@@ -121,28 +113,26 @@ public class MealBean {
 
 	public void setMealId(int mealId) {
 		this.mealId = mealId;
-	}
-
-	public List<String> getIngredientIds() {
-		return ingredientIds;
-	}
-
-	public List<SelectItem> getIngredientsAsSelectItems() {
-		IngredientSelectItemHelper helper = new IngredientSelectItemHelper();
-		return helper.asSelectItemList(meal.getIngredients());
-	}
-
-	public void setIngredientIds(List<String> ingredientIds) {
-		this.ingredientIds = ingredientIds;
-		IngredientService service = new IngredientService();
-		List<Ingredient> ingredients = new LinkedList<>();
-		for (String nextId : ingredientIds) {
-			ingredients.add(service.get(Integer.parseInt(nextId)));
+		if (mealId != 0) {
+			MealService service = new MealService();
+			this.meal = service.get(mealId);
+			logger.info("MealID: " + mealId + ", Meal: " + meal);
+			this.selectedIngredientIds = new LinkedList<>();
+			for (Ingredient nextIngredient : meal.getIngredients()) {
+				selectedIngredientIds.add(nextIngredient.getId() + "");
+			}
 		}
-		meal.setIngredients(ingredients);
 	}
 
 	// FUNKTIONEN
+
+	public List<String> getSelectedIngredientIds() {
+		return selectedIngredientIds;
+	}
+
+	public void setSelectedIngredientIds(List<String> selectedIngredientIds) {
+		this.selectedIngredientIds = selectedIngredientIds;
+	}
 
 	public String deleteMeal() {
 		logger.info("Versuche Meal zu löschen: " + mealId);
@@ -154,7 +144,14 @@ public class MealBean {
 	}
 
 	public String saveMeal() {
+		List<Integer> idsAsInteger = new LinkedList<>();
+		for (String nextId : selectedIngredientIds) {
+			idsAsInteger.add(Integer.valueOf(nextId));
+		}
 		MealService service = new MealService();
+		IngredientService ingredientService = new IngredientService();
+		List<Ingredient> ingredients = ingredientService.whereIdsIn(idsAsInteger);
+		meal.setIngredients(ingredients);
 		service.saveOrUpdate(meal);
 		return mealList();
 	}
@@ -162,21 +159,21 @@ public class MealBean {
 	public String showMeal() {
 		MealService service = new MealService();
 		meal = service.get(mealId);
-		return "showMeal.xhtml";
+		return "showMeal.jsf";
 	}
 
 	public String changeMeal() {
 		MealService service = new MealService();
 		meal = service.get(mealId);
-		return "changeMeal.xhtml";
+		return "changeMeal.jsf";
 	}
 
 	public String createMeal() {
-		return "createMeal.xhtml";
+		return "createMeal.jsf";
 	}
 
 	public String mealList() {
-		return "mealList.xhtml";
+		return "mealList.jsf";
 	}
 
 }

@@ -26,6 +26,13 @@
 					<td><h:outputLabel value="#{questionBean.answerCount}" /></td>
 				</tr>
 			</table>
+			<br/>
+			<h:dataTable value="#{questionBean.allAnswers}" var="o" border="1">
+				<h:column>
+					<f:facet name="header">Antwort</f:facet>
+					<h:outputText value="#{o.text}"></h:outputText>
+				</h:column>
+			</h:dataTable>
 			<h:commandButton value="Zurück" action="#{questionBean.questionList}" />
 		</h:form>
 	</f:view>

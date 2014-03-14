@@ -196,5 +196,8 @@ public class MealBean {
 	public String mealList() {
 		return "mealList.jsf";
 	}
-
+	
+	public String main(){
+		return "/resources/javaee/main.xhtml";
+	}
 }

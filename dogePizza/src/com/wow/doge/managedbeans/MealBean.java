@@ -14,6 +14,7 @@ import com.wow.doge.domain.Ingredient;
 import com.wow.doge.domain.Meal;
 import com.wow.doge.domain.Size;
 import com.wow.doge.helper.IngredientSelectItemHelper;
+import com.wow.doge.helper.SizeSelectItemHelper;
 import com.wow.doge.services.IngredientService;
 import com.wow.doge.services.MealService;
 import com.wow.doge.services.SizeService;
@@ -27,6 +28,7 @@ public class MealBean {
 	private Meal meal;
 	// die ausgewählten Ids (rechte Seite, aber nur die, die selektiert wurden)
 	private List<String> selectedIngredientIds;
+	private List<String> selectedSizeIds;
 
 	@ManagedProperty("#{param.mealId}")
 	private int mealId;
@@ -34,6 +36,7 @@ public class MealBean {
 	public MealBean() {
 		meal = new Meal();
 		selectedIngredientIds = new LinkedList<>();
+		selectedSizeIds = new LinkedList<>();
 	}
 
 	public void setId(int id) {
@@ -91,19 +94,16 @@ public class MealBean {
 		return asSelectItemList;
 	}
 
-	public String deleteSelectedIngredients() {
-		return "";
-	}
-
-	public List<Size> getAllSizes() {
+	public List<SelectItem> getAllSizes() {
 		SizeService service = new SizeService();
-		return service.getList();
+		SizeSelectItemHelper helper = new SizeSelectItemHelper();
+		List<SelectItem> asSelectItemList = helper.asSelectItemList(service.getList());
+		return asSelectItemList;
 	}
 
 	public List<Meal> getAllMeals() {
 		MealService service = new MealService();
-		List<Meal> list = service.getList();
-		logger.info("meals: "+list);
+		List<Meal> list = service.getListWithComparator(Meal.getMealNameComparator());
 		return list;
 	}
 
@@ -121,6 +121,11 @@ public class MealBean {
 			for (Ingredient nextIngredient : meal.getIngredients()) {
 				selectedIngredientIds.add(nextIngredient.getId() + "");
 			}
+			
+			this.selectedSizeIds = new LinkedList<>();
+			for(Size nextSize: meal.getPossibleSizes()){
+				selectedSizeIds.add(nextSize.getId()+"");
+			}
 		}
 	}
 
@@ -132,6 +137,14 @@ public class MealBean {
 
 	public void setSelectedIngredientIds(List<String> selectedIngredientIds) {
 		this.selectedIngredientIds = selectedIngredientIds;
+	}
+	
+	public List<String> getSelectedSizeIds() {
+		return selectedSizeIds;
+	}
+
+	public void setSelectedSizeIds(List<String> selectedSizeIds) {
+		this.selectedSizeIds = selectedSizeIds;
 	}
 
 	public String deleteMeal() {
@@ -152,6 +165,14 @@ public class MealBean {
 		IngredientService ingredientService = new IngredientService();
 		List<Ingredient> ingredients = ingredientService.whereIdsIn(idsAsInteger);
 		meal.setIngredients(ingredients);
+
+		List<Integer> sizeIdsAsInteger = new LinkedList<>();
+		for (String nextId : selectedSizeIds) {
+			sizeIdsAsInteger.add(Integer.valueOf(nextId));
+		}
+		SizeService sizeService = new SizeService();
+		List<Size> sizes = sizeService.whereIdsIn(sizeIdsAsInteger);
+		meal.setPossibleSizes(sizes);
 		service.saveOrUpdate(meal);
 		return mealList();
 	}

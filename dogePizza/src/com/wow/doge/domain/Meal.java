@@ -1,6 +1,7 @@
 package com.wow.doge.domain;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,9 +26,9 @@ public class Meal {
 	private byte[] image;
 	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<Ingredient> ingredients;
-	@ManyToMany(mappedBy = "favoriteMeals", fetch=FetchType.LAZY)
+	@ManyToMany(mappedBy = "favoriteMeals", fetch = FetchType.LAZY)
 	private Set<User> favoredBy;
-	@ManyToMany(fetch=FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<Size> possibleSizes;
 
 	// TODO Erweiterungsmöglichkeiten
@@ -91,11 +92,26 @@ public class Meal {
 	public void setIngredients(Set<Ingredient> ingredients) {
 		this.ingredients = ingredients;
 	}
-	
+
 	public void setIngredients(List<Ingredient> ingredientsAsList) {
 		ingredients = new HashSet<>();
-		for(Ingredient nextIng :ingredientsAsList){
+		for (Ingredient nextIng : ingredientsAsList) {
 			ingredients.add(nextIng);
+		}
+	}
+
+	public Set<Size> getPossibleSizes() {
+		return possibleSizes;
+	}
+
+	public void setPossibleSizes(Set<Size> possibleSizes) {
+		this.possibleSizes = possibleSizes;
+	}
+	
+	public void setPossibleSizes(List<Size> sizesAsList) {
+		possibleSizes = new HashSet<>();
+		for (Size nextSize : sizesAsList) {
+			possibleSizes.add(nextSize);
 		}
 	}
 
@@ -111,6 +127,21 @@ public class Meal {
 	public String toString() {
 		return "Meal [id=" + id + ", name=" + name + ", rawPrice=" + rawPrice + ", vegeterian=" + vegeterian + ", description=" + description + ", image="
 				+ Arrays.toString(image) + ", ingredients=" + ingredients + "]";
+	}
+	
+	// ============== COMPARATOR ===============
+	
+	public static Comparator<Meal> getMealNameComparator(){
+		return new MealNameComparator();
+	}
+	
+	private static class MealNameComparator implements Comparator<Meal>{
+
+		@Override
+		public int compare(Meal o1, Meal o2) {
+			return o1.getName().compareTo(o2.getName());
+		}
+		
 	}
 
 }

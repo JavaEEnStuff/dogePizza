@@ -2,6 +2,8 @@ package com.wow.doge.services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -113,20 +115,27 @@ public abstract class AbstractService<T> {
 			HibernateUtil.closeSession(session);
 		}
 	}
-
+	
 	/**
 	 * Gibt alle Sehenswürdigkeiten als Liste aus der Datenbank zurück.
 	 * 
 	 * @return Alle Sehenswürdigkeiten.
 	 */
 	public List<T> getList() {
+		return getListWithComparator(null);
+	}
+	
+	public List<T> getListWithComparator(Comparator<T> comparator) {
 		Session session = null;
 
 		try {
 			session = HibernateUtil.getSessionFactory().getCurrentSession();
 			session.beginTransaction();
 
-			List<T> resultList = (ArrayList<T>) session.createCriteria(getHibernateClass()).list();
+			List<T> resultList = (ArrayList<T>) session.createCriteria(getHibernateClass()).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+			if(comparator!=null){
+				Collections.sort(resultList, comparator);
+			}
 			session.getTransaction().commit();
 			return resultList;
 		} catch (Exception e) {
@@ -153,7 +162,7 @@ public abstract class AbstractService<T> {
 			for (Criterion nextCriterion : criterions) {
 				criteria.add(nextCriterion);
 			}
-			List<T> resultList = (ArrayList<T>) criteria.list();
+			List<T> resultList = (ArrayList<T>) criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 			session.getTransaction().commit();
 			return resultList;
 		} catch (Exception e) {
@@ -176,7 +185,7 @@ public abstract class AbstractService<T> {
 			for (Criterion nextCriterion : criterions) {
 				criteria.add(nextCriterion);
 			}
-			List<T> resultList = (ArrayList<T>) criteria.list();
+			List<T> resultList = (ArrayList<T>) criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 			session.getTransaction().commit();
 			return resultList;
 		} catch (Exception e) {

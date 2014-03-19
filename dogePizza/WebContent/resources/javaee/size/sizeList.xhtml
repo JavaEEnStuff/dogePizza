@@ -36,12 +36,15 @@
 				<a class="navbar-brand" href="../../../index.html">dogePizza</a>
 			</div>
 			<div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
-					<li><a href="../../../index.html">Home</a></li>
-					<li><a href="../../../about.html">Über doge</a></li>
-					<li><a href="../../../contact.html">doge kontaktieren</a></li>
-					<li><a href="../../../error.html">Logout</a></li>
-				</ul>
+				<h:form>
+					<ul class="nav navbar-nav">
+						<li><a href="../../../index.html">Home</a></li>
+						<li><a href="../../../about.html">Über doge</a></li>
+						<li><a href="../../../contact.html">doge kontaktieren</a></li>
+						<li><h:commandLink value="#{sessionBean.loginText}"
+								action="#{sessionBean.loginLogout}" href="../../../index.html" /></li>
+					</ul>
+				</h:form>
 			</div>
 			<!--/.nav-collapse -->
 		</div>

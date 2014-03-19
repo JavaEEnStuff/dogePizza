@@ -31,9 +31,9 @@ public class SessionBean {
 			logger.info("Benutzer " + loggedInUser.getEmailAddress() + " wird abgemeldet!");
 			logger.info("Dauer der Anmeldung: " + (System.currentTimeMillis() - loginTime) / 1000);
 			this.loggedInUser = null;
-			return "main.jsf";
+			return "/resources/javaee/main.jsf";
 		} else {
-			return "login.jsf";
+			return "/resources/javaee/login.jsf";
 		}
 	}
 	

@@ -92,8 +92,11 @@
 							</h:commandButton>
 						</h:column>
 					</h:dataTable>
-					<h:commandButton class="btn btn-default" value="Anlegen"
-						action="#{ingredientBean.createIngredient}" />
+					<h:commandButton class="btn btn-default" style="margin-right:5px"
+						value="Anlegen" action="#{ingredientBean.createIngredient}" />
+
+					<h:commandButton class="btn btn-default" value="Zurück"
+						action="#{ingredientBean.main}" />
 				</h:form>
 			</f:view>
 		</div>

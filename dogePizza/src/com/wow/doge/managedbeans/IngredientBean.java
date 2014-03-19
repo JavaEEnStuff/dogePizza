@@ -96,4 +96,8 @@ public class IngredientBean {
 	public String ingredientList() {
 		return "ingredientList.xhtml";
 	}
+	
+	public String main(){
+		return "/resources/javaee/main.xhtml";
+	}
 }

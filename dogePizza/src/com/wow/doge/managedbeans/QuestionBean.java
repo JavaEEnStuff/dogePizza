@@ -110,4 +110,8 @@ public class QuestionBean {
 	public List<Answer> getAllAnswers() {
 		return question.getAnswers();
 	}
+	
+	public String main(){
+		return "/resources/javaee/main.xhtml";
+	}
 }

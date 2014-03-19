@@ -111,4 +111,8 @@ public class SizeBean {
 	public String toString() {
 		return size.toString();
 	}
+	
+	public String main(){
+		return "/resources/javaee/main.xhtml";
+	}
 }

@@ -174,6 +174,42 @@ public abstract class AbstractService<T> {
 		}
 	}
 	
+	/**
+	 * @param searchString
+	 * @return all found Objects
+	 */
+	public List<T> getList(SelectionHelper<T> helper) {
+		Session session = null;
+
+		try {
+			session = HibernateUtil.getSessionFactory().getCurrentSession();
+			session.beginTransaction();
+
+			Criteria criteria = session.createCriteria(getHibernateClass());
+			for (Criterion nextCriterion : helper.getCriterions()) {
+				criteria.add(nextCriterion);
+			}
+			if(helper.getMaxResults()!=0){
+				criteria.setMaxResults(helper.getMaxResults());
+			}
+			if(helper.getOrder()!=null){
+				criteria.addOrder(helper.getOrder());
+			}
+			List<T> resultList = (ArrayList<T>) criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+			if(helper.getComparator()!=null){
+				Collections.sort(resultList, helper.getComparator());
+			}
+			session.getTransaction().commit();
+			return resultList;
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			// TODO: errorHandling
+			return null;
+		} finally {
+			HibernateUtil.closeSession(session);
+		}
+	}
+	
 	public List<T> getList(Collection<Criterion> criterions) {
 		Session session = null;
 

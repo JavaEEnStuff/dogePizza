@@ -10,7 +10,6 @@ public class OrderPosition {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private Meal meal;
-	private Size size;
 
 	public int getId() {
 		return id;
@@ -28,27 +27,17 @@ public class OrderPosition {
 		this.meal = gericht;
 	}
 
-	public Size getSize() {
-		return size;
-	}
-
-	public void setSize(Size size) {
-		this.size = size;
-	}
-
 	/**
 	 * @return Zusammengesetzter Preis aus Grundpreis * Größenanpassung
 	 */
 	public double getPrice() {
-		return meal.getRawPrice() * size.getPriceMultiplicator();
+		return 0;
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("OrderPosition [id=").append(id).append(", gericht=")
-				.append(meal).append(", size=").append(size).append("]");
-		return builder.toString();
+		return "OrderPosition [id=" + id + ", meal=" + meal + "]";
 	}
 
+	
 }

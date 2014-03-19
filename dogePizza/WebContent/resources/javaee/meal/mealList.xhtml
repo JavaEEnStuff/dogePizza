@@ -66,12 +66,20 @@
 							<h:outputText value="#{o.name}" />
 						</h:column>
 						<h:column>
-							<f:facet name="header">Preis</f:facet>
-							<h:outputText value="#{o.rawPrice}"></h:outputText>
-						</h:column>
-						<h:column>
 							<f:facet name="header">Vegetarisch</f:facet>
 							<h:outputText value="#{o.vegeterian?'Ja':'Nein'}"></h:outputText>
+						</h:column>
+						<h:column>
+							<f:facet name="header">S</f:facet>
+							<h:outputText value="#{o.firstPrice} €"></h:outputText>
+						</h:column>
+						<h:column>
+							<f:facet name="header">M</f:facet>
+							<h:outputText value="#{o.secondPrice} €"></h:outputText>
+						</h:column>
+						<h:column>
+							<f:facet name="header">L</f:facet>
+							<h:outputText value="#{o.thirdPrice} €"></h:outputText>
 						</h:column>
 						<h:column>
 							<f:facet name="header">Anzeigen</f:facet>

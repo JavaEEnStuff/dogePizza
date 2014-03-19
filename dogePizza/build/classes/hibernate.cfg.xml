@@ -17,11 +17,10 @@
 		<property name="hibernate.transaction.factory_class">
 			org.hibernate.transaction.JDBCTransactionFactory
 		</property>
-		<property name="hibernate.hbm2ddl.auto">update</property>
+		<property name="hibernate.hbm2ddl.auto">create-drop</property>
 
 		<mapping class="com.wow.doge.domain.Meal" />
 		<mapping class="com.wow.doge.domain.Ingredient" />
-		<mapping class="com.wow.doge.domain.Size" />
 		<mapping class="com.wow.doge.domain.User" />
 		<mapping class="com.wow.doge.domain.Address" />
 		<mapping class="com.wow.doge.domain.Question"/>

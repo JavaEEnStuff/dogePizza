@@ -1,78 +1,34 @@
 package com.wow.doge.helper;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import com.wow.doge.domain.Meal;
 import com.wow.doge.services.MealService;
+import com.wow.doge.services.SelectionHelper;
 
 public class EvaluationHelper {
 
-	int margin = 10;
-	
+	private static final int MAX_COUNT = 10;
+
 	public List<Meal> HighestPriceMeals() {
-		List<Meal> allMeals = new LinkedList<Meal>();
 		MealService service = new MealService();
-		allMeals = service.getList();
-		List<Meal> highestPriceMeals = new LinkedList<Meal>();
-		int mealCounter = 0;
-		for (Meal currentMeal : allMeals) {
-			if (mealCounter <= margin) {
-				highestPriceMeals.add(currentMeal);
-				mealCounter++;
-			} else {
-				Meal lowestPriceMeal = GetLowestPriceMeal(highestPriceMeals);
-				if (currentMeal.getRawPrice() > lowestPriceMeal.getRawPrice()) {
-					highestPriceMeals.remove(lowestPriceMeal);
-					highestPriceMeals.add(currentMeal);
-				}
-			}
+		SelectionHelper<Meal> mealSelection = new SelectionHelper<>();
+		mealSelection.setComparator(Meal.getReverseMealPriceComparator());
+		List<Meal> highestPriceMeals = service.getList(mealSelection);
+		if(highestPriceMeals.size()>=10){
+			highestPriceMeals.subList(0, 9);
 		}
 		return highestPriceMeals;
 	}
 	
-	private Meal GetLowestPriceMeal(List<Meal> mealsToCheck) {
-		Meal lowestPriceMeal = mealsToCheck.get(0);
-		double lowestPrice = lowestPriceMeal.getRawPrice();
-		for (Meal currentMeal : mealsToCheck) {
-			if (currentMeal.getRawPrice() < lowestPrice) {
-				lowestPrice = currentMeal.getRawPrice();
-				lowestPriceMeal = currentMeal;
-			}
-		}
-		return lowestPriceMeal;
-	}
-	
-	public List<Meal> LowestPriceMeals() {
-		List<Meal> allMeals = new LinkedList<Meal>();
+	public List<Meal> getLowestPriceMeals(List<Meal> mealsToCheck) {
 		MealService service = new MealService();
-		allMeals = service.getList();
-		List<Meal> lowestPriceMeals = new LinkedList<Meal>();
-		int mealCounter = 0;
-		for (Meal currentMeal : allMeals) {
-			if (mealCounter <= margin) {
-				lowestPriceMeals.add(currentMeal);
-				mealCounter++;
-			} else {
-				Meal highestPriceMeal = GetHighestPriceMeal(lowestPriceMeals);
-				if (currentMeal.getRawPrice() < highestPriceMeal.getRawPrice()) {
-					lowestPriceMeals.remove(highestPriceMeal);
-					lowestPriceMeals.add(currentMeal);
-				}
-			}
+		SelectionHelper<Meal> mealSelection = new SelectionHelper<>();
+		mealSelection.setComparator(Meal.getMealPriceComparator());
+		List<Meal> lowestPriceMeals = service.getList(mealSelection);
+		if(lowestPriceMeals.size()>=MAX_COUNT){
+			lowestPriceMeals.subList(0, 9);
 		}
 		return lowestPriceMeals;
-	}
-	
-	private Meal GetHighestPriceMeal(List<Meal> mealsToCheck) {
-		Meal highestPriceMeal = mealsToCheck.get(0);
-		double highestPrice = highestPriceMeal.getRawPrice();
-		for (Meal currentMeal : mealsToCheck) {
-			if (currentMeal.getRawPrice() > highestPrice) {
-				highestPrice = currentMeal.getRawPrice();
-				highestPriceMeal = currentMeal;
-			}
-		}
-		return highestPriceMeal;
 	}
 }

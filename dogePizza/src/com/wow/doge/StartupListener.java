@@ -78,14 +78,6 @@ public class StartupListener implements ServletContextListener {
 		ingredients.setLoginRequired(true);
 		service.saveOrUpdate(ingredients);
 
-		Menu sizes = new Menu();
-		sizes.setName("Größen");
-		sizes.setText("Größen verwalten");
-		sizes.setAdminMenu(true);
-		sizes.setLink("/dogePizza/resources/javaee/size/sizeList.jsf");
-		sizes.setLoginRequired(true);
-		service.saveOrUpdate(sizes);
-
 		Menu meals = new Menu();
 		meals.setName("Menüs");
 		meals.setText("Menüs verwalten");

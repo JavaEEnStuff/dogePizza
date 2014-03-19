@@ -1,8 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
 	<title>Menü anzeigen</title>
 	<link rel="shortcut icon" href="../../img/logo_icon.ico" />
@@ -27,11 +25,8 @@
 	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 		<div class="container">
 			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target=".navbar-collapse">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand" href="../../../index.html">dogePizza</a>
 			</div>
@@ -41,8 +36,7 @@
 						<li><a href="../../../index.html">Home</a></li>
 						<li><a href="../../../about.html">Über doge</a></li>
 						<li><a href="../../../contact.html">doge kontaktieren</a></li>
-						<li><h:commandLink value="#{sessionBean.loginText}"
-								action="#{sessionBean.loginLogout}" /></li>
+						<li><h:commandLink value="#{sessionBean.loginText}" action="#{sessionBean.loginLogout}" /></li>
 					</ul>
 				</h:form>
 			</div>
@@ -54,39 +48,26 @@
 		<!-- Main jumbotron for a primary marketing message or call to action -->
 		<div class="jumbotron">
 			<h2>Menü anzeigen</h2>
-			<br/>
+			<br />
 			<f:view>
 				<h:form class="form-horizontal" role="form">
 
 					<div class="form-group">
-						<h:outputLabel for="inputName" class="col-sm-2 control-label"
-							value="Name " />
+						<h:outputLabel for="inputName" class="col-sm-2 control-label" value="Name " />
 						<div class="col-sm-10">
-							<h:outputText id="inputName" class="form-control"
-								value="#{mealBean.name}" />
+							<h:outputText id="inputName" class="form-control" value="#{mealBean.name}" />
 						</div>
 					</div>
 					<div class="form-group">
-						<h:outputLabel for="inputDesc" class="col-sm-2 control-label"
-							value="Beschreibung " />
+						<h:outputLabel for="inputDesc" class="col-sm-2 control-label" value="Beschreibung " />
 						<div class="col-sm-10">
-							<h:outputText id="inputDesc" class="form-control"
-								value="#{mealBean.description}" />
-						</div>
-					</div>
-					<div class="form-group">
-						<h:outputLabel for="inputPrice" class="col-sm-2 control-label"
-							value="Preis " />
-						<div class="col-sm-10">
-							<h:outputText id="inputPrice" class="form-control"
-								value="#{mealBean.rawPrice}" />
+							<h:outputText id="inputDesc" class="form-control" value="#{mealBean.description}" />
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
 							<div class="checkbox">
-								<label> <h:selectBooleanCheckbox disabled="true"
-										value="#{mealBean.vegeterian}" /> Vegetarisch
+								<label> <h:selectBooleanCheckbox disabled="true" value="#{mealBean.vegeterian}" /> Vegetarisch
 								</label>
 							</div>
 						</div>
@@ -100,14 +81,24 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<h:outputLabel class="col-sm-2 control-label" value="Größen " />
+						<h:outputLabel for="firstPrice" class="col-sm-2 control-label" value="S " />
 						<div class="col-sm-10">
-							<h:selectManyListbox class="form-control" value="#{mealBean.selectedSizeIds}" disabled="true">
-								<f:selectItems value="#{mealBean.allSizes}" />
-							</h:selectManyListbox>
+							<h:outputLabel id="firstPrice" class="form-control" value="#{mealBean.firstPrice}" />
 						</div>
 					</div>
-					
+					<div class="form-group">
+						<h:outputLabel for="secondPrice" class="col-sm-2 control-label" value="M " />
+						<div class="col-sm-10">
+							<h:outputLabel id="secondPrice" class="form-control" value="#{mealBean.secondPrice}" />
+						</div>
+					</div>
+					<div class="form-group">
+						<h:outputLabel for="thirdPrice" class="col-sm-2 control-label" value="L " />
+						<div class="col-sm-10">
+							<h:outputLabel id="thirdPrice" class="form-control" value="#{mealBean.thirdPrice}" />
+						</div>
+					</div>
+
 					<h:commandButton class="btn btn-default" value="Zurück" action="#{mealBean.mealList}" />
 				</h:form>
 			</f:view>
@@ -117,8 +108,7 @@
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script src="../../js/bootstrap.min.js"></script>
 	<script src="../../js/docs.min.js"></script>
 </h:body>

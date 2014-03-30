@@ -32,7 +32,12 @@ h:body {
 	width:80px;	
 }
 
-img {
+.images{
+	top: 1em;
+	left: 10em;
+}
+
+.img-doge {
 	position: absolute;
 	top: 7em;
 	right: 30em;

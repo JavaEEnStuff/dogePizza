@@ -51,7 +51,4 @@ public class StartupListener implements ServletContextListener {
 			creator.create();
 		}
 	}
-
-
-
 }

@@ -37,6 +37,8 @@
 						<li><a href="../../../about.html">Über doge</a></li>
 						<li><a href="../../../contact.html">doge kontaktieren</a></li>
 						<li><h:commandLink value="#{sessionBean.loginText}" action="#{sessionBean.loginLogout}" /></li>
+						<li><h:commandLink action="#{shoppingCart.showShoppingCart}" >
+								#{shoppingCart.positionCount} Gerichte<br/>#{shoppingCart.overallPrice} €</h:commandLink></li>
 					</ul>
 				</h:form>
 			</div>

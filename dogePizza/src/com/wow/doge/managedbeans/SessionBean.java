@@ -57,5 +57,9 @@ public class SessionBean {
 	public String getLoginText(){
 		return userIsLoggedIn()?"Logout":"Login";
 	}
+	
+	public String main(){
+		return "/resources/javaee/main.xhtml";
+	}
 
 }

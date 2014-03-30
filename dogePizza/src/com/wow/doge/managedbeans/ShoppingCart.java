@@ -51,9 +51,20 @@ public class ShoppingCart {
 	 * Anpassung des Index durch Veringerum um 1 (da 0-basiert)
 	 * @param position
 	 */
-	public void removeOrderPosition(int position) {
-		logger.info("Element aus dem Einkaufswagen entfernt: " + orderPositions.get(position));
-		orderPositions.remove(position - 1);
+	public String removeOrderPosition() {
+		logger.info("Loesche Position");
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		Integer mealId = Integer.parseInt(facesContext.getExternalContext().getRequestParameterMap().get("mealId"));
+		logger.info("MealId:" + mealId);
+		Double price = Double.parseDouble(facesContext.getExternalContext().getRequestParameterMap().get("price"));
+		logger.info("price:" + price);
+		for (OrderPosition orderPosition : orderPositions) {
+			if (orderPosition.getMeal().getId().equals(mealId) && orderPosition.getPrice().equals(price)) {
+				orderPositions.remove(orderPosition);
+				break;
+			}
+		}
+		return "";
 	}
 
 	public List<OrderPosition> getOrderPositions() {
@@ -79,7 +90,7 @@ public class ShoppingCart {
 	}
 
 	public String showShoppingCart() {
-		return "";
+		return "/resources/javaee/shoppingCart/shoppingCartList.jsf";
 	}
 
 	@Override
@@ -89,5 +100,10 @@ public class ShoppingCart {
 
 	public String getText() {
 		return toString();
+	}
+	
+	public String order(){
+		logger.info("Bestellung!");
+		return "";
 	}
 }

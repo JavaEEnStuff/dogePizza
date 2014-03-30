@@ -5,10 +5,13 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
 
+import com.wow.doge.domain.Meal;
 import com.wow.doge.domain.OrderPosition;
+import com.wow.doge.services.MealService;
 
 /**
  * Einkaufswagen der Anwendung. Es handelt sich hierbei um kein persistentes Objekt, sondern ein rein auf die Session beschränktes Objekt.
@@ -19,7 +22,7 @@ import com.wow.doge.domain.OrderPosition;
 @ManagedBean
 @SessionScoped
 public class ShoppingCart {
-	
+
 	private static final Logger logger = Logger.getLogger(ShoppingCart.class);
 
 	private List<OrderPosition> orderPositions;
@@ -27,10 +30,21 @@ public class ShoppingCart {
 	public ShoppingCart() {
 		orderPositions = new LinkedList<>();
 	}
-
-	public void addOrderPosition(OrderPosition position) {
-		logger.info("neuer Eintrag im Einkaufswagen: "+position);
+	
+	public String addOrderPosition(){
+		logger.info("Fuege neue Position hinzu");
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		Integer mealId =Integer.parseInt(facesContext.getExternalContext().getRequestParameterMap().get("mealId"));
+		logger.info("MealId:"+mealId);
+		Double price = Double.parseDouble(facesContext.getExternalContext().getRequestParameterMap().get("price"));
+		logger.info("price:"+price);
+		OrderPosition position = new OrderPosition();
+		MealService mealService = new MealService();
+		Meal meal = mealService.get(mealId);
+		position.setMeal(meal);
+		position.setPrice(price);
 		orderPositions.add(position);
+		return "";
 	}
 
 	/**
@@ -38,11 +52,11 @@ public class ShoppingCart {
 	 * @param position
 	 */
 	public void removeOrderPosition(int position) {
-		logger.info("Element aus dem Einkaufswagen entfernt: "+orderPositions.get(position));
+		logger.info("Element aus dem Einkaufswagen entfernt: " + orderPositions.get(position));
 		orderPositions.remove(position - 1);
 	}
-	
-	public List<OrderPosition> getOrderPositions(){
+
+	public List<OrderPosition> getOrderPositions() {
 		return orderPositions;
 	}
 
@@ -58,9 +72,22 @@ public class ShoppingCart {
 
 		return value;
 	}
-	
-	public void clearShoppingCart(){
-		logger.info("Leere Einkaufswagen, aktuelle Anzahl an Positionen: "+orderPositions.size());
+
+	public void clearShoppingCart() {
+		logger.info("Leere Einkaufswagen, aktuelle Anzahl an Positionen: " + orderPositions.size());
 		orderPositions = new LinkedList<>();
+	}
+
+	public String showShoppingCart() {
+		return "";
+	}
+
+	@Override
+	public String toString() {
+		return orderPositions.size() + " Produkte" + getOverallPrice() + " €";
+	}
+
+	public String getText() {
+		return toString();
 	}
 }

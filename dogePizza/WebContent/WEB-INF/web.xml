@@ -32,6 +32,6 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
   <listener>
-    <listener-class>com.wow.doge.StartupListener</listener-class>
+    <listener-class>com.wow.doge.startup.StartupListener</listener-class>
   </listener>
 </web-app> 

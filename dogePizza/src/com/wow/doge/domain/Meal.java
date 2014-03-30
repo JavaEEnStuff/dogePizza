@@ -5,8 +5,6 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,18 +14,18 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 @Entity
-public class Meal {
+public class Meal implements Comparable<Meal>{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 	private String name;
 	private boolean vegeterian;
 	private String description;
 	private byte[] image;
 	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<Ingredient> ingredients;
-	@ManyToMany(mappedBy = "favoriteMeals", fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "favoriteMeals", fetch = FetchType.EAGER)
 	private Set<User> favoredBy;
 
 	private Double firstPrice;
@@ -72,11 +70,11 @@ public class Meal {
 		this.image = image;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -93,6 +91,10 @@ public class Meal {
 		for (Ingredient nextIng : ingredientsAsList) {
 			ingredients.add(nextIng);
 		}
+	}
+	
+	public void addIngredient(Ingredient ingredient){
+		ingredients.add(ingredient);
 	}
 
 	public Set<User> getFavoredBy() {
@@ -215,20 +217,29 @@ public class Meal {
 				+ thirdPrice + "]";
 	}
 
-	public static void main(String[] args) {
-		SortedSet<Meal> meals = new TreeSet<>(Meal.getReverseMealPriceComparator());
-		Meal meal = new Meal();
-		meal.setFirstPrice(1.0);
-		meal.setSecondPrice(2.0);
-		meal.setThirdPrice(3.0);
+//	public static void main(String[] args) {
+//		SortedSet<Meal> meals = new TreeSet<>(Meal.getReverseMealPriceComparator());
+//		Meal meal = new Meal();
+//		meal.setFirstPrice(1.0);
+//		meal.setSecondPrice(2.0);
+//		meal.setThirdPrice(3.0);
+//
+//		Meal meal1 = new Meal();
+//		meal1.setFirstPrice(3.0);
+//		meal1.setSecondPrice(4.0);
+//		meal1.setThirdPrice(2.0);
+//		meals.add(meal);
+//		meals.add(meal1);
+//		System.out.println(meals);
+//	}
 
-		Meal meal1 = new Meal();
-		meal1.setFirstPrice(3.0);
-		meal1.setSecondPrice(4.0);
-		meal1.setThirdPrice(2.0);
-		meals.add(meal);
-		meals.add(meal1);
-		System.out.println(meals);
+	@Override
+	public int compareTo(Meal o) {
+		if (id == null || o.getId() == null) {
+			return name.compareTo(o.getName());
+		} else {
+			return id.compareTo(o.getId());
+		}
 	}
 
 }

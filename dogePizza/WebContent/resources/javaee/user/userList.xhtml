@@ -1,6 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<title>Zutaten</title>
 	<link rel="shortcut icon" href="../../img/logo_icon.ico" />
@@ -22,25 +25,10 @@
 </h:head>
 <h:body>
 	<!-- Fixed navbar -->
-	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-					<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="../../../index.html">dogePizza</a>
-			</div>
-			<div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
-					<li><a href="../../../index.html">Home</a></li>
-					<li><a href="../../../about.html">Über doge</a></li>
-					<li><a href="../../../contact.html">doge kontaktieren</a></li>
-					<li><a href="../../../error.html">Logout</a></li>
-				</ul>
-			</div>
-			<!--/.nav-collapse -->
-		</div>
+	<div>
+		<ui:include src="/resources/javaee/navbar.xhtml"></ui:include>
 	</div>
+	
 	<div class="container theme-showcase" role="main">
 
 		<!-- Main jumbotron for a primary marketing message or call to action -->

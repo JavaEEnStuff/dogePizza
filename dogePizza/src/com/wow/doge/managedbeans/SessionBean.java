@@ -1,6 +1,7 @@
 package com.wow.doge.managedbeans;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
 import org.apache.log4j.Logger;
@@ -10,6 +11,10 @@ import com.wow.doge.domain.User;
 @ManagedBean(name = "sessionBean")
 @SessionScoped
 public class SessionBean {
+
+	@ManagedProperty(value="#{shoppingCart}")
+    private ShoppingCart shoppingCart; // +setter
+	
 	private Logger logger = Logger.getLogger(SessionBean.class);
 
 	private User loggedInUser=null;
@@ -31,6 +36,7 @@ public class SessionBean {
 			logger.info("Benutzer " + loggedInUser.getEmailAddress() + " wird abgemeldet!");
 			logger.info("Dauer der Anmeldung: " + (System.currentTimeMillis() - loginTime) / 1000);
 			this.loggedInUser = null;
+			shoppingCart.clearShoppingCart();
 			return "/resources/javaee/main.jsf";
 		} else {
 			return "/resources/javaee/login.jsf";
@@ -62,4 +68,11 @@ public class SessionBean {
 		return "/resources/javaee/main.xhtml";
 	}
 
+	public ShoppingCart getShoppingCart() {
+		return shoppingCart;
+	}
+
+	public void setShoppingCart(ShoppingCart shoppingCart) {
+		this.shoppingCart = shoppingCart;
+	}
 }

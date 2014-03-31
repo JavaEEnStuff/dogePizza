@@ -22,7 +22,7 @@ import com.wow.doge.services.MealService;
 @ManagedBean
 @SessionScoped
 public class ShoppingCart {
-
+	
 	private static final Logger logger = Logger.getLogger(ShoppingCart.class);
 
 	private List<OrderPosition> orderPositions;

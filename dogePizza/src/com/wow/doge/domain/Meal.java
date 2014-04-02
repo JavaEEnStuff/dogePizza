@@ -12,9 +12,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 @Entity
-public class Meal implements Comparable<Meal>{
+public class Meal implements Comparable<Meal> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,6 +28,9 @@ public class Meal implements Comparable<Meal>{
 	private Set<Ingredient> ingredients;
 	@ManyToMany(mappedBy = "favoriteMeals", fetch = FetchType.EAGER)
 	private Set<User> favoredBy;
+
+	@OneToMany(mappedBy = "meal")
+	private Set<OrderPosition> positions;
 
 	private Double firstPrice;
 	private Double secondPrice;
@@ -92,8 +96,8 @@ public class Meal implements Comparable<Meal>{
 			ingredients.add(nextIng);
 		}
 	}
-	
-	public void addIngredient(Ingredient ingredient){
+
+	public void addIngredient(Ingredient ingredient) {
 		ingredients.add(ingredient);
 	}
 
@@ -129,6 +133,14 @@ public class Meal implements Comparable<Meal>{
 
 	public void setThirdPrice(Double thirdPrice) {
 		this.thirdPrice = thirdPrice;
+	}
+
+	public Set<OrderPosition> getPositions() {
+		return positions;
+	}
+
+	public void setPositions(Set<OrderPosition> positions) {
+		this.positions = positions;
 	}
 
 	public static Comparator<Meal> getMealNameComparator() {
@@ -194,7 +206,7 @@ public class Meal implements Comparable<Meal>{
 			if (o1.getThirdPrice() != null && o1.getThirdPrice() < lowest)
 				lowest = o1.getThirdPrice();
 			if (o2.getFirstPrice() != null && o2.getFirstPrice() < lowest) {
-				mealWithHigherPrice =GREATER;
+				mealWithHigherPrice = GREATER;
 				lowest = o1.getFirstPrice();
 			}
 			if (o2.getSecondPrice() != null && o2.getSecondPrice() < lowest) {
@@ -217,21 +229,21 @@ public class Meal implements Comparable<Meal>{
 				+ thirdPrice + "]";
 	}
 
-//	public static void main(String[] args) {
-//		SortedSet<Meal> meals = new TreeSet<>(Meal.getReverseMealPriceComparator());
-//		Meal meal = new Meal();
-//		meal.setFirstPrice(1.0);
-//		meal.setSecondPrice(2.0);
-//		meal.setThirdPrice(3.0);
-//
-//		Meal meal1 = new Meal();
-//		meal1.setFirstPrice(3.0);
-//		meal1.setSecondPrice(4.0);
-//		meal1.setThirdPrice(2.0);
-//		meals.add(meal);
-//		meals.add(meal1);
-//		System.out.println(meals);
-//	}
+	//	public static void main(String[] args) {
+	//		SortedSet<Meal> meals = new TreeSet<>(Meal.getReverseMealPriceComparator());
+	//		Meal meal = new Meal();
+	//		meal.setFirstPrice(1.0);
+	//		meal.setSecondPrice(2.0);
+	//		meal.setThirdPrice(3.0);
+	//
+	//		Meal meal1 = new Meal();
+	//		meal1.setFirstPrice(3.0);
+	//		meal1.setSecondPrice(4.0);
+	//		meal1.setThirdPrice(2.0);
+	//		meals.add(meal);
+	//		meals.add(meal1);
+	//		System.out.println(meals);
+	//	}
 
 	@Override
 	public int compareTo(Meal o) {

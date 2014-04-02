@@ -2,8 +2,8 @@ package com.wow.doge.domain;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -11,15 +11,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-@Entity
+@Entity(name="dogeOrder")
 public class Order {
 
-	private static final SimpleDateFormat dateFormat = new SimpleDateFormat(
-			"yyyy-MM-dd");
-	private static final SimpleDateFormat timestampFormat = new SimpleDateFormat(
-			"hh-mm-ss");
+	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	private static final SimpleDateFormat timestampFormat = new SimpleDateFormat("hh-mm-ss");
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,13 +26,14 @@ public class Order {
 
 	/** Datum + Lieferuhrzeit */
 	private long date;
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Address address;
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	private List<OrderPosition> positions;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<OrderPosition> positions;
 	private String remark;
 
 	public Order() {
-		positions = new LinkedList<OrderPosition>();
+		positions = new HashSet<OrderPosition>();
 	}
 
 	public int getId() {
@@ -68,12 +68,16 @@ public class Order {
 		this.address = address;
 	}
 
-	public List<OrderPosition> getPositions() {
+	public Set<OrderPosition> getPositions() {
 		return positions;
 	}
 
-	public void setPositions(List<OrderPosition> positions) {
+	public void setPositions(Set<OrderPosition> positions) {
 		this.positions = positions;
+	}
+
+	public void addPosition(OrderPosition position) {
+		this.positions.add(position);
 	}
 
 	public String getRemark() {
@@ -86,12 +90,9 @@ public class Order {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Order [id=").append(id).append(", date=").append(date)
-				.append(", address=").append(address).append(", positions=")
-				.append(positions).append(", remark=").append(remark)
-				.append("]");
-		return builder.toString();
+		return "Order [id=" + id + ", date=" + date + ", remark=" + remark + "]";
 	}
+
+	
 
 }

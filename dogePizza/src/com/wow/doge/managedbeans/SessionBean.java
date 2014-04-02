@@ -75,4 +75,8 @@ public class SessionBean {
 	public void setShoppingCart(ShoppingCart shoppingCart) {
 		this.shoppingCart = shoppingCart;
 	}
+	
+	public String completeOrder(){
+		return shoppingCart.completeOrder(loggedInUser);
+	}
 }

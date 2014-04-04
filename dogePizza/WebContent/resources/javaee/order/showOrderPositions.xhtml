@@ -34,26 +34,22 @@
 			<h1>Bestellungen</h1>
 			<f:view>
 				<h:form>
-					<h:dataTable class="table table-hover table-condensed" value="#{orderBean.allOrders}" var="o">
+					<h:outputText value="Bestellung vom #{orderBean.orderDate}" />
+					<h:dataTable class="table table-hover table-condensed" value="#{orderBean.orderPositionForOrder}" var="o">
 						<h:column>
-							<f:facet name="header">Bestelldatum</f:facet>
-							<h:outputText value="#{o.formattedOrderDate}" />
-						</h:column>
-						<h:column>
-							<f:facet name="header">Anzahl</f:facet>
-							<h:outputText value="#{o.positionCount}"></h:outputText>
+							<f:facet name="header">Name</f:facet>
+							<h:outputText value="#{o.meal.name}" />
 						</h:column>
 						<h:column>
 							<f:facet name="header">Preis</f:facet>
-							<h:outputText value="#{o.price} €"></h:outputText>
+							<h:outputText value="#{o.price}"></h:outputText>
 						</h:column>
 						<h:column>
-							<f:facet name="header">Anzeigen</f:facet>
-							<h:commandButton class="btn btn-info btn-xs btn-width" value="Anzeigen" action="#{orderBean.show}">
-								<f:param name="orderId" value="#{o.id}" />
-							</h:commandButton>
+							<f:facet name="header">Bewertung</f:facet>
+							<h:outputText value="nix da"></h:outputText>
 						</h:column>
 					</h:dataTable>
+					<h:outputText value="Gesamtpreis: #{orderBean.orderPrice} €" />
 					<h:commandButton class="btn btn-default" value="Zurück" action="#{sessionBean.main}" />
 				</h:form>
 			</f:view>

@@ -209,8 +209,8 @@ public class ShoppingCart {
 	public void completeOrder(User user) {
 		OrderPositionService orderPositionService = new OrderPositionService();
 		OrderService orderService = new OrderService();
-		logger.info("Bestellung abschicken!");
 		if (user != null && useUserAddress) {
+			logger.info("Bestellung mit normaler default-Adresse!");
 			Order order = new Order();
 			order.setAddress(user.getDefaultAddress());
 			order.setDate(getSelectedDateTimeInMillis());
@@ -223,6 +223,7 @@ public class ShoppingCart {
 			orderService.saveOrUpdate(order);
 			clearShoppingCart();
 		} else {
+			logger.info("Bestellung mit alternativer Adresse!");
 			// TODO: was da los?
 		}
 	}

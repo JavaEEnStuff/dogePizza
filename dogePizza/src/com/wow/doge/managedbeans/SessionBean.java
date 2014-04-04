@@ -77,6 +77,7 @@ public class SessionBean {
 	}
 	
 	public String completeOrder(){
-		return shoppingCart.completeOrder(loggedInUser);
+		shoppingCart.completeOrder(loggedInUser);
+		return main();
 	}
 }

@@ -206,7 +206,7 @@ public class ShoppingCart {
 		}
 	}
 
-	public String completeOrder(User user) {
+	public void completeOrder(User user) {
 		OrderPositionService orderPositionService = new OrderPositionService();
 		OrderService orderService = new OrderService();
 		logger.info("Bestellung abschicken!");
@@ -219,11 +219,11 @@ public class ShoppingCart {
 				order.addPosition(position);
 			}
 			order.setRemark(remark);
+			order.setOrderDate(new Date().getTime());
 			orderService.saveOrUpdate(order);
 			clearShoppingCart();
 		} else {
-
+			// TODO: was da los?
 		}
-		return "";
 	}
 }

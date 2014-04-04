@@ -55,6 +55,16 @@ public class MenuStartupCreator implements StartupCreator {
 		searchMeal.setLoginRequired(false);
 		service.saveOrUpdate(searchMeal);
 		logger.info("Menüs erstellt");
+		
+
+		Menu listOrders = new Menu();
+		listOrders.setName("Bestellungen");
+		listOrders.setText("Bestellungen ansehen");
+		listOrders.setAdminMenu(false);
+		listOrders.setLink("/dogePizza/resources/javaee/order/orderList.jsf");
+		listOrders.setLoginRequired(true);
+		service.saveOrUpdate(listOrders);
+		logger.info("Menüs erstellt");
 
 	}
 

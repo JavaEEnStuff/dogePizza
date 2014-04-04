@@ -1,6 +1,7 @@
 package com.wow.doge.domain;
 
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,11 +15,12 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-@Entity(name="dogeOrder")
-public class Order {
+@Entity(name = "dogeOrder")
+public class Order implements Comparable<Order>{
 
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-	private static final SimpleDateFormat timestampFormat = new SimpleDateFormat("hh-mm-ss");
+	private static final SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm:ss");
+	private static final SimpleDateFormat timestampFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,6 +33,7 @@ public class Order {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<OrderPosition> positions;
 	private String remark;
+	private long orderDate;
 
 	public Order() {
 		positions = new HashSet<OrderPosition>();
@@ -57,7 +60,7 @@ public class Order {
 	}
 
 	public String getDeliveryTime() {
-		return timestampFormat.format(new Date(date));
+		return timeFormat.format(new Date(date));
 	}
 
 	public Address getAddress() {
@@ -88,11 +91,54 @@ public class Order {
 		this.remark = remark;
 	}
 
-	@Override
-	public String toString() {
-		return "Order [id=" + id + ", date=" + date + ", remark=" + remark + "]";
+	public Long getOrderDate() {
+		return orderDate;
 	}
 
+	public void setOrderDate(long orderDate) {
+		this.orderDate = orderDate;
+	}
 	
+	public String getFormattedOrderDate(){
+		return timestampFormat.format(new Date(orderDate));
+	}
+	
+	public int getPositionCount(){
+		return positions.size();
+	}
+	
+	public double getPrice(){
+		double price = 0;
+		for(OrderPosition position : positions){
+			price += position.getPrice();
+		}
+		return price;
+	}
 
+	@Override
+	public String toString() {
+		return "Order [id=" + id + ", date=" + date + ", address=" + address + ", positions=" + positions + ", remark=" + remark + ", orderDate=" + orderDate
+				+ "]";
+	}
+
+	/**
+	 * natural order: nach Bestelldatum
+	 */
+	@Override
+	public int compareTo(Order o) {
+		return o.getOrderDate().compareTo(getOrderDate());
+	}
+	
+	public static Comparator<Order> getReverseOrderDateComparator(){
+		return new ReverseOrderDateComparator();
+	}
+	
+	private static class ReverseOrderDateComparator implements Comparator<Order>{
+
+		@Override
+		public int compare(Order o1, Order o2) {
+			return o2.getOrderDate().compareTo(o1.getOrderDate());
+		}
+		
+	}
 }

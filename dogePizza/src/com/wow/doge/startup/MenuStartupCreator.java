@@ -55,7 +55,6 @@ public class MenuStartupCreator implements StartupCreator {
 		searchMeal.setLoginRequired(false);
 		service.saveOrUpdate(searchMeal);
 		logger.info("Menüs erstellt");
-		
 
 		Menu listOrders = new Menu();
 		listOrders.setName("Bestellungen");
@@ -64,6 +63,15 @@ public class MenuStartupCreator implements StartupCreator {
 		listOrders.setLink("/dogePizza/resources/javaee/order/orderList.jsf");
 		listOrders.setLoginRequired(true);
 		service.saveOrUpdate(listOrders);
+		logger.info("Menüs erstellt");
+
+		Menu changePassword = new Menu();
+		changePassword.setName("Passwort ändern");
+		changePassword.setText("Passwort ändern");
+		changePassword.setAdminMenu(false);
+		changePassword.setLink("/dogePizza/resources/javaee/user/changePassword.jsf");
+		changePassword.setLoginRequired(true);
+		service.saveOrUpdate(changePassword);
 		logger.info("Menüs erstellt");
 
 	}

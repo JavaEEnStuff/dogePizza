@@ -15,16 +15,15 @@ import com.wow.doge.services.UserService;
 @ManagedBean
 @RequestScoped
 public class LoginBean {
-	
-	
-	@ManagedProperty(value="#{sessionBean}")
+
+	@ManagedProperty(value = "#{sessionBean}")
 	private SessionBean sessionBean;
-	
+
 	private Logger logger = Logger.getLogger(LoginBean.class);
 
-	
 	private String loginEmail;
 	private String password;
+	private String errorText;
 
 	public String getLoginEmail() {
 		return loginEmail;
@@ -41,9 +40,19 @@ public class LoginBean {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	public void setSessionBean(SessionBean sessionBean) {
 		this.sessionBean = sessionBean;
+	}
+	
+	
+
+	public String getErrorText() {
+		return errorText;
+	}
+
+	public void setErrorText(String errorText) {
+		this.errorText = errorText;
 	}
 
 	public String login() {
@@ -51,6 +60,7 @@ public class LoginBean {
 		List<User> usersWithGivenEmail = service.getList(Restrictions.eq("emailAddress", loginEmail));
 		if (usersWithGivenEmail.size() == 0) {
 			logger.info("Email-Adresse wurde nicht gefunden");
+			errorText="Benutzername wurde nicht gefunden oder das Passwort ist falsch";
 			return "";
 		} else {
 			User user = usersWithGivenEmail.get(0);
@@ -60,6 +70,7 @@ public class LoginBean {
 				return "main.xhtml";
 			} else {
 				logger.error("Passwort ist nicht korrekt!");
+				errorText="Benutzername wurde nicht gefunden oder das Passwort ist falsch";
 				return "";
 			}
 		}

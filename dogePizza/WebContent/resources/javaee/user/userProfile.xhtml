@@ -1,8 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<title>Zutaten</title>
@@ -28,7 +26,7 @@
 	<div>
 		<ui:include src="/resources/javaee/navbar.xhtml"></ui:include>
 	</div>
-	
+
 	<div class="container theme-showcase" role="main">
 
 		<!-- Main jumbotron for a primary marketing message or call to action -->
@@ -37,34 +35,22 @@
 			<f:view>
 				<h:form>
 					<table>
-					<thead>
-					</thead>
-					<tbody>
-					<tr>
-					<td>
-						<h:outputLabel class="form-control form-control-width" value="E-Mail-Adresse"/>
-					</td>
-					<td>
-						<h:outputLabel class="form-control form-control-width" value="#{sessionBean.loggedInUser.emailAddress}"/>
-					</td>
-					</tr>
-					<tr>
-					<td>
-						<h:outputLabel class="form-control form-control-width" value="Vorname"/>
-					</td>
-					<td>
-						<h:outputLabel class="form-control form-control-width" value="#{sessionBean.loggedInUser.firstName}"/>
-					</td>
-					</tr>
-					<tr>
-					<td>
-						<h:outputLabel class="form-control form-control-width" value="Nachname"/>
-					</td>
-					<td>
-						<h:outputLabel class="form-control form-control-width" value="#{sessionBean.loggedInUser.lastName}"/>
-					</td>
-					</tr>
-					</tbody>
+						<thead>
+						</thead>
+						<tbody>
+							<tr>
+								<td><h:outputLabel class="form-control form-control-width" value="E-Mail-Adresse" /></td>
+								<td><h:outputLabel class="form-control form-control-width" value="#{sessionBean.loggedInUser.emailAddress}" /></td>
+							</tr>
+							<tr>
+								<td><h:outputLabel class="form-control form-control-width" value="Vorname" /></td>
+								<td><h:outputLabel class="form-control form-control-width" value="#{sessionBean.loggedInUser.firstName}" /></td>
+							</tr>
+							<tr>
+								<td><h:outputLabel class="form-control form-control-width" value="Nachname" /></td>
+								<td><h:outputLabel class="form-control form-control-width" value="#{sessionBean.loggedInUser.lastName}" /></td>
+							</tr>
+						</tbody>
 					</table>
 				</h:form>
 			</f:view>
@@ -74,8 +60,7 @@
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script src="../../js/bootstrap.min.js"></script>
 	<script src="../../js/docs.min.js"></script>
 </h:body>

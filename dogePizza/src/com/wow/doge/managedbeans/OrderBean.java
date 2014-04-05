@@ -69,6 +69,14 @@ public class OrderBean {
 		return order.getPrice();
 	}
 
+	public String getOrderRemark() {
+		return order.getRemark();
+	}
+
+	public String getDeliveryTimestamp() {
+		return order.getDeliveryDate() + " " + order.getDeliveryTime();
+	}
+
 	public String show() {
 		return "showOrderPositions.jsf";
 	}

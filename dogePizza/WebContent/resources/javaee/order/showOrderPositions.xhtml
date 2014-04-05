@@ -31,10 +31,20 @@
 
 		<!-- Main jumbotron for a primary marketing message or call to action -->
 		<div class="jumbotron">
-			<h1>Bestellungen</h1>
 			<f:view>
 				<h:form>
-					<h:outputText value="Bestellung vom #{orderBean.orderDate}" />
+					<h1>Bestellungs-Details</h1>
+					<h2>#{orderBean.orderDate}</h2>
+					<div class="input-group input-group-width">
+						<h:outputLabel class="input-group-addon input-group-addon-width" value="Bemerkung: " />
+						<h:outputText class="form-control form-control-width" value="#{orderBean.orderRemark}" />
+					</div>
+
+					<div class="input-group input-group-width">
+						<h:outputLabel class="input-group-addon input-group-addon-width" value="Lieferdatum: " />
+						<h:outputText class="form-control form-control-width" value="#{orderBean.deliveryTimestamp}" />
+					</div>
+					<h3>Bestellpositionen</h3>
 					<h:dataTable class="table table-hover table-condensed" value="#{orderBean.orderPositionForOrder}" var="o">
 						<h:column>
 							<f:facet name="header">Name</f:facet>
@@ -49,7 +59,8 @@
 							<h:outputText value="nix da"></h:outputText>
 						</h:column>
 					</h:dataTable>
-					<h:outputText value="Gesamtpreis: #{orderBean.orderPrice} €" />
+					<strong><h:outputText class="" value="Gesamtpreis: #{orderBean.orderPrice} €" /></strong>
+					<br />
 					<h:commandButton class="btn btn-default" value="Zurück" action="#{sessionBean.main}" />
 				</h:form>
 			</f:view>

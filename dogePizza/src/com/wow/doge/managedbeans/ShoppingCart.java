@@ -46,6 +46,10 @@ public class ShoppingCart {
 	public ShoppingCart() {
 		orderPositions = new LinkedList<>();
 		address = new Address();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
+		SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm:ss");
+		date = dateFormat.format(new Date().getTime());
+		time = timeFormat.format(new Date().getTime() + (1000 * 60 * 60));
 	}
 
 	public String addOrderPosition() {
@@ -205,7 +209,7 @@ public class ShoppingCart {
 			return new Date().getTime()+(1000*60*60);
 		}
 	}
-
+	
 	public void completeOrder(User user) {
 		OrderPositionService orderPositionService = new OrderPositionService();
 		OrderService orderService = new OrderService();
@@ -220,7 +224,7 @@ public class ShoppingCart {
 			}
 			order.setRemark(remark);
 			order.setOrderDate(new Date().getTime());
-			orderService.saveOrUpdate(order);
+			orderService.merge(order);
 			clearShoppingCart();
 		} else {
 			logger.info("Bestellung mit alternativer Adresse!");

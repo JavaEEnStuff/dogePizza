@@ -259,4 +259,27 @@ public abstract class AbstractService<T> {
 			HibernateUtil.closeSession(session);
 		}
 	}
+	
+	/**
+	 * Alternative zu saveOrUpdate, wird verwendet, wenn was mit dem Identifier bei Joins nicht klappt.
+	 * @param t
+	 */
+	public void merge(T t) {
+		Session session = null;
+		try {
+			session = HibernateUtil.getSessionFactory().getCurrentSession();
+			session.beginTransaction();
+			session.merge(t);
+			session.flush();
+			session.getTransaction().commit();
+		} catch(HibernateException e){
+			logger.error("HibernateException", e);
+			e.printStackTrace();
+		}catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			// TODO: errorHandling
+		} finally {
+			HibernateUtil.closeSession(session);
+		}
+	}
 }

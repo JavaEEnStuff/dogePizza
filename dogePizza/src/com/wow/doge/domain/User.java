@@ -1,7 +1,6 @@
 package com.wow.doge.domain;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -34,14 +33,14 @@ public class User {
 	@OneToOne
 	private Address defaultAddress;
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	private List<Meal> favoriteMeals;
+	@ManyToMany(fetch = FetchType.EAGER)
+	private Set<Meal> favoriteMeals;
 
 	@OneToMany(mappedBy = "user")
 	private Set<Order> orders;
 
 	public User() {
-		favoriteMeals = new LinkedList<Meal>();
+		favoriteMeals = new HashSet<Meal>();
 		isAdmin = false;
 		defaultAddress = new Address();
 	}
@@ -102,11 +101,11 @@ public class User {
 		this.isAdmin = isAdmin;
 	}
 
-	public List<Meal> getFavoriteMeals() {
+	public Set<Meal> getFavoriteMeals() {
 		return favoriteMeals;
 	}
 
-	public void setFavoriteMeals(List<Meal> favoriteMeals) {
+	public void setFavoriteMeals(Set<Meal> favoriteMeals) {
 		this.favoriteMeals = favoriteMeals;
 	}
 

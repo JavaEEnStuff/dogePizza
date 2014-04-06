@@ -9,7 +9,7 @@ import com.wow.doge.services.UserService;
 public class ChangePasswordBean {
 
 	@ManagedProperty(value = "#{sessionBean}")
-	private SessionBean sessionBean; // +setter
+	private SessionBean sessionBean;
 
 	public void setSessionBean(SessionBean sessionBean) {
 		this.sessionBean = sessionBean;

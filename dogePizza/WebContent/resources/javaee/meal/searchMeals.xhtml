@@ -36,7 +36,17 @@
 			<h2>Gerichte</h2>
 			<f:view>
 				<h:form>
-					<h:dataTable class="table table-hover table-condensed" value="#{mealBean.allMeals}" var="o">
+					<div class="input-group input-group-width">
+						<h:outputLabel class="input-group-addon input-group-addon-width" value="Preis von: " />
+						<h:inputText class="form-control form-control-width" value="#{mealBean.fromPrice}" />
+					</div>
+					<div class="input-group input-group-width">
+						<h:outputLabel class="input-group-addon input-group-addon-width" value="Preis bis: " />
+						<h:inputText class="form-control form-control-width" value="#{mealBean.toPrice}" />
+					</div>
+					<h:commandButton class="btn btn-danger btn-xs btn-width" value="Suchen" action="#{mealBean.search}" />
+					<h:commandButton class="btn btn-danger btn-xs btn-width" value="Suche leeren" action="#{mealBean.clearSearch}" />
+					<h:dataTable class="table table-hover table-condensed" value="#{mealBean.meals}" var="o">
 						<h:column>
 							<f:facet name="header">Name</f:facet>
 							<h:outputText value="#{o.name}" />
@@ -64,6 +74,12 @@
 							<h:commandButton class="btn btn-info btn-xs btn-width" value="#{o.thirdPrice} €" action="#{shoppingCart.addOrderPosition}">
 								<f:param name="mealId" value="#{o.id}" />
 								<f:param name="price" value="#{o.thirdPrice}" />
+							</h:commandButton>
+						</h:column>
+						<h:column rendered="#{sessionBean.userLoggedIn}">
+							<f:facet name="header">Favorit</f:facet>
+							<h:commandButton  class="btn btn-danger btn-xs btn-width" value="&lt;3" action="#{mealBean.favoriteMeal}">
+								<f:param name="mealId" value="#{o.id}" />
 							</h:commandButton>
 						</h:column>
 					</h:dataTable>

@@ -52,7 +52,12 @@ public class SessionBean {
 	}
 
 	public boolean userIsLoggedIn(){
+		logger.info("User loggedIn? "+loggedInUser!=null);
 		return loggedInUser!=null;
+	}
+	
+	public boolean isUserLoggedIn(){
+		return userIsLoggedIn();
 	}
 
 	@Override

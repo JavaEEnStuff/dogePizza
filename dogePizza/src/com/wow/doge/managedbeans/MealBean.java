@@ -12,9 +12,12 @@ import org.apache.log4j.Logger;
 
 import com.wow.doge.domain.Ingredient;
 import com.wow.doge.domain.Meal;
+import com.wow.doge.domain.User;
 import com.wow.doge.helper.IngredientSelectItemHelper;
+import com.wow.doge.helper.MealEvaluationHelper;
 import com.wow.doge.services.IngredientService;
 import com.wow.doge.services.MealService;
+import com.wow.doge.services.UserService;
 
 @ManagedBean
 @RequestScoped
@@ -28,6 +31,16 @@ public class MealBean {
 
 	@ManagedProperty("#{param.mealId}")
 	private int mealId;
+
+	@ManagedProperty(value = "#{sessionBean}")
+	private SessionBean sessionBean;
+
+	public void setSessionBean(SessionBean sessionBean) {
+		this.sessionBean = sessionBean;
+	}
+
+	private Double fromPrice;
+	private Double toPrice;
 
 	public MealBean() {
 		meal = new Meal();
@@ -74,21 +87,24 @@ public class MealBean {
 		meal.setImage(image);
 	}
 
-	public List<SelectItem> getAllIngredients() {
-		IngredientService service = new IngredientService();
-		IngredientSelectItemHelper helper = new IngredientSelectItemHelper();
-		List<SelectItem> asSelectItemList = helper.asSelectItemList(service.getList());
-		return asSelectItemList;
-	}
-
-	public List<Meal> getAllMeals() {
-		MealService service = new MealService();
-		List<Meal> list = service.getListWithComparator(Meal.getMealNameComparator());
-		return list;
-	}
-
 	public int getMealId() {
 		return mealId;
+	}
+
+	public Double getFromPrice() {
+		return fromPrice;
+	}
+
+	public void setFromPrice(Double fromPrice) {
+		this.fromPrice = fromPrice;
+	}
+
+	public Double getToPrice() {
+		return toPrice;
+	}
+
+	public void setToPrice(Double toPrice) {
+		this.toPrice = toPrice;
 	}
 
 	public void setMealId(int mealId) {
@@ -103,7 +119,7 @@ public class MealBean {
 			}
 		}
 	}
-	
+
 	public Double getFirstPrice() {
 		return meal.getFirstPrice();
 	}
@@ -128,7 +144,19 @@ public class MealBean {
 		meal.setThirdPrice(thirdPrice);
 	}
 
-	// FUNKTIONEN
+	// ========== FUNKTIONEN ================
+
+	public List<SelectItem> getAllIngredients() {
+		IngredientService service = new IngredientService();
+		IngredientSelectItemHelper helper = new IngredientSelectItemHelper();
+		List<SelectItem> asSelectItemList = helper.asSelectItemList(service.getList());
+		return asSelectItemList;
+	}
+
+	public List<Meal> getMeals() {
+		MealEvaluationHelper helper = new MealEvaluationHelper();
+		return helper.getMealsInPriceRange(fromPrice, toPrice);
+	}
 
 	public List<String> getSelectedIngredientIds() {
 		return selectedIngredientIds;
@@ -161,6 +189,20 @@ public class MealBean {
 		return mealList();
 	}
 
+	public String favoriteMeal() {
+		MealService service = new MealService();
+		meal = service.get(mealId);
+		User user = sessionBean.getLoggedInUser();
+		if (!user.getFavoriteMeals().contains(meal)) {
+			user.addFavoriteMeals(meal);
+			UserService userService = new UserService();
+			userService.saveOrUpdate(user);
+		}
+		return "";
+	}
+
+	// ========= Links ===============
+
 	public String showMeal() {
 		MealService service = new MealService();
 		meal = service.get(mealId);
@@ -180,8 +222,18 @@ public class MealBean {
 	public String mealList() {
 		return "mealList.jsf";
 	}
-	
-	public String main(){
+
+	public String main() {
 		return "/resources/javaee/main.xhtml";
+	}
+
+	public String search() {
+		return "";
+	}
+
+	public String clearSearch() {
+		fromPrice = null;
+		toPrice = null;
+		return "";
 	}
 }

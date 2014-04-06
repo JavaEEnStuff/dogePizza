@@ -61,6 +61,8 @@ public class IngredientBean {
 		return service.getList();
 	}
 
+	// ============ Funktionen =============
+	
 	public String save() {
 		logger.info("Versuche Ingredient zu speichern... "+ingredient);
 		IngredientService service = new IngredientService();

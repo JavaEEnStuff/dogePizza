@@ -190,9 +190,6 @@ public abstract class AbstractService<T> {
 			for (Criterion nextCriterion : helper.getCriterions()) {
 				criteria.add(nextCriterion);
 			}
-			for(DogeAlias alias : helper.getAlias()){
-				criteria.createAlias(alias.getAssociationPath(), alias.getAlias());
-			}
 			if (helper.getMaxResults() != 0) {
 				criteria.setMaxResults(helper.getMaxResults());
 			}

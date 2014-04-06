@@ -24,13 +24,11 @@ public class SelectionHelper<T> {
 	private int maxResults;
 	private Comparator<T> comparator;
 	private ProjectionList projectionList;
-	private List<DogeAlias> alias;
 
 	public SelectionHelper() {
 		maxResults = 0;
 		criterions = new LinkedList<Criterion>();
 		projectionList = Projections.projectionList();
-		alias = new LinkedList<DogeAlias>();
 	}
 
 	public Order getOrder() {
@@ -82,18 +80,4 @@ public class SelectionHelper<T> {
 		this.projectionList.add(projection);
 		return this;
 	}
-
-	public List<DogeAlias> getAlias() {
-		return alias;
-	}
-
-	public void setAlias(List<DogeAlias> alias) {
-		this.alias = alias;
-	}
-
-	public SelectionHelper<T> addAlias(DogeAlias newAlias) {
-		alias.add(newAlias);
-		return this;
-	}
-
 }

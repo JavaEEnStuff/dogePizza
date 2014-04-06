@@ -1,18 +1,14 @@
 package com.wow.doge.managedbeans;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 
 import org.apache.log4j.Logger;
-import org.hibernate.criterion.Restrictions;
 
 import com.wow.doge.domain.User;
 import com.wow.doge.helper.UserEvaluationHelper;
-import com.wow.doge.services.CommonService;
-import com.wow.doge.services.SelectionHelper;
 import com.wow.doge.services.UserService;
 
 @ManagedBean

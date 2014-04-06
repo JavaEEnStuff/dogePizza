@@ -16,7 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity(name = "dogeOrder")
-public class Order implements Comparable<Order>{
+public class Order implements Comparable<Order> {
 
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	private static final SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm:ss");
@@ -34,6 +34,9 @@ public class Order implements Comparable<Order>{
 	private Set<OrderPosition> positions;
 	private String remark;
 	private long orderDate;
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	private User user;
 
 	public Order() {
 		positions = new HashSet<OrderPosition>();
@@ -98,21 +101,29 @@ public class Order implements Comparable<Order>{
 	public void setOrderDate(long orderDate) {
 		this.orderDate = orderDate;
 	}
-	
-	public String getFormattedOrderDate(){
+
+	public String getFormattedOrderDate() {
 		return timestampFormat.format(new Date(orderDate));
 	}
-	
-	public int getPositionCount(){
+
+	public int getPositionCount() {
 		return positions.size();
 	}
-	
-	public double getPrice(){
+
+	public double getPrice() {
 		double price = 0;
-		for(OrderPosition position : positions){
+		for (OrderPosition position : positions) {
 			price += position.getPrice();
 		}
 		return price;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@Override
@@ -128,17 +139,17 @@ public class Order implements Comparable<Order>{
 	public int compareTo(Order o) {
 		return o.getOrderDate().compareTo(getOrderDate());
 	}
-	
-	public static Comparator<Order> getReverseOrderDateComparator(){
+
+	public static Comparator<Order> getReverseOrderDateComparator() {
 		return new ReverseOrderDateComparator();
 	}
-	
-	private static class ReverseOrderDateComparator implements Comparator<Order>{
+
+	private static class ReverseOrderDateComparator implements Comparator<Order> {
 
 		@Override
 		public int compare(Order o1, Order o2) {
 			return o2.getOrderDate().compareTo(o1.getOrderDate());
 		}
-		
+
 	}
 }

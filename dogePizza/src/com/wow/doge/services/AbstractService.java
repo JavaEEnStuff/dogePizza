@@ -13,6 +13,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.Alias;
 
 import com.wow.doge.hibernate.HibernateUtil;
 
@@ -69,7 +70,7 @@ public abstract class AbstractService<T> {
 			HibernateUtil.closeSession(session);
 		}
 	}
-	
+
 	public List<T> whereIdsNotIn(List<Integer> ids) {
 		Session session = null;
 
@@ -91,7 +92,7 @@ public abstract class AbstractService<T> {
 			HibernateUtil.closeSession(session);
 		}
 	}
-	
+
 	/**
 	 * Sucht ein bestimmtes Objekt mit einer ID aus der Datenbank
 	 * 
@@ -115,7 +116,7 @@ public abstract class AbstractService<T> {
 			HibernateUtil.closeSession(session);
 		}
 	}
-	
+
 	/**
 	 * Gibt alle Sehenswürdigkeiten als Liste aus der Datenbank zurück.
 	 * 
@@ -124,7 +125,7 @@ public abstract class AbstractService<T> {
 	public List<T> getList() {
 		return getListWithComparator(null);
 	}
-	
+
 	public List<T> getListWithComparator(Comparator<T> comparator) {
 		Session session = null;
 
@@ -133,7 +134,7 @@ public abstract class AbstractService<T> {
 			session.beginTransaction();
 
 			List<T> resultList = (ArrayList<T>) session.createCriteria(getHibernateClass()).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
-			if(comparator!=null){
+			if (comparator != null) {
 				Collections.sort(resultList, comparator);
 			}
 			session.getTransaction().commit();
@@ -173,7 +174,7 @@ public abstract class AbstractService<T> {
 			HibernateUtil.closeSession(session);
 		}
 	}
-	
+
 	/**
 	 * @param searchString
 	 * @return all found Objects
@@ -189,14 +190,21 @@ public abstract class AbstractService<T> {
 			for (Criterion nextCriterion : helper.getCriterions()) {
 				criteria.add(nextCriterion);
 			}
-			if(helper.getMaxResults()!=0){
+			for(DogeAlias alias : helper.getAlias()){
+				criteria.createAlias(alias.getAssociationPath(), alias.getAlias());
+			}
+			if (helper.getMaxResults() != 0) {
 				criteria.setMaxResults(helper.getMaxResults());
 			}
-			if(helper.getOrder()!=null){
+			if (helper.getOrder() != null) {
 				criteria.addOrder(helper.getOrder());
 			}
+			if (helper.getProjectionList().getLength() > 0) {
+				criteria.setProjection(helper.getProjectionList());
+			}
+			logger.info("Gleich gehts los: "+criteria);
 			List<T> resultList = (ArrayList<T>) criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
-			if(helper.getComparator()!=null){
+			if (helper.getComparator() != null) {
 				Collections.sort(resultList, helper.getComparator());
 			}
 			session.getTransaction().commit();
@@ -209,7 +217,7 @@ public abstract class AbstractService<T> {
 			HibernateUtil.closeSession(session);
 		}
 	}
-	
+
 	public List<T> getList(Collection<Criterion> criterions) {
 		Session session = null;
 
@@ -232,7 +240,7 @@ public abstract class AbstractService<T> {
 			HibernateUtil.closeSession(session);
 		}
 	}
-
+	
 	/**
 	 * Speichert eine Sehenswürdigkeit in der Datenbank. Diese Methode erkennt
 	 * selbstständig, ob ein Objekt neu in die Datenbank eingefügt oder dort
@@ -249,17 +257,17 @@ public abstract class AbstractService<T> {
 			session.saveOrUpdate(t);
 			session.flush();
 			session.getTransaction().commit();
-		} catch(HibernateException e){
+		} catch (HibernateException e) {
 			logger.error("HibernateException", e);
 			e.printStackTrace();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			// TODO: errorHandling
 		} finally {
 			HibernateUtil.closeSession(session);
 		}
 	}
-	
+
 	/**
 	 * Alternative zu saveOrUpdate, wird verwendet, wenn was mit dem Identifier bei Joins nicht klappt.
 	 * @param t
@@ -272,10 +280,10 @@ public abstract class AbstractService<T> {
 			session.merge(t);
 			session.flush();
 			session.getTransaction().commit();
-		} catch(HibernateException e){
+		} catch (HibernateException e) {
 			logger.error("HibernateException", e);
 			e.printStackTrace();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			// TODO: errorHandling
 		} finally {

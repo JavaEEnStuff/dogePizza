@@ -2,6 +2,7 @@ package com.wow.doge.domain;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,9 +11,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-@Entity(name="dogePizzaUser")
+@Entity(name = "dogePizzaUser")
 public class User {
 
 	@Id
@@ -32,8 +34,11 @@ public class User {
 	@OneToOne
 	private Address defaultAddress;
 
-	@ManyToMany(fetch=FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY)
 	private List<Meal> favoriteMeals;
+
+	@OneToMany(mappedBy = "user")
+	private Set<Order> orders;
 
 	public User() {
 		favoriteMeals = new LinkedList<Meal>();
@@ -111,14 +116,19 @@ public class User {
 		}
 	}
 
+	public Set<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(Set<Order> orders) {
+		this.orders = orders;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Customer [id=").append(id).append(", firstName=")
-				.append(firstName).append(", lastName=").append(lastName)
-				.append(", emailAddress=").append(emailAddress)
-				.append(", password=*********")
-				.append(", defaultAddress=").append(defaultAddress).append("]");
+		builder.append("Customer [id=").append(id).append(", firstName=").append(firstName).append(", lastName=").append(lastName).append(", emailAddress=")
+				.append(emailAddress).append(", password=*********").append(", defaultAddress=").append(defaultAddress).append("]");
 		return builder.toString();
 	}
 }

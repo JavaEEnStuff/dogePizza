@@ -1,13 +1,18 @@
 package com.wow.doge.managedbeans;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 
 import org.apache.log4j.Logger;
+import org.hibernate.criterion.Restrictions;
 
 import com.wow.doge.domain.User;
+import com.wow.doge.helper.UserEvaluationHelper;
+import com.wow.doge.services.CommonService;
+import com.wow.doge.services.SelectionHelper;
 import com.wow.doge.services.UserService;
 
 @ManagedBean
@@ -18,6 +23,7 @@ public class UserAdministrationBean {
 	@ManagedProperty("#{param.userId}")
 	private int userId;
 	private User user;
+	private Double minimumOrderValue;
 
 	public UserAdministrationBean() {
 		user = new User();
@@ -37,9 +43,17 @@ public class UserAdministrationBean {
 
 	// =========== Funktionen ===============
 
-	public List<User> getAllUsers() {
-		UserService userService = new UserService();
-		return userService.getList();
+	public Double getMinimumOrderValue() {
+		return minimumOrderValue;
+	}
+
+	public void setMinimumOrderValue(Double minimumOrderValue) {
+		this.minimumOrderValue = minimumOrderValue;
+	}
+
+	public List<User> getUsers() {
+		UserEvaluationHelper helper = new UserEvaluationHelper();
+		return helper.getAllUsersWithMinimumOrderValue(minimumOrderValue);
 	}
 
 	public String deleteUser() {
@@ -75,6 +89,15 @@ public class UserAdministrationBean {
 
 	public String userList() {
 		return "userList.jsf";
+	}
+
+	public String search() {
+		return "";
+	}
+
+	public String clearSearch() {
+		minimumOrderValue = null;
+		return "";
 	}
 
 }

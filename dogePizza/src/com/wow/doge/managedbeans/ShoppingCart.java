@@ -224,6 +224,7 @@ public class ShoppingCart {
 			}
 			order.setRemark(remark);
 			order.setOrderDate(new Date().getTime());
+			order.setUser(user);
 			orderService.merge(order);
 			clearShoppingCart();
 		} else {

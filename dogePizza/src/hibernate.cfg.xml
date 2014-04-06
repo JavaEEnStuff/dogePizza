@@ -23,6 +23,7 @@
 		<mapping class="com.wow.doge.domain.OrderPosition" />
 		<mapping class="com.wow.doge.domain.Meal" />
 		<mapping class="com.wow.doge.domain.Ingredient" />
+		<mapping class="com.wow.doge.domain.Category"/>
 		<mapping class="com.wow.doge.domain.User" />
 		<mapping class="com.wow.doge.domain.Address" />
 		<mapping class="com.wow.doge.domain.Question"/>

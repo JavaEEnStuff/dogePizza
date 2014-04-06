@@ -17,7 +17,6 @@ public class IngredientBean {
 
 	private static final Logger logger = Logger.getLogger(IngredientBean.class);
 
-
 	@ManagedProperty("#{param.ingredientId}")
 	private int ingredientId;
 
@@ -56,13 +55,13 @@ public class IngredientBean {
 		return ingredient.toString();
 	}
 
+	// ============ Funktionen =============
+	
 	public List<Ingredient> getAllIngredients() {
 		IngredientService service = new IngredientService();
 		return service.getList();
 	}
 
-	// ============ Funktionen =============
-	
 	public String save() {
 		logger.info("Versuche Ingredient zu speichern... "+ingredient);
 		IngredientService service = new IngredientService();

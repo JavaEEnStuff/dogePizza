@@ -48,21 +48,21 @@
 							<f:facet name="header">Anzeigen</f:facet>
 							<!-- row record -->
 							<h:commandButton class="btn btn-info btn-xs btn-width" value="Anzeigen" action="#{categoryBean.showCategory}">
-								<f:param name="ingredientId" value="#{o.id}" />
+								<f:param name="categoryId" value="#{o.id}" />
 							</h:commandButton>
 						</h:column>
 						<h:column>
 							<f:facet name="header">Ändern</f:facet>
 							<!-- row record -->
 							<h:commandButton class="btn btn-warning btn-xs btn-width" value="Ändern" action="#{categoryBean.changeCategory}">
-								<f:param name="ingredientId" value="#{o.id}" />
+								<f:param name="categoryId" value="#{o.id}" />
 							</h:commandButton>
 						</h:column>
 						<h:column>
 							<f:facet name="header">Löschen</f:facet>
 							<!-- row record -->
 							<h:commandButton class="btn btn-danger btn-xs btn-width" value="Löschen" action="#{categoryBean.deleteCategory}">
-								<f:param name="ingredientId" value="#{o.id}" />
+								<f:param name="categoryId" value="#{o.id}" />
 							</h:commandButton>
 						</h:column>
 					</h:dataTable>

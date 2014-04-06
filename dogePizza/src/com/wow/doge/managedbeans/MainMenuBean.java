@@ -32,10 +32,10 @@ public class MainMenuBean {
 		List<Criterion> restrictions = new LinkedList<>();
 		MenuService service = new MenuService();
 		if (sessionBean.userIsLoggedIn()) {
-			logger.info("User ist eingeloggt, nur diese Menüs suchen");
+			logger.debug("User ist eingeloggt, nur diese Menüs suchen");
 			User user = sessionBean.getLoggedInUser();
 			if (!user.isAdmin()) {
-				logger.info("User ist kein Admin, nur diese Menüs suchen");
+				logger.debug("User ist kein Admin, nur diese Menüs suchen");
 				restrictions.add(Restrictions.eq("adminMenu", false));
 			}
 		} else {

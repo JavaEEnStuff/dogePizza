@@ -1,8 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<title>Menü ändern</title>
@@ -37,26 +35,21 @@
 			<f:view>
 				<h:form class="form-horizontal" role="form">
 					<div class="form-group">
-						<h:outputLabel for="inputName" class="col-sm-2 control-label"
-							value="Name " />
+						<h:outputLabel for="inputName" class="col-sm-2 control-label" value="Name " />
 						<div class="col-sm-10">
-							<h:inputText id="inputName" class="form-control"
-								value="#{mealBean.name}" />
+							<h:inputText id="inputName" class="form-control" value="#{mealBean.name}" />
 						</div>
 					</div>
 					<div class="form-group">
-						<h:outputLabel for="inputDesc" class="col-sm-2 control-label"
-							value="Beschreibung " />
+						<h:outputLabel for="inputDesc" class="col-sm-2 control-label" value="Beschreibung " />
 						<div class="col-sm-10">
-							<h:inputTextarea id="inputDesc" class="form-control"
-								value="#{mealBean.description}" />
+							<h:inputTextarea id="inputDesc" class="form-control" value="#{mealBean.description}" />
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
 							<div class="checkbox">
-								<label> <h:selectBooleanCheckbox
-										value="#{mealBean.vegeterian}" /> Vegetarisch
+								<label> <h:selectBooleanCheckbox value="#{mealBean.vegeterian}" /> Vegetarisch
 								</label>
 							</div>
 						</div>
@@ -68,6 +61,14 @@
 							<h:selectManyListbox class="form-control" value="#{mealBean.selectedIngredientIds}">
 								<f:selectItems value="#{mealBean.allIngredients}" />
 							</h:selectManyListbox>
+						</div>
+					</div>
+					<div class="form-group">
+						<h:outputLabel class="col-sm-2 control-label" value="Kategorie " />
+						<div class="col-sm-10">
+							<h:selectOneMenu class="form-control" value="#{mealBean.selectedCategoryId}">
+								<f:selectItems value="#{mealBean.allCategories}" />
+							</h:selectOneMenu>
 						</div>
 					</div>
 					<div class="form-group">
@@ -99,8 +100,7 @@
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script src="../../js/bootstrap.min.js"></script>
 	<script src="../../js/docs.min.js"></script>
 </h:body>

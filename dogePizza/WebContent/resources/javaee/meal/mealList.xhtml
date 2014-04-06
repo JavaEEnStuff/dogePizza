@@ -35,7 +35,7 @@
 			<h2>Menüs</h2>
 			<f:view>
 				<h:form>
-					<h:dataTable class="table table-hover table-condensed" value="#{mealBean.allMeals}" var="o">
+					<h:dataTable class="table table-hover table-condensed" value="#{mealBean.meals}" var="o">
 						<h:column>
 							<f:facet name="header">ID</f:facet>
 							<h:outputText value="#{o.id}" />

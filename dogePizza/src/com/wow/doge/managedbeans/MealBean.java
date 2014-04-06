@@ -10,11 +10,14 @@ import javax.faces.model.SelectItem;
 
 import org.apache.log4j.Logger;
 
+import com.wow.doge.domain.Category;
 import com.wow.doge.domain.Ingredient;
 import com.wow.doge.domain.Meal;
 import com.wow.doge.domain.User;
+import com.wow.doge.helper.CategorySelectItemHelper;
 import com.wow.doge.helper.IngredientSelectItemHelper;
 import com.wow.doge.helper.MealEvaluationHelper;
+import com.wow.doge.services.CategoryService;
 import com.wow.doge.services.IngredientService;
 import com.wow.doge.services.MealService;
 import com.wow.doge.services.UserService;
@@ -28,6 +31,7 @@ public class MealBean {
 	private Meal meal;
 	// die ausgewählten Ids (rechte Seite, aber nur die, die selektiert wurden)
 	private List<String> selectedIngredientIds;
+	private Integer selectedCategoryId;
 
 	@ManagedProperty("#{param.mealId}")
 	private int mealId;
@@ -47,11 +51,11 @@ public class MealBean {
 		selectedIngredientIds = new LinkedList<>();
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		meal.setId(id);
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return meal.getId();
 	}
 
@@ -86,6 +90,10 @@ public class MealBean {
 	public void setImage(byte[] image) {
 		meal.setImage(image);
 	}
+	
+	public String getCategory(){
+		return meal.getCategory().getName();
+	}
 
 	public int getMealId() {
 		return mealId;
@@ -107,6 +115,14 @@ public class MealBean {
 		this.toPrice = toPrice;
 	}
 
+	public Integer getSelectedCategoryId() {
+		return selectedCategoryId;
+	}
+
+	public void setSelectedCategoryId(Integer selectedCategoryId) {
+		this.selectedCategoryId = selectedCategoryId;
+	}
+
 	public void setMealId(int mealId) {
 		this.mealId = mealId;
 		if (mealId != 0) {
@@ -117,6 +133,7 @@ public class MealBean {
 			for (Ingredient nextIngredient : meal.getIngredients()) {
 				selectedIngredientIds.add(nextIngredient.getId() + "");
 			}
+			this.selectedCategoryId = meal.getCategory().getId();
 		}
 	}
 
@@ -153,6 +170,13 @@ public class MealBean {
 		return asSelectItemList;
 	}
 
+	public List<SelectItem> getAllCategories() {
+		CategoryService service = new CategoryService();
+		CategorySelectItemHelper helper = new CategorySelectItemHelper();
+		List<SelectItem> asSelectItemList = helper.asSelectItemList(service.getList());
+		return asSelectItemList;
+	}
+
 	public List<Meal> getMeals() {
 		MealEvaluationHelper helper = new MealEvaluationHelper();
 		return helper.getMealsInPriceRange(fromPrice, toPrice);
@@ -184,6 +208,10 @@ public class MealBean {
 		IngredientService ingredientService = new IngredientService();
 		List<Ingredient> ingredients = ingredientService.whereIdsIn(idsAsInteger);
 		meal.setIngredients(ingredients);
+
+		CategoryService categoryService = new CategoryService();
+		Category selectedCategory = categoryService.get(selectedCategoryId);
+		meal.setCategory(selectedCategory);
 
 		service.saveOrUpdate(meal);
 		return mealList();

@@ -1,8 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<title>Zutaten</title>
@@ -37,8 +35,7 @@
 
 			<f:view>
 				<h:form>
-					<h:dataTable class="table table-hover table-condensed"
-						value="#{ingredientBean.allIngredients}" var="o">
+					<h:dataTable class="table table-hover table-condensed" value="#{ingredientBean.allIngredients}" var="o">
 						<h:column>
 							<f:facet name="header">ID</f:facet>
 							<!-- row record -->
@@ -52,33 +49,28 @@
 						<h:column>
 							<f:facet name="header">Anzeigen</f:facet>
 							<!-- row record -->
-							<h:commandButton class="btn btn-info btn-xs btn-width"
-								value="Anzeigen" action="#{ingredientBean.showIngredient}">
+							<h:commandButton class="btn btn-info btn-xs btn-width" value="Anzeigen" action="#{ingredientBean.showIngredient}">
 								<f:param name="ingredientId" value="#{o.id}" />
 							</h:commandButton>
 						</h:column>
 						<h:column>
 							<f:facet name="header">Ändern</f:facet>
 							<!-- row record -->
-							<h:commandButton class="btn btn-warning btn-xs btn-width"
-								value="Ändern" action="#{ingredientBean.changeIngredient}">
+							<h:commandButton class="btn btn-warning btn-xs btn-width" value="Ändern" action="#{ingredientBean.changeIngredient}">
 								<f:param name="ingredientId" value="#{o.id}" />
 							</h:commandButton>
 						</h:column>
 						<h:column>
 							<f:facet name="header">Löschen</f:facet>
 							<!-- row record -->
-							<h:commandButton class="btn btn-danger btn-xs btn-width"
-								value="Löschen" action="#{ingredientBean.deleteIngredient}">
+							<h:commandButton class="btn btn-danger btn-xs btn-width" value="Löschen" action="#{ingredientBean.deleteIngredient}">
 								<f:param name="ingredientId" value="#{o.id}" />
 							</h:commandButton>
 						</h:column>
 					</h:dataTable>
-					<h:commandButton class="btn btn-default" style="margin-right:5px"
-						value="Anlegen" action="#{ingredientBean.createIngredient}" />
+					<h:commandButton class="btn btn-default" style="margin-right:5px" value="Anlegen" action="#{ingredientBean.createIngredient}" />
 
-					<h:commandButton class="btn btn-default" value="Zurück"
-						action="#{ingredientBean.main}" />
+					<h:commandButton class="btn btn-default" value="Zurück" action="#{ingredientBean.main}" />
 				</h:form>
 			</f:view>
 		</div>
@@ -87,8 +79,7 @@
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script src="../../js/bootstrap.min.js"></script>
 	<script src="../../js/docs.min.js"></script>
 </h:body>

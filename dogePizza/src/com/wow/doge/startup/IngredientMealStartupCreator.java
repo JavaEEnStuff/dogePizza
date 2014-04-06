@@ -1,7 +1,9 @@
 package com.wow.doge.startup;
 
+import com.wow.doge.domain.Category;
 import com.wow.doge.domain.Ingredient;
 import com.wow.doge.domain.Meal;
+import com.wow.doge.services.CategoryService;
 import com.wow.doge.services.IngredientService;
 import com.wow.doge.services.MealService;
 
@@ -21,6 +23,18 @@ public class IngredientMealStartupCreator implements StartupCreator {
 		cheese.setName("Käse");
 		service.saveOrUpdate(cheese);
 		
+		CategoryService categoryService = new CategoryService();
+		Category nudeln = new Category();
+		nudeln.setName("Nudeln");
+		categoryService.saveOrUpdate(nudeln);
+		
+		Category salat = new Category();
+		salat.setName("Salat");
+		categoryService.saveOrUpdate(salat);
+		
+		Category pizza = new Category();
+		pizza.setName("Pizza");
+		categoryService.saveOrUpdate(pizza);
 		
 		MealService mealService = new MealService();
 		Meal pizzaNormale = new Meal();
@@ -31,6 +45,7 @@ public class IngredientMealStartupCreator implements StartupCreator {
 		pizzaNormale.setVegeterian(false);
 		pizzaNormale.addIngredient(cheese);
 		pizzaNormale.addIngredient(salami);
+		pizzaNormale.setCategory(pizza);
 		mealService.saveOrUpdate(pizzaNormale);
 		
 	}

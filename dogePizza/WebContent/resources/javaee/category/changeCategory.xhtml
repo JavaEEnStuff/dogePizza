@@ -1,11 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
-	<title>Zutat</title>
+	<title>Kategorie ändern</title>
 	<link rel="shortcut icon" href="../../img/logo_icon.ico" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -33,28 +31,26 @@
 
 		<!-- Main jumbotron for a primary marketing message or call to action -->
 		<div class="jumbotron">
-			<h2>Zutat ändern</h2>
+			<h2>Kategorie ändern</h2>
 			<br />
 			<f:view>
 				<h:form class="form-horizontal" role="form">
 					<div class="form-group">
 						<h:outputLabel class="col-sm-1 control-label" value="ID" />
 						<div class="col-sm-11">
-							<h:outputLabel class="form-control" value="#{ingredientBean.id}" />
+							<h:outputLabel class="form-control" value="#{categoryBean.id}" />
 						</div>
 					</div>
 					<div class="form-group">
 						<h:outputLabel class="col-sm-1 control-label" value="Name: " />
 						<div class="col-sm-11">
-							<h:inputText class="form-control" value="#{ingredientBean.name}" />
+							<h:inputText class="form-control" value="#{categoryBean.name}" />
 						</div>
 					</div>
 
-					<h:inputHidden value="#{ingredientBean.id}" />
-					<h:commandButton class="btn btn-default" style="margin-right:5px"
-						value="Speichern" action="#{ingredientBean.save}" />
-					<h:commandButton class="btn btn-default" value="Zurück"
-						action="#{ingredientBean.ingredientList}" />
+					<h:inputHidden value="#{categoryBean.id}" />
+					<h:commandButton class="btn btn-default" style="margin-right:5px" value="Speichern" action="#{categoryBean.save}" />
+					<h:commandButton class="btn btn-default" value="Zurück" action="#{categoryBean.categoryList}" />
 				</h:form>
 			</f:view>
 
@@ -64,8 +60,7 @@
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script src="../../js/bootstrap.min.js"></script>
 	<script src="../../js/docs.min.js"></script>
 </h:body>

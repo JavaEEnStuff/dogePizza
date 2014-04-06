@@ -5,7 +5,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
-	<title>Zutat</title>
+	<title>Kategorie anzeigen</title>
 	<link rel="shortcut icon" href="../../img/logo_icon.ico" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -32,7 +32,7 @@
 
 		<!-- Main jumbotron for a primary marketing message or call to action -->
 		<div class="jumbotron">
-			<h2>Zutat</h2>
+			<h2>Kategorie-Details</h2>
 			<f:view>
 				<h:form class="form-horizontal" role="form">
 
@@ -41,7 +41,7 @@
 							value="ID " />
 						<div class="col-sm-11">
 							<h:outputText class="form-control"
-								value="#{ingredientBean.id}" />
+								value="#{categoryBean.id}" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -49,11 +49,11 @@
 							value="Name " />
 						<div class="col-sm-11">
 							<h:outputText class="form-control"
-								value="#{ingredientBean.name}" />
+								value="#{categoryBean.name}" />
 						</div>
 					</div>
 					<h:commandButton class="btn btn-default" value="Zurück"
-						action="#{ingredientBean.ingredientList}" />
+						action="#{categoryBean.categoryList}" />
 				</h:form>
 			</f:view>
 		</div>

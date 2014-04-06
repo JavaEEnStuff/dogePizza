@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 
 import org.apache.log4j.Logger;
 
@@ -11,32 +12,25 @@ import com.wow.doge.domain.Category;
 import com.wow.doge.services.CategoryService;
 
 @ManagedBean
+@RequestScoped
 public class CategoryBean {
 
 	private static final Logger logger = Logger.getLogger(CategoryBean.class);
 
-	private Category category;
-
 	@ManagedProperty("#{param.categoryId}")
 	private int categoryId;
 
-	public int getCategoryId() {
-		return categoryId;
-	}
-
-	public void setCategoryId(int categoryId) {
-		this.categoryId = categoryId;
-	}
+	private Category category;
 
 	public CategoryBean() {
 		category = new Category();
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return category.getId();
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		category.setId(id);
 	}
 
@@ -46,6 +40,19 @@ public class CategoryBean {
 
 	public void setName(String name) {
 		category.setName(name);
+	}
+
+	public int getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
+	}
+
+	@Override
+	public String toString() {
+		return category.toString();
 	}
 
 	// ====== Funktionen ===========
@@ -60,20 +67,20 @@ public class CategoryBean {
 		CategoryService service = new CategoryService();
 		service.saveOrUpdate(category);
 
-		return "ingredientList.xhtml";
+		return categoryList();
 	}
 
 	public String showCategory() {
 		CategoryService service = new CategoryService();
 		category = service.get(categoryId);
-		return "showCategory.xhtml";
+		return "showCategory.jsf";
 	}
 
 	public String changeCategory() {
 		CategoryService service = new CategoryService();
 		category = service.get(categoryId);
 		logger.info("Versuche Category zu aendern: " + category);
-		return "changeCategory.xhtml";
+		return "changeCategory.jsf";
 	}
 
 	public String deleteCategory() {

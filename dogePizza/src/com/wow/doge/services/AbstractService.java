@@ -13,7 +13,6 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.sql.Alias;
 
 import com.wow.doge.hibernate.HibernateUtil;
 
@@ -199,7 +198,6 @@ public abstract class AbstractService<T> {
 			if (helper.getProjectionList().getLength() > 0) {
 				criteria.setProjection(helper.getProjectionList());
 			}
-			logger.info("Gleich gehts los: "+criteria);
 			List<T> resultList = (ArrayList<T>) criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 			if (helper.getComparator() != null) {
 				Collections.sort(resultList, helper.getComparator());

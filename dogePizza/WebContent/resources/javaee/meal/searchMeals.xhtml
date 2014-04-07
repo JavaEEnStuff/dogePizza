@@ -34,27 +34,39 @@
 		<!-- Main jumbotron for a primary marketing message or call to action -->
 		<div class="jumbotron">
 			<h2>Gerichte</h2>
+			<br />
 			<f:view>
 				<h:form>
 					<div class="input-group input-group-width">
-						<h:outputLabel class="input-group-addon input-group-addon-width" value="Preis von: " />
-						<h:inputText class="form-control form-control-width" value="#{mealBean.fromPrice}" />
+						<h:outputLabel class="input-group-addon input-group-addon-width"
+							value="Preis von: " />
+						<h:inputText class="form-control form-control-width"
+							value="#{mealBean.fromPrice}" />
 					</div>
 					<div class="input-group input-group-width">
-						<h:outputLabel class="input-group-addon input-group-addon-width" value="Preis bis: " />
-						<h:inputText class="form-control form-control-width" value="#{mealBean.toPrice}" />
+						<h:outputLabel class="input-group-addon input-group-addon-width"
+							value="Preis bis: " />
+						<h:inputText class="form-control form-control-width"
+							value="#{mealBean.toPrice}" />
 					</div>
-					<div class="input-group input-group-width">
-						<h:outputLabel class="input-group-addon input-group-addon-width" value="Kategorie " />
-						<div class="col-sm-10">
-							<h:selectOneMenu class="form-control" value="#{mealBean.selectedCategoryId}">
+					<div class="input-group">
+							<h:outputLabel class="input-group-addon input-group-addon-width"
+								value="Kategorie " />
+							<h:selectOneMenu type="button"
+								class="btn btn-default dropdown-toggle"
+								value="#{mealBean.selectedCategoryId}">
 								<f:selectItems value="#{mealBean.allCategoriesPlusAll}" />
 							</h:selectOneMenu>
-						</div>
 					</div>
-					<h:commandButton class="btn btn-danger btn-xs btn-width" value="Suchen" action="#{mealBean.search}" />
-					<h:commandButton class="btn btn-danger btn-xs btn-width" value="Suche leeren" action="#{mealBean.clearSearch}" />
-					<h:dataTable class="table table-hover table-condensed" value="#{mealBean.meals}" var="o">
+					<br/>
+					<h:commandButton class="btn btn-default" style="margin-right:5px"
+						value="Suchen" action="#{mealBean.search}" />
+					<h:commandButton class="btn btn-default" value="Suche leeren"
+						action="#{mealBean.clearSearch}" />
+					<br />
+					<br />
+					<h:dataTable class="table table-hover table-condensed"
+						value="#{mealBean.meals}" var="o">
 						<h:column>
 							<f:facet name="header">Name</f:facet>
 							<h:outputText value="#{o.name}" />
@@ -65,33 +77,41 @@
 						</h:column>
 						<h:column>
 							<f:facet name="header">S</f:facet>
-							<h:commandButton class="btn btn-info btn-xs btn-width" value="#{o.firstPrice} €" action="#{shoppingCart.addOrderPosition}">
+							<h:commandButton class="btn btn-info btn-xs btn-width"
+								value="#{o.firstPrice} €"
+								action="#{shoppingCart.addOrderPosition}">
 								<f:param name="mealId" value="#{o.id}" />
 								<f:param name="price" value="#{o.firstPrice}" />
 							</h:commandButton>
 						</h:column>
 						<h:column>
 							<f:facet name="header">M</f:facet>
-							<h:commandButton class="btn btn-info btn-xs btn-width" value="#{o.secondPrice} €" action="#{shoppingCart.addOrderPosition}">
+							<h:commandButton class="btn btn-info btn-xs btn-width"
+								value="#{o.secondPrice} €"
+								action="#{shoppingCart.addOrderPosition}">
 								<f:param name="mealId" value="#{o.id}" />
 								<f:param name="price" value="#{o.secondPrice}" />
 							</h:commandButton>
 						</h:column>
 						<h:column>
 							<f:facet name="header">L</f:facet>
-							<h:commandButton class="btn btn-info btn-xs btn-width" value="#{o.thirdPrice} €" action="#{shoppingCart.addOrderPosition}">
+							<h:commandButton class="btn btn-info btn-xs btn-width"
+								value="#{o.thirdPrice} €"
+								action="#{shoppingCart.addOrderPosition}">
 								<f:param name="mealId" value="#{o.id}" />
 								<f:param name="price" value="#{o.thirdPrice}" />
 							</h:commandButton>
 						</h:column>
 						<h:column rendered="#{sessionBean.userLoggedIn}">
 							<f:facet name="header">Favorit</f:facet>
-							<h:commandButton  class="btn btn-danger btn-xs btn-width" value="&lt;3" action="#{mealBean.favoriteMeal}">
+							<h:commandButton class="btn btn-danger btn-xs btn-width"
+								value="&lt;3" action="#{mealBean.favoriteMeal}">
 								<f:param name="mealId" value="#{o.id}" />
 							</h:commandButton>
 						</h:column>
 					</h:dataTable>
-					<h:commandButton class="btn btn-default" value="Zurück" action="#{mealBean.main}" />
+					<h:commandButton class="btn btn-default" value="Zurück"
+						action="#{mealBean.main}" />
 				</h:form>
 			</f:view>
 		</div>

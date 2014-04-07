@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-  <html xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
@@ -11,7 +11,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 	<!-- Bootstrap -->
-	<link href="/dogePizza/resources/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="/dogePizza/resources/css/bootstrap.min.css"
+		rel="stylesheet" />
 
 	<!-- Custom styles for this template -->
 	<link href="/dogePizza/resources/css/theme.css" rel="stylesheet" />
@@ -34,13 +35,19 @@
 
 		<!-- Main jumbotron for a primary marketing message or call to action -->
 		<div class="jumbotron">
-			<h1>Los gehts!</h1>
+			<h1>
+				<span class="label label-success"><span
+					class="glyphicon glyphicon-heart"></span> Hallo</span>
+			</h1>
+			<br />
 			<h2>Dies können Sie tun:</h2>
+			<br />
 			<f:view>
 				<h:form>
 					<h:dataTable value="#{mainMenuBean.menusToShow}" var="menu">
 						<h:column>
-							<a class="btn btn-primary btn-margin-bottom" href="#{menu.link}">#{menu.text}</a>
+							<a class="btn btn-default btn-margin-bottom btn-block"
+								style="width: 25em" href="#{menu.link}">#{menu.text}</a>
 						</h:column>
 					</h:dataTable>
 				</h:form>

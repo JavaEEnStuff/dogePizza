@@ -31,15 +31,16 @@
 
 		<!-- Main jumbotron for a primary marketing message or call to action -->
 		<div class="jumbotron">
-			<h2>Benutzer</h2>
+			<h2>Benutzer</h2><br/>
 			<f:view>
 				<h:form>
 					<div class="input-group input-group-width">
 						<h:outputLabel class="input-group-addon input-group-addon-width" value="Mindestbestellwert: " />
 						<h:inputText class="form-control form-control-width" value="#{userAdministrationBean.minimumOrderValue}" />
 					</div>
-					<h:commandButton class="btn btn-danger btn-xs btn-width" value="Suchen" action="#{userAdministrationBean.search}" />
-					<h:commandButton class="btn btn-danger btn-xs btn-width" value="Suche leeren" action="#{userAdministrationBean.clearSearch}" />
+					<h:commandButton class="btn btn-default" style="margin-right:5px" value="Suchen" action="#{userAdministrationBean.search}" />
+					<h:commandButton class="btn btn-default" value="Suche leeren" action="#{userAdministrationBean.clearSearch}" />
+					<br/><br/>
 					<h:dataTable class="table table-hover table-condensed" value="#{userAdministrationBean.users}" var="o">
 						<h:column>
 							<f:facet name="header">ID</f:facet>

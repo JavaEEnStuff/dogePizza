@@ -44,6 +44,14 @@
 						<h:outputLabel class="input-group-addon input-group-addon-width" value="Preis bis: " />
 						<h:inputText class="form-control form-control-width" value="#{mealBean.toPrice}" />
 					</div>
+					<div class="input-group input-group-width">
+						<h:outputLabel class="input-group-addon input-group-addon-width" value="Kategorie " />
+						<div class="col-sm-10">
+							<h:selectOneMenu class="form-control" value="#{mealBean.selectedCategoryId}">
+								<f:selectItems value="#{mealBean.allCategoriesPlusAll}" />
+							</h:selectOneMenu>
+						</div>
+					</div>
 					<h:commandButton class="btn btn-danger btn-xs btn-width" value="Suchen" action="#{mealBean.search}" />
 					<h:commandButton class="btn btn-danger btn-xs btn-width" value="Suche leeren" action="#{mealBean.clearSearch}" />
 					<h:dataTable class="table table-hover table-condensed" value="#{mealBean.meals}" var="o">

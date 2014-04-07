@@ -5,7 +5,9 @@ import java.util.List;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.SimpleExpression;
 
+import com.wow.doge.domain.Category;
 import com.wow.doge.domain.Meal;
+import com.wow.doge.services.CategoryService;
 import com.wow.doge.services.MealService;
 import com.wow.doge.services.SelectionHelper;
 
@@ -35,7 +37,7 @@ public class MealEvaluationHelper {
 		return lowestPriceMeals;
 	}
 
-	public List<Meal> getMealsInPriceRange(Double fromPrice, Double toPrice) {
+	public List<Meal> getMealsInPriceRangeAndCategory(Double fromPrice, Double toPrice, Integer categoryId) {
 		MealService service = new MealService();
 		SelectionHelper<Meal> mealSelection = new SelectionHelper<>();
 		if (fromPrice != null) {
@@ -49,6 +51,11 @@ public class MealEvaluationHelper {
 			SimpleExpression secondPrice = Restrictions.le("secondPrice", toPrice);
 			SimpleExpression thirdPrice = Restrictions.le("thirdPrice", toPrice);
 			mealSelection.addCriterion(Restrictions.or(firstPrice, Restrictions.or(secondPrice, thirdPrice)));
+		}
+		if(categoryId!=0){
+			CategoryService categoryService = new CategoryService();
+			Category category = categoryService.get(categoryId);
+			mealSelection.addCriterion(Restrictions.eq("category", category));
 		}
 		mealSelection.setComparator(Meal.getMealNameComparator());
 

@@ -26,6 +26,8 @@ import com.wow.doge.services.UserService;
 @RequestScoped
 public class MealBean {
 
+	private static final int CATEGORY_ID_ALL = 0;
+
 	private static final Logger logger = Logger.getLogger(MealBean.class);
 
 	private Meal meal;
@@ -49,6 +51,7 @@ public class MealBean {
 	public MealBean() {
 		meal = new Meal();
 		selectedIngredientIds = new LinkedList<>();
+		selectedCategoryId = CATEGORY_ID_ALL;
 	}
 
 	public void setId(Integer id) {
@@ -90,8 +93,8 @@ public class MealBean {
 	public void setImage(byte[] image) {
 		meal.setImage(image);
 	}
-	
-	public String getCategory(){
+
+	public String getCategory() {
 		return meal.getCategory().getName();
 	}
 
@@ -177,9 +180,17 @@ public class MealBean {
 		return asSelectItemList;
 	}
 
+	public List<SelectItem> getAllCategoriesPlusAll() {
+		CategoryService service = new CategoryService();
+		CategorySelectItemHelper helper = new CategorySelectItemHelper();
+		List<SelectItem> asSelectItemList = helper.asSelectItemList(service.getList());
+		asSelectItemList.add(0, new SelectItem(CATEGORY_ID_ALL, "Alle"));
+		return asSelectItemList;
+	}
+
 	public List<Meal> getMeals() {
 		MealEvaluationHelper helper = new MealEvaluationHelper();
-		return helper.getMealsInPriceRange(fromPrice, toPrice);
+		return helper.getMealsInPriceRangeAndCategory(fromPrice, toPrice, selectedCategoryId);
 	}
 
 	public List<String> getSelectedIngredientIds() {
@@ -262,6 +273,7 @@ public class MealBean {
 	public String clearSearch() {
 		fromPrice = null;
 		toPrice = null;
+		selectedCategoryId = CATEGORY_ID_ALL;
 		return "";
 	}
 }

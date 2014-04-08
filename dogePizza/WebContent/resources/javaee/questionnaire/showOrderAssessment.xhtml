@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Fragebogen</title>
+	<link rel="shortcut icon" href="../../img/logo_icon.ico" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<!-- Bootstrap -->
+	<link href="../../css/bootstrap.min.css" rel="stylesheet" />
+
+	<!-- Custom styles for this template -->
+	<link href="../../css/theme.css" rel="stylesheet" />
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</h:head>
+<h:body>
+	<!-- Fixed navbar -->
+	<div>
+		<ui:include src="/resources/javaee/navbar.xhtml"></ui:include>
+	</div>
+
+	<div class="container theme-showcase" role="main">
+
+		<!-- Main jumbotron for a primary marketing message or call to action -->
+		<div class="jumbotron">
+			<h2>Fragebogen</h2>
+			<f:view>
+				<h:form>
+					<h:inputHidden value="#{questionnaireBean.orderId}" />
+					<h:dataTable class="table table-hover table-condensed" value="#{questionnaireBean.questions}" var="o">
+						<h:column>
+							<f:facet name="header">Frage</f:facet>
+							<h:outputText value="#{o.questionText}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">Antwort</f:facet>
+							<h:outputText id="answer" value="#{o.answer}" required="true" validatorMessage="Bitte nur Noten angeben" />
+							<h:message for="answer" />
+						</h:column>
+					</h:dataTable>
+
+					<div class="form-group">
+						<h:outputLabel class="col-sm-1 control-label" value="Gesamtnote " />
+						<div class="col-sm-11">
+							<h:outputText id="grade" class="form-control" value="#{questionnaireBean.overallGrade}" />
+						</div>
+						<h:message for="grade" />
+					</div>
+					<div class="form-group">
+						<h:outputLabel class="col-sm-1 control-label" value="Bemerkung " />
+						<div class="col-sm-11">
+							<h:outputText id="remark" class="form-control" value="#{questionnaireBean.remark}"  />
+						</div>
+						<h:message for="remark" />
+					</div>
+
+					<h:commandButton class="btn btn-default" value="Zurück" action="#{sessionBean.main}" />
+				</h:form>
+			</f:view>
+		</div>
+	</div>
+
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="../../js/bootstrap.min.js"></script>
+	<script src="../../js/docs.min.js"></script>
+</h:body>
+</html>

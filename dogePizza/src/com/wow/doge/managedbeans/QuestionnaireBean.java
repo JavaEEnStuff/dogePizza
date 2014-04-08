@@ -7,6 +7,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
 import org.hibernate.criterion.Restrictions;
@@ -145,7 +146,7 @@ public class QuestionnaireBean {
 	public void setQuestions(List<AssessmentQuestion> questions) {
 		this.questions = questions;
 	}
-	
+
 	public String save() {
 		logger.info("Versuche Questionnaire zu speichern... " + questionnaire);
 		QuestionnaireService service = new QuestionnaireService();
@@ -168,7 +169,20 @@ public class QuestionnaireBean {
 	}
 
 	public String questionnaire() {
-		return "/resources/javaee/questionnaire/assessOrder.jsf";
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		Integer id = Integer.parseInt(facesContext.getExternalContext().getRequestParameterMap().get("orderId"));
+
+		OrderService orderService = new OrderService();
+		Order order = orderService.get(id);
+		QuestionnaireService questionnaireService = new QuestionnaireService();
+		SelectionHelper<Questionnaire> helper = new SelectionHelper<>();
+		helper.addCriterion(Restrictions.eq("order", order));
+		List<Questionnaire> found = questionnaireService.getList(helper);
+		if (found != null && found.size() >= 1) {
+			return "/resources/javaee/questionnaire/showOrderAssessment.jsf";
+		} else {
+			return "/resources/javaee/questionnaire/assessOrder.jsf";
+		}
 	}
 
 }

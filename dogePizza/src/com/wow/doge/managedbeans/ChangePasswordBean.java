@@ -53,7 +53,7 @@ public class ChangePasswordBean {
 	}
 
 	public String changePassword() {
-		if (oldPassword.equals(sessionBean.getLoggedInUser().getPassword())) {
+		if (oldPassword!=null && oldPassword.equals(sessionBean.getLoggedInUser().getPassword())) {
 			if (newPassword.equals(newPasswordConfirmation)) {
 				sessionBean.getLoggedInUser().setPassword(newPassword);
 				UserService service = new UserService();

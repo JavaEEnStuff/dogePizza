@@ -32,6 +32,9 @@ import com.wow.doge.services.OrderService;
 @SessionScoped
 public class ShoppingCart {
 
+	public static final double MINIMUM_ORDER_VALUE = 10.0;
+	public static final double SHIPPING_COST = 3.0;
+
 	private static final Logger logger = Logger.getLogger(ShoppingCart.class);
 
 	private List<OrderPosition> orderPositions;
@@ -42,6 +45,8 @@ public class ShoppingCart {
 	private String date;
 	/** HH:mi:ss */
 	private String time;
+
+	private String errorText;
 
 	public ShoppingCart() {
 		orderPositions = new LinkedList<>();
@@ -65,6 +70,7 @@ public class ShoppingCart {
 		position.setMeal(meal);
 		position.setPrice(price);
 		orderPositions.add(position);
+		errorText = "";
 		return "";
 	}
 
@@ -85,6 +91,7 @@ public class ShoppingCart {
 				break;
 			}
 		}
+		errorText = "";
 		return "";
 	}
 
@@ -160,6 +167,14 @@ public class ShoppingCart {
 		this.time = time;
 	}
 
+	public double getMinimumOrderValue() {
+		return MINIMUM_ORDER_VALUE;
+	}
+
+	public double getShippingCost() {
+		return SHIPPING_COST;
+	}
+
 	public double getOverallPrice() {
 		double value = 0;
 		for (OrderPosition nextPosition : orderPositions) {
@@ -167,6 +182,14 @@ public class ShoppingCart {
 		}
 
 		return value;
+	}
+
+	public String getErrorText() {
+		return errorText;
+	}
+
+	public void setErrorText(String errorText) {
+		this.errorText = errorText;
 	}
 
 	public String getUseUserAddressStyle() {
@@ -196,21 +219,28 @@ public class ShoppingCart {
 	}
 
 	public String order() {
-		logger.info("Bestellung!");
-		return "orderAddressConfirmation.jsf";
+		if (getOverallPrice() < MINIMUM_ORDER_VALUE) {
+			errorText = "Der Mindestbestellwert wurde noch nicht erreicht!";
+			return "";
+		} else {
+			errorText = "";
+			logger.info("Bestellung!");
+			return "orderAddressConfirmation.jsf";
+		}
 	}
-	
-	public long getSelectedDateTimeInMillis()  {
+
+	public long getSelectedDateTimeInMillis() {
 		try {
 			SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd hh:mm:ss");
 			Date d = dateFormat.parse(date + " " + time);
 			return d.getTime();
 		} catch (ParseException e) {
-			return new Date().getTime()+(1000*60*60);
+			return new Date().getTime() + (1000 * 60 * 60);
 		}
 	}
-	
+
 	public void completeOrder(User user) {
+
 		OrderPositionService orderPositionService = new OrderPositionService();
 		OrderService orderService = new OrderService();
 		if (user != null && useUserAddress) {

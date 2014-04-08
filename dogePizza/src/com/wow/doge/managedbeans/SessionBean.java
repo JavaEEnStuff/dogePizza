@@ -82,6 +82,6 @@ public class SessionBean {
 	
 	public String completeOrder(){
 		shoppingCart.completeOrder(loggedInUser);
-		return main();
+		return "orderFinished.jsf";
 	}
 }

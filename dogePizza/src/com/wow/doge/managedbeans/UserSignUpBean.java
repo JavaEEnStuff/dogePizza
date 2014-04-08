@@ -1,6 +1,10 @@
 package com.wow.doge.managedbeans;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 
 import com.wow.doge.domain.User;
 import com.wow.doge.services.UserService;
@@ -97,6 +101,12 @@ public class UserSignUpBean {
 			return "../login.xhtml";
 		} else {
 			return "";
+		}
+	}
+	
+	public void validateEmail(FacesContext context, UIComponent component, Object value) throws ValidatorException {
+		if(!((String) value).matches(".+@.+\\..+")){
+			throw new ValidatorException(new FacesMessage("Fehlerhafte E-Mail-Syntax"));
 		}
 	}
 

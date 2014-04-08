@@ -1,8 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
 	<title>Registrierung</title>
 	<link rel="shortcut icon" href="../../img/logo_icon.ico" />
@@ -34,51 +32,66 @@
 					</div>
 					<div class="input-group input-group-width">
 						<h:outputLabel value="Vorname: " class="input-group-addon input-group-addon-width" />
-						<h:inputText class="form-control form-control-width"
-							value="#{userSignUpBean.firstName}" />
+						<h:inputText class="form-control form-control-width" value="#{userSignUpBean.firstName}" />
 					</div>
 					<div class="input-group input-group-width">
 						<h:outputLabel class="input-group-addon input-group-addon-width" value="Nachname: " />
-						<h:inputText class="form-control form-control-width"
-							value="#{userSignUpBean.lastName}" />
+						<h:inputText class="form-control form-control-width" value="#{userSignUpBean.lastName}" />
 					</div>
 					<div class="input-group input-group-width">
 						<h:outputLabel class="input-group-addon input-group-addon-width" value="Email: " />
-						<h:inputText class="form-control form-control-width"
-							value="#{userSignUpBean.emailAddress}" />
+						<h:inputText id="email" class="form-control form-control-width" value="#{userSignUpBean.emailAddress}" required="true"
+							validatorMessage="#{msg.email_not_correct}" requiredMessage="#{msg.email_required}">
+							<f:validateRequired />
+							<f:validateRegex pattern=".+@.+\..+" />
+						</h:inputText>
 					</div>
+					<h:message for="email" />
 					<div class="input-group input-group-width">
 						<h:outputLabel class="input-group-addon input-group-addon-width" value="Passwort: " />
-						<h:inputSecret class="form-control form-control-width"
-							value="#{userSignUpBean.password}" />
+						<h:inputSecret id="password" class="form-control form-control-width" value="#{userSignUpBean.password}" required="true"
+							requiredMessage="#{msg.password_required}" />
 					</div>
+					<h:message for="password" />
 					<div class="input-group input-group-width">
-						<h:outputLabel class="input-group-addon input-group-addon-width"
-							value="Passwort wiederholen: " />
-						<h:inputSecret class="form-control form-control-width"
-							value="#{userSignUpBean.passwordToCheck}" />
+						<h:outputLabel class="input-group-addon input-group-addon-width" value="Passwort wiederholen: " />
+						<h:inputSecret id="confirmPassword" class="form-control form-control-width" value="#{userSignUpBean.passwordToCheck}" required="true"
+							requiredMessage="#{msg.password_confirmation_required}" />
 					</div>
+					<h:message for="confirmPassword" />
 
 					<h2>Adresse</h2>
 					<div class="input-group input-group-width">
 						<h:outputLabel class="input-group-addon input-group-addon-width" value="Postleitzahl " />
-						<h:inputText class="form-control form-control-width" value="#{userSignUpBean.zipCode}" />
+						<h:inputText id="zip" class="form-control form-control-width" value="#{userSignUpBean.zipCode}" required="true" validatorMessage="#{msg.zip_not_correct}"
+							requiredMessage="#{msg.zip_required}">
+							<f:validateRequired />
+							<f:validateLongRange minimum="10000" maximum="99999" />
+						</h:inputText>
 					</div>
+					<h:message for="zip" />
 					<div class="input-group input-group-width">
 						<h:outputLabel class="input-group-addon input-group-addon-width" value="Ort: " />
-						<h:inputText class="form-control form-control-width" value="#{userSignUpBean.city}" />
+						<h:inputText id="city" class="form-control form-control-width" value="#{userSignUpBean.city}" required="true" requiredMessage="#{msg.city_required}" />
 					</div>
+					<h:message for="city" />
 					<div class="input-group input-group-width">
 						<h:outputLabel class="input-group-addon input-group-addon-width" value="Straße: " />
-						<h:inputText class="form-control form-control-width" value="#{userSignUpBean.streetName}" />
+						<h:inputText id="street" class="form-control form-control-width" value="#{userSignUpBean.streetName}" required="true"
+							requiredMessage="#{msg.street_required}" />
 					</div>
+					<h:message for="street" />
 					<div class="input-group input-group-width">
-					 <h:outputLabel class="input-group-addon input-group-addon-width" value="Hausnummer: "/>
-					 <h:inputText class="form-control form-control-width" value="#{userSignUpBean.number}" />
+						<h:outputLabel class="input-group-addon input-group-addon-width" value="Hausnummer: " />
+						<h:inputText id="number" class="form-control form-control-width" value="#{userSignUpBean.number}" required="true" requiredMessage="#{msg.number_required}"
+							validatorMessage="#{msg.number_not_correct}">
+							<f:validateRequired />
+							<f:validateLongRange minimum="1" maximum="10000" />
+						</h:inputText>
 					</div>
-					<br/>
-					<h:commandButton class="btn btn-default" value="Registrieren"
-						action="#{userSignUpBean.tryToSignUp}"></h:commandButton>
+					<h:message for="number" />
+					<br />
+					<h:commandButton class="btn btn-default" value="Registrieren" action="#{userSignUpBean.tryToSignUp}"></h:commandButton>
 				</h:form>
 			</f:view>
 		</div>
@@ -86,8 +99,7 @@
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script src="../../js/bootstrap.min.js"></script>
 	<script src="../../js/docs.min.js"></script>
 </h:body>

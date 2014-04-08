@@ -12,8 +12,10 @@ public class CategorySelectItemHelper extends SelectItemHelper<Category> {
 	@Override
 	public List<SelectItem> asSelectItemList(List<Category> elements) {
 		List<SelectItem> items = new LinkedList<SelectItem>();
-		for (Category nextCategory : elements) {
-			items.add(new SelectItem(nextCategory.getId(), nextCategory.getName()));
+		if (elements != null) {
+			for (Category nextCategory : elements) {
+				items.add(new SelectItem(nextCategory.getId(), nextCategory.getName()));
+			}
 		}
 		return items;
 	}

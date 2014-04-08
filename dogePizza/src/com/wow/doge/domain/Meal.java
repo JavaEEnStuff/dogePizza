@@ -34,7 +34,7 @@ public class Meal implements Comparable<Meal> {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Category category;
 
-	@OneToMany(mappedBy = "meal")
+	@OneToMany(mappedBy = "meal", fetch=FetchType.EAGER)
 	private Set<OrderPosition> positions;
 
 	private Double firstPrice;
@@ -112,6 +112,29 @@ public class Meal implements Comparable<Meal> {
 
 	public void setFavoredBy(Set<User> favoredBy) {
 		this.favoredBy = favoredBy;
+	}
+
+	public void addFavoredBy(User user) {
+		favoredBy.add(user);
+	}
+
+	public void removeFavoredBy(User user) {
+		User userToRemove = null;
+		for (User nextUser : favoredBy) {
+			if (nextUser.equals(user))
+				userToRemove = nextUser;
+		}
+
+		favoredBy.remove(userToRemove);
+	}
+	
+	public boolean isFavoredBy(User user) {
+		for (User nextUser : favoredBy) {
+			if (nextUser.equals(user))
+				return true;
+		}
+
+		return false;
 	}
 
 	// ============== COMPARATOR ===============
@@ -242,22 +265,6 @@ public class Meal implements Comparable<Meal> {
 				+ thirdPrice + "]";
 	}
 
-	//	public static void main(String[] args) {
-	//		SortedSet<Meal> meals = new TreeSet<>(Meal.getReverseMealPriceComparator());
-	//		Meal meal = new Meal();
-	//		meal.setFirstPrice(1.0);
-	//		meal.setSecondPrice(2.0);
-	//		meal.setThirdPrice(3.0);
-	//
-	//		Meal meal1 = new Meal();
-	//		meal1.setFirstPrice(3.0);
-	//		meal1.setSecondPrice(4.0);
-	//		meal1.setThirdPrice(2.0);
-	//		meals.add(meal);
-	//		meals.add(meal1);
-	//		System.out.println(meals);
-	//	}
-
 	@Override
 	public int compareTo(Meal o) {
 		if (id == null || o.getId() == null) {
@@ -265,6 +272,36 @@ public class Meal implements Comparable<Meal> {
 		} else {
 			return id.compareTo(o.getId());
 		}
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((category == null) ? 0 : category.hashCode());
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((firstPrice == null) ? 0 : firstPrice.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + Arrays.hashCode(image);
+		result = prime * result + ((ingredients == null) ? 0 : ingredients.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((positions == null) ? 0 : positions.hashCode());
+		result = prime * result + ((secondPrice == null) ? 0 : secondPrice.hashCode());
+		result = prime * result + ((thirdPrice == null) ? 0 : thirdPrice.hashCode());
+		result = prime * result + (vegeterian ? 1231 : 1237);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Meal other = (Meal) obj;
+		return compareTo(other) == 0;
 	}
 
 }

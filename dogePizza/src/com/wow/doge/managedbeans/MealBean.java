@@ -21,6 +21,7 @@ import com.wow.doge.services.CategoryService;
 import com.wow.doge.services.IngredientService;
 import com.wow.doge.services.MealService;
 import com.wow.doge.services.UserService;
+import com.wow.doge.view.MealViewItem;
 
 @ManagedBean
 @RequestScoped
@@ -188,9 +189,22 @@ public class MealBean {
 		return asSelectItemList;
 	}
 
-	public List<Meal> getMeals() {
+	public List<MealViewItem> getMeals() {
 		MealEvaluationHelper helper = new MealEvaluationHelper();
-		return helper.getMealsInPriceRangeAndCategory(fromPrice, toPrice, selectedCategoryId);
+		List<Meal> meals = helper.getMealsInPriceRangeAndCategory(fromPrice, toPrice, selectedCategoryId);
+		List<MealViewItem> elements = new LinkedList<MealViewItem>();
+		for (Meal nextMeal : meals) {
+			if (sessionBean.getLoggedInUser() != null) {
+				if (nextMeal.isFavoredBy(sessionBean.getLoggedInUser())) {
+					elements.add(new MealViewItem(nextMeal, true, true));
+				} else {
+					elements.add(new MealViewItem(nextMeal, false, true));
+				}
+			} else {
+				elements.add(new MealViewItem(nextMeal, false, false));
+			}
+		}
+		return elements;
 	}
 
 	public List<String> getSelectedIngredientIds() {
@@ -229,13 +243,24 @@ public class MealBean {
 	}
 
 	public String favoriteMeal() {
-		MealService service = new MealService();
-		meal = service.get(mealId);
+		MealService mealService = new MealService();
+		UserService userService = new UserService();
+		meal = mealService.get(mealId);
 		User user = sessionBean.getLoggedInUser();
-		if (!user.getFavoriteMeals().contains(meal)) {
+		if (!meal.isFavoredBy(user)) {
+			logger.info("Noch nicht vorhanden, kann hinzufügen");
 			user.addFavoriteMeals(meal);
-			UserService userService = new UserService();
+			meal.addFavoredBy(user);
+
 			userService.saveOrUpdate(user);
+			mealService.saveOrUpdate(meal);
+		} else {
+			logger.info("Schon vorhanden, muss entfernen");
+			user.removeFavoritedMeal(meal);
+			userService.saveOrUpdate(user);
+
+			meal.removeFavoredBy(user);
+			mealService.saveOrUpdate(meal);
 		}
 		return "";
 	}

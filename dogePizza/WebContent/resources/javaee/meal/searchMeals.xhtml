@@ -57,37 +57,38 @@
 					<h:dataTable class="table table-hover table-condensed" value="#{mealBean.meals}" var="o">
 						<h:column>
 							<f:facet name="header">Name</f:facet>
-							<h:outputText value="#{o.name}" />
+							<h:outputText value="#{o.meal.name}" />
 						</h:column>
 						<h:column>
 							<f:facet name="header">Vegetarisch</f:facet>
-							<h:outputText value="#{o.vegeterian?'Ja':'Nein'}"></h:outputText>
+							<h:outputText value="#{o.meal.vegeterian?'Ja':'Nein'}"></h:outputText>
 						</h:column>
 						<h:column>
 							<f:facet name="header">S</f:facet>
-							<h:commandButton class="btn btn-info btn-xs btn-width" value="#{o.firstPrice} €" action="#{shoppingCart.addOrderPosition}">
-								<f:param name="mealId" value="#{o.id}" />
-								<f:param name="price" value="#{o.firstPrice}" />
+							<h:commandButton class="btn btn-info btn-xs btn-width" value="#{o.meal.firstPrice} €" action="#{shoppingCart.addOrderPosition}">
+								<f:param name="mealId" value="#{o.meal.id}" />
+								<f:param name="price" value="#{o.meal.firstPrice}" />
 							</h:commandButton>
 						</h:column>
 						<h:column>
 							<f:facet name="header">M</f:facet>
-							<h:commandButton class="btn btn-info btn-xs btn-width" value="#{o.secondPrice} €" action="#{shoppingCart.addOrderPosition}">
-								<f:param name="mealId" value="#{o.id}" />
-								<f:param name="price" value="#{o.secondPrice}" />
+							<h:commandButton class="btn btn-info btn-xs btn-width" value="#{o.meal.secondPrice} €" action="#{shoppingCart.addOrderPosition}">
+								<f:param name="mealId" value="#{o.meal.id}" />
+								<f:param name="price" value="#{o.meal.secondPrice}" />
 							</h:commandButton>
 						</h:column>
 						<h:column>
 							<f:facet name="header">L</f:facet>
-							<h:commandButton class="btn btn-info btn-xs btn-width" value="#{o.thirdPrice} €" action="#{shoppingCart.addOrderPosition}">
-								<f:param name="mealId" value="#{o.id}" />
-								<f:param name="price" value="#{o.thirdPrice}" />
+							<h:commandButton class="btn btn-info btn-xs btn-width" value="#{o.meal.thirdPrice} €" action="#{shoppingCart.addOrderPosition}">
+								<f:param name="mealId" value="#{o.meal.id}" />
+								<f:param name="price" value="#{o.meal.thirdPrice}" />
 							</h:commandButton>
 						</h:column>
 						<h:column rendered="#{sessionBean.userLoggedIn}">
 							<f:facet name="header">Favorit</f:facet>
-							<h:commandButton class="btn btn-danger btn-xs btn-width" value="&lt;3" action="#{mealBean.favoriteMeal}">
-								<f:param name="mealId" value="#{o.id}" />
+							<h:commandButton class="btn btn-danger btn-xs btn-width" value="#{o.favorited?'-':'+'}" action="#{mealBean.favoriteMeal}"
+								disabled="#{!o.canFavorite}">
+								<f:param name="mealId" value="#{o.meal.id}" />
 							</h:commandButton>
 						</h:column>
 					</h:dataTable>

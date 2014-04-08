@@ -1,6 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<title>Fragebogen</title>
@@ -33,16 +35,18 @@
 		<div class="jumbotron">
 			<h2>Fragebogen</h2>
 			<f:view>
-				<h:form>
+				<h:form class="form-horizontal" role="form">
 					<h:inputHidden value="#{questionnaireBean.orderId}" />
-					<h:dataTable class="table table-hover table-condensed" value="#{questionnaireBean.questions}" var="o">
+					<h:dataTable class="table table-hover table-condensed"
+						value="#{questionnaireBean.questions}" var="o">
 						<h:column>
 							<f:facet name="header">Frage</f:facet>
 							<h:outputText value="#{o.questionText}" />
 						</h:column>
 						<h:column>
 							<f:facet name="header">Antwort</f:facet>
-							<h:inputText id="answer" value="#{o.answer}" required="true" validatorMessage="Bitte nur Noten angeben" >
+							<h:inputText id="answer" value="#{o.answer}" required="true" class="form-control"
+								validatorMessage="Bitte nur Noten angeben">
 								<f:validateRequired />
 								<f:validateLongRange minimum="1" maximum="6" />
 							</h:inputText>
@@ -51,10 +55,12 @@
 					</h:dataTable>
 
 					<div class="form-group">
-						<h:outputLabel class="col-sm-1 control-label" value="Gesamtnote " />
-						<div class="col-sm-11">
-							<h:inputText id="grade" class="form-control" value="#{questionnaireBean.overallGrade}" required="true" requiredMessage="Bitte eine Gesamtnote angeben"
-								validatorMessage="Bitte nur Noten angeben" >
+						<h:outputLabel class="col-sm-2 control-label" value="Gesamtnote " />
+						<div class="col-sm-10">
+							<h:inputText id="grade" class="form-control"
+								value="#{questionnaireBean.overallGrade}" required="true"
+								requiredMessage="Bitte eine Gesamtnote angeben"
+								validatorMessage="Bitte nur Noten angeben">
 								<f:validateRequired />
 								<f:validateLongRange minimum="1" maximum="6" />
 							</h:inputText>
@@ -62,15 +68,18 @@
 						<h:message for="grade" />
 					</div>
 					<div class="form-group">
-						<h:outputLabel class="col-sm-1 control-label" value="Bemerkung " />
-						<div class="col-sm-11">
-							<h:inputText id="remark" class="form-control" value="#{questionnaireBean.remark}"  />
+						<h:outputLabel class="col-sm-2 control-label" value="Bemerkung " />
+						<div class="col-sm-10">
+							<h:inputText id="remark" class="form-control"
+								value="#{questionnaireBean.remark}" />
 						</div>
 						<h:message for="remark" />
 					</div>
 
-					<h:commandButton class="btn btn-default" value="Speichern" action="#{questionnaireBean.save}" />
-					<h:commandButton class="btn btn-default" value="Zurück" action="#{sessionBean.main}" />
+					<h:commandButton class="btn btn-default" value="Speichern" style="margin-right:5px"
+						action="#{questionnaireBean.save}" />
+					<h:commandButton class="btn btn-default" value="Zurück"
+						action="#{sessionBean.main}" />
 				</h:form>
 			</f:view>
 		</div>
@@ -79,7 +88,8 @@
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script src="../../js/bootstrap.min.js"></script>
 	<script src="../../js/docs.min.js"></script>
 </h:body>

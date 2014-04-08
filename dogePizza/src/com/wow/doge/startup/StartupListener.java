@@ -14,8 +14,8 @@ public class StartupListener implements ServletContextListener {
 	private List<StartupCreator> startupCreators;
 
 	private static final Logger logger = Logger.getLogger(StartupListener.class);
-	
-	public StartupListener(){
+
+	public StartupListener() {
 		initStartupCreators();
 	}
 
@@ -29,6 +29,7 @@ public class StartupListener implements ServletContextListener {
 		startupCreators.add(new MenuStartupCreator());
 		startupCreators.add(new UserStartupCreator());
 		startupCreators.add(new IngredientMealStartupCreator());
+		startupCreators.add(new QuestionDraftStartupCreator());
 	}
 
 	@Override
@@ -44,10 +45,9 @@ public class StartupListener implements ServletContextListener {
 		logger.info(prefix + file);
 		PropertyConfigurator.configure(prefix + file);
 		logger.info("Starting the system.");
-		
 
 		// STARTUP CREATION
-		for(StartupCreator creator : startupCreators){
+		for (StartupCreator creator : startupCreators) {
 			creator.create();
 		}
 	}

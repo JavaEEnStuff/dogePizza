@@ -19,15 +19,18 @@
 		</property>
 		<property name="hibernate.hbm2ddl.auto">create-drop</property>
 
+		<mapping class="com.wow.doge.domain.questionnaire.QuestionDraft" />
+		<mapping class="com.wow.doge.domain.questionnaire.Questionnaire" />
+		<mapping class="com.wow.doge.domain.questionnaire.AssessmentQuestion" />
 		<mapping class="com.wow.doge.domain.Order" />
 		<mapping class="com.wow.doge.domain.OrderPosition" />
 		<mapping class="com.wow.doge.domain.Meal" />
 		<mapping class="com.wow.doge.domain.Ingredient" />
-		<mapping class="com.wow.doge.domain.Category"/>
+		<mapping class="com.wow.doge.domain.Category" />
 		<mapping class="com.wow.doge.domain.User" />
 		<mapping class="com.wow.doge.domain.Address" />
-		<mapping class="com.wow.doge.domain.Question"/>
-		<mapping class="com.wow.doge.domain.Answer"/>
-		<mapping class="com.wow.doge.domain.html.Menu"/>
+		<mapping class="com.wow.doge.domain.Answer" />
+		<mapping class="com.wow.doge.domain.Question" />
+		<mapping class="com.wow.doge.domain.html.Menu" />
 	</session-factory>
 </hibernate-configuration>    

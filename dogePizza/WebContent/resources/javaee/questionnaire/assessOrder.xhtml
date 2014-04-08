@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
-	<title>Bestellungen</title>
+	<title>Fragebogen</title>
 	<link rel="shortcut icon" href="../../img/logo_icon.ico" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -31,35 +31,45 @@
 
 		<!-- Main jumbotron for a primary marketing message or call to action -->
 		<div class="jumbotron">
-			<h2>Bestellungen</h2>
+			<h2>Fragebogen</h2>
 			<f:view>
 				<h:form>
-					<h:dataTable class="table table-hover table-condensed" value="#{orderBean.allOrders}" var="o">
+					<h:inputHidden value="#{questionnaireBean.orderId}" />
+					<h:dataTable class="table table-hover table-condensed" value="#{questionnaireBean.questions}" var="o">
 						<h:column>
-							<f:facet name="header">Bestelldatum</f:facet>
-							<h:outputText value="#{o.formattedOrderDate}" />
+							<f:facet name="header">Frage</f:facet>
+							<h:outputText value="#{o.questionText}" />
 						</h:column>
 						<h:column>
-							<f:facet name="header">Anzahl</f:facet>
-							<h:outputText value="#{o.positionCount}"></h:outputText>
-						</h:column>
-						<h:column>
-							<f:facet name="header">Preis</f:facet>
-							<h:outputText value="#{o.price} €"></h:outputText>
-						</h:column>
-						<h:column>
-							<f:facet name="header">Anzeigen</f:facet>
-							<h:commandButton class="btn btn-info btn-xs btn-width" value="Anzeigen" action="#{orderBean.show}">
-								<f:param name="orderId" value="#{o.id}" />
-							</h:commandButton>
-						</h:column>
-						<h:column>
-							<f:facet name="header">Bewerten</f:facet>
-							<h:commandButton class="btn btn-info btn-xs btn-width" value="Bewerten" action="#{questionnaireBean.questionnaire}">
-								<f:param name="orderId" value="#{o.id}" />
-							</h:commandButton>
+							<f:facet name="header">Antwort</f:facet>
+							<h:inputText id="answer" value="#{o.answer}" required="true" validatorMessage="Bitte nur Noten angeben" >
+								<f:validateRequired />
+								<f:validateLongRange minimum="1" maximum="6" />
+							</h:inputText>
+							<h:message for="answer" />
 						</h:column>
 					</h:dataTable>
+
+					<div class="form-group">
+						<h:outputLabel class="col-sm-1 control-label" value="Gesamtnote " />
+						<div class="col-sm-11">
+							<h:inputText id="grade" class="form-control" value="#{questionnaireBean.overallGrade}" required="true" requiredMessage="Bitte eine Gesamtnote angeben"
+								validatorMessage="Bitte nur Noten angeben" >
+								<f:validateRequired />
+								<f:validateLongRange minimum="1" maximum="6" />
+							</h:inputText>
+						</div>
+						<h:message for="grade" />
+					</div>
+					<div class="form-group">
+						<h:outputLabel class="col-sm-1 control-label" value="Bemerkung " />
+						<div class="col-sm-11">
+							<h:inputText id="remark" class="form-control" value="#{questionnaireBean.remark}"  />
+						</div>
+						<h:message for="remark" />
+					</div>
+
+					<h:commandButton class="btn btn-default" value="Speichern" action="#{questionnaireBean.save}" />
 					<h:commandButton class="btn btn-default" value="Zurück" action="#{sessionBean.main}" />
 				</h:form>
 			</f:view>

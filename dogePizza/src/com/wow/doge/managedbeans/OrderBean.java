@@ -80,4 +80,5 @@ public class OrderBean {
 	public String show() {
 		return "showOrderPositions.jsf";
 	}
+	
 }

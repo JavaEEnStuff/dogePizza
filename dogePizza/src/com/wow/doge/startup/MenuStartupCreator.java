@@ -78,6 +78,15 @@ public class MenuStartupCreator implements StartupCreator {
 		category.setLink("/dogePizza/resources/javaee/category/categoryList.jsf");
 		category.setLoginRequired(true);
 		service.saveOrUpdate(category);
+		
+
+		Menu questionDraft = new Menu();
+		questionDraft.setName("Fragevorlagen verwalten");
+		questionDraft.setText("Fragevorlagen verwalten");
+		questionDraft.setAdminMenu(true);
+		questionDraft.setLink("/dogePizza/resources/javaee/questionDraft/questionDraftList.jsf");
+		questionDraft.setLoginRequired(true);
+		service.saveOrUpdate(questionDraft);
 		logger.info("Menüs erstellt");
 
 	}

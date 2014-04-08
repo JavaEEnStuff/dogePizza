@@ -52,7 +52,7 @@ public class MealEvaluationHelper {
 			SimpleExpression thirdPrice = Restrictions.le("thirdPrice", toPrice);
 			mealSelection.addCriterion(Restrictions.or(firstPrice, Restrictions.or(secondPrice, thirdPrice)));
 		}
-		if(categoryId!=0){
+		if (categoryId != null && categoryId != 0) {
 			CategoryService categoryService = new CategoryService();
 			Category category = categoryService.get(categoryId);
 			mealSelection.addCriterion(Restrictions.eq("category", category));

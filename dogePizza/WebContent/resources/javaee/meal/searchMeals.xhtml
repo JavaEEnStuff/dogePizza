@@ -1,8 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<title>Gerichte</title>
@@ -38,35 +36,25 @@
 			<f:view>
 				<h:form>
 					<div class="input-group input-group-width">
-						<h:outputLabel class="input-group-addon input-group-addon-width"
-							value="Preis von: " />
-						<h:inputText class="form-control form-control-width"
-							value="#{mealBean.fromPrice}" />
+						<h:outputLabel class="input-group-addon input-group-addon-width" value="Preis von: " />
+						<h:inputText class="form-control form-control-width" value="#{mealBean.fromPrice}" />
 					</div>
 					<div class="input-group input-group-width">
-						<h:outputLabel class="input-group-addon input-group-addon-width"
-							value="Preis bis: " />
-						<h:inputText class="form-control form-control-width"
-							value="#{mealBean.toPrice}" />
+						<h:outputLabel class="input-group-addon input-group-addon-width" value="Preis bis: " />
+						<h:inputText class="form-control form-control-width" value="#{mealBean.toPrice}" />
 					</div>
 					<div class="input-group">
-							<h:outputLabel class="input-group-addon input-group-addon-width"
-								value="Kategorie " />
-							<h:selectOneMenu type="button"
-								class="btn btn-default dropdown-toggle"
-								value="#{mealBean.selectedCategoryId}">
-								<f:selectItems value="#{mealBean.allCategoriesPlusAll}" />
-							</h:selectOneMenu>
+						<h:outputLabel class="input-group-addon input-group-addon-width" value="Kategorie " />
+						<h:selectOneMenu type="button" class="btn btn-default dropdown-toggle" value="#{mealBean.selectedCategoryId}">
+							<f:selectItems value="#{mealBean.allCategoriesPlusAll}" />
+						</h:selectOneMenu>
 					</div>
-					<br/>
-					<h:commandButton class="btn btn-default" style="margin-right:5px"
-						value="Suchen" action="#{mealBean.search}" />
-					<h:commandButton class="btn btn-default" value="Suche leeren"
-						action="#{mealBean.clearSearch}" />
+					<br />
+					<h:commandButton class="btn btn-default" style="margin-right:5px" value="Suchen" action="#{mealBean.search}" />
+					<h:commandButton class="btn btn-default" value="Suche leeren" action="#{mealBean.clearSearch}" />
 					<br />
 					<br />
-					<h:dataTable class="table table-hover table-condensed"
-						value="#{mealBean.meals}" var="o">
+					<h:dataTable class="table table-hover table-condensed" value="#{mealBean.meals}" var="o">
 						<h:column>
 							<f:facet name="header">Name</f:facet>
 							<h:outputText value="#{o.name}" />
@@ -77,41 +65,33 @@
 						</h:column>
 						<h:column>
 							<f:facet name="header">S</f:facet>
-							<h:commandButton class="btn btn-info btn-xs btn-width"
-								value="#{o.firstPrice} €"
-								action="#{shoppingCart.addOrderPosition}">
+							<h:commandButton class="btn btn-info btn-xs btn-width" value="#{o.firstPrice} €" action="#{shoppingCart.addOrderPosition}">
 								<f:param name="mealId" value="#{o.id}" />
 								<f:param name="price" value="#{o.firstPrice}" />
 							</h:commandButton>
 						</h:column>
 						<h:column>
 							<f:facet name="header">M</f:facet>
-							<h:commandButton class="btn btn-info btn-xs btn-width"
-								value="#{o.secondPrice} €"
-								action="#{shoppingCart.addOrderPosition}">
+							<h:commandButton class="btn btn-info btn-xs btn-width" value="#{o.secondPrice} €" action="#{shoppingCart.addOrderPosition}">
 								<f:param name="mealId" value="#{o.id}" />
 								<f:param name="price" value="#{o.secondPrice}" />
 							</h:commandButton>
 						</h:column>
 						<h:column>
 							<f:facet name="header">L</f:facet>
-							<h:commandButton class="btn btn-info btn-xs btn-width"
-								value="#{o.thirdPrice} €"
-								action="#{shoppingCart.addOrderPosition}">
+							<h:commandButton class="btn btn-info btn-xs btn-width" value="#{o.thirdPrice} €" action="#{shoppingCart.addOrderPosition}">
 								<f:param name="mealId" value="#{o.id}" />
 								<f:param name="price" value="#{o.thirdPrice}" />
 							</h:commandButton>
 						</h:column>
 						<h:column rendered="#{sessionBean.userLoggedIn}">
 							<f:facet name="header">Favorit</f:facet>
-							<h:commandButton class="btn btn-danger btn-xs btn-width"
-								value="&lt;3" action="#{mealBean.favoriteMeal}">
+							<h:commandButton class="btn btn-danger btn-xs btn-width" value="&lt;3" action="#{mealBean.favoriteMeal}">
 								<f:param name="mealId" value="#{o.id}" />
 							</h:commandButton>
 						</h:column>
 					</h:dataTable>
-					<h:commandButton class="btn btn-default" value="Zurück"
-						action="#{mealBean.main}" />
+					<h:commandButton class="btn btn-default" value="Zurück" action="#{mealBean.main}" />
 				</h:form>
 			</f:view>
 		</div>
@@ -120,8 +100,7 @@
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script src="../../js/bootstrap.min.js"></script>
 	<script src="../../js/docs.min.js"></script>
 </h:body>

@@ -44,8 +44,9 @@
 					<div class="form-group">
 						<h:outputLabel class="col-sm-1 control-label" value="Name: " />
 						<div class="col-sm-11">
-							<h:inputText class="form-control" value="#{categoryBean.name}" />
+							<h:inputText id="name" class="form-control" value="#{categoryBean.name}" required="true" requiredMessage="#{msg.category_name_required}" />
 						</div>
+						<h:message for="name" />
 					</div>
 
 					<h:inputHidden value="#{categoryBean.id}" />

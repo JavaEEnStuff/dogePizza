@@ -41,10 +41,7 @@
 					<div class="input-group input-group-width">
 						<h:outputLabel class="input-group-addon input-group-addon-width" value="Email: " />
 						<h:inputText id="email" class="form-control form-control-width" value="#{userSignUpBean.emailAddress}" required="true"
-							validatorMessage="#{msg.email_not_correct}" requiredMessage="#{msg.email_required}">
-							<f:validateRequired />
-							<f:validateRegex pattern=".+@.+\..+" />
-						</h:inputText>
+							requiredMessage="#{msg.email_required}" validator="#{userSignUpBean.validateEmail}" />
 					</div>
 					<h:message for="email" />
 					<div class="input-group input-group-width">

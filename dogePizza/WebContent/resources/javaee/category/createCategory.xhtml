@@ -1,8 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<title>Kategorie anlegen</title>
@@ -35,19 +33,18 @@
 		<!-- Main jumbotron for a primary marketing message or call to action -->
 		<div class="jumbotron">
 			<h2>Kategorie anlegen</h2>
-			<br/>
+			<br />
 			<f:view>
 				<h:form class="form-horizontal" role="form">
 					<div class="form-group">
 						<h:outputLabel class="col-sm-1 control-label" value="Name " />
 						<div class="col-sm-11">
-							<h:inputText class="form-control" value="#{categoryBean.name}" />
+							<h:inputText id="name" class="form-control" value="#{categoryBean.name}" required="true" requiredMessage="#{msg.category_name_required}" />
 						</div>
+						<h:message for="name" />
 					</div>
-						<h:commandButton class="btn btn-default" style="margin-right:5px"
-							value="Speichern" action="#{categoryBean.save}" />
-						<h:commandButton class="btn btn-default" value="Zurück"
-							action="#{categoryBean.categoryList}" />
+					<h:commandButton class="btn btn-default" style="margin-right:5px" value="Speichern" action="#{categoryBean.save}" />
+					<h:commandButton class="btn btn-default" value="Zurück" action="#{categoryBean.categoryList}" />
 				</h:form>
 			</f:view>
 		</div>
@@ -56,8 +53,7 @@
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script src="../../js/bootstrap.min.js"></script>
 	<script src="../../js/docs.min.js"></script>
 </h:body>

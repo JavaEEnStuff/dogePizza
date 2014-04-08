@@ -1,12 +1,18 @@
 package com.wow.doge.managedbeans;
 
+import java.util.List;
+import java.util.ResourceBundle;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
+import org.hibernate.criterion.Restrictions;
+
 import com.wow.doge.domain.User;
+import com.wow.doge.services.SelectionHelper;
 import com.wow.doge.services.UserService;
 
 @ManagedBean
@@ -54,7 +60,7 @@ public class UserSignUpBean {
 	public String getStreetName() {
 		return user.getDefaultAddress().getStreetName();
 	}
-	
+
 	public void setStreetName(String streetName) {
 		user.getDefaultAddress().setStreetName(streetName);
 	}
@@ -62,6 +68,7 @@ public class UserSignUpBean {
 	public Integer getNumber() {
 		return user.getDefaultAddress().getNumber();
 	}
+
 	public void setNumber(Integer number) {
 		user.getDefaultAddress().setNumber(number);
 	}
@@ -93,9 +100,9 @@ public class UserSignUpBean {
 	public void setPasswordToCheck(String passwortToCheck) {
 		this.passwordToCheck = passwortToCheck;
 	}
-	
-	public String tryToSignUp(){
-		if(user.getPassword()!=null && !user.getPassword().isEmpty() && user.getPassword().equals(passwordToCheck)){
+
+	public String tryToSignUp() {
+		if (user.getPassword() != null && !user.getPassword().isEmpty() && user.getPassword().equals(passwordToCheck)) {
 			UserService userService = new UserService();
 			userService.saveOrUpdate(user);
 			return "../login.xhtml";
@@ -103,10 +110,20 @@ public class UserSignUpBean {
 			return "";
 		}
 	}
-	
+
 	public void validateEmail(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-		if(!((String) value).matches(".+@.+\\..+")){
-			throw new ValidatorException(new FacesMessage("Fehlerhafte E-Mail-Syntax"));
+
+		ResourceBundle rb = context.getApplication().getResourceBundle(context, "msg");
+		if (!((String) value).matches(".+@.+\\..+")) {
+			throw new ValidatorException(new FacesMessage(rb.getString("email_not_correct")));
+		}
+
+		UserService service = new UserService();
+		SelectionHelper<User> helper = new SelectionHelper<>();
+		helper.addCriterion(Restrictions.eq("emailAddress", value));
+		List<User> users = service.getList(helper);
+		if (users != null && users.size() >= 1) {
+			throw new ValidatorException(new FacesMessage(rb.getString("email_already_in_use")));
 		}
 	}
 

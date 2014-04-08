@@ -2,14 +2,20 @@ package com.wow.doge.managedbeans;
 
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 
 import org.apache.log4j.Logger;
+import org.hibernate.criterion.Restrictions;
 
 import com.wow.doge.domain.Ingredient;
 import com.wow.doge.services.IngredientService;
+import com.wow.doge.services.SelectionHelper;
 
 @ManagedBean
 @RequestScoped
@@ -95,10 +101,26 @@ public class IngredientBean {
 	}
 
 	public String ingredientList() {
-		return "ingredientList.xhtml";
+		return "ingredientList.jsf";
 	}
 	
 	public String main(){
 		return "/resources/javaee/main.xhtml";
+	}
+	
+	public void validateName(FacesContext context, UIComponent component, Object value) throws ValidatorException {
+		IngredientService service = new IngredientService();
+		SelectionHelper<Ingredient> helper = new SelectionHelper<>();
+		helper.addCriterion(Restrictions.eq("name", value));
+		List<Ingredient> ingredientsWithName = service.getList(helper);
+		
+		if(ingredientsWithName!=null && ingredientsWithName.size()>=1){
+			Ingredient curIngredient=ingredientsWithName.get(0);
+			logger.info("Id-Vergleich: "+curIngredient.getId()+", "+ingredient.getId());
+			logger.info(ingredient);
+			if(curIngredient.getId()!=ingredient.getId()){
+				throw new ValidatorException(new FacesMessage("Der Name existiert bereits!"));
+			}
+		}
 	}
 }

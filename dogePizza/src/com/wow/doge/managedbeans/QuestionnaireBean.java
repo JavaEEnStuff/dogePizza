@@ -151,9 +151,17 @@ public class QuestionnaireBean {
 		logger.info("Versuche Questionnaire zu speichern... " + questionnaire);
 		QuestionnaireService service = new QuestionnaireService();
 		OrderService orderService = new OrderService();
+		
+		// Questionnaire wegschreiben
 		Order order = orderService.get(orderId);
 		questionnaire.setOrder(order);
 		service.saveOrUpdate(questionnaire);
+		
+		// Bestellung wegschreiben
+		order.setQuestionnaire(questionnaire);
+		service.saveOrUpdate(questionnaire);
+		
+		// Questions wegschreiben
 		AssessmentQuestionService aqService = new AssessmentQuestionService();
 		for (AssessmentQuestion q : questions) {
 			q.setQuestionnaire(questionnaire);

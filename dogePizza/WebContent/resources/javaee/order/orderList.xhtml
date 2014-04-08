@@ -48,6 +48,10 @@
 							<h:outputText value="#{o.price} €"></h:outputText>
 						</h:column>
 						<h:column>
+							<f:facet name="header">Bewertung</f:facet>
+							<h:outputText value="#{o.questionnaire!=null?o.questionnaire.overallGrade:'-'}"></h:outputText>
+						</h:column>
+						<h:column>
 							<f:facet name="header">Anzeigen</f:facet>
 							<h:commandButton class="btn btn-info btn-xs btn-width" value="Anzeigen" action="#{orderBean.show}">
 								<f:param name="orderId" value="#{o.id}" />

@@ -14,6 +14,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import com.wow.doge.domain.questionnaire.Questionnaire;
 
 @Entity(name = "dogeOrder")
 public class Order implements Comparable<Order> {
@@ -37,6 +40,9 @@ public class Order implements Comparable<Order> {
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	private User user;
+
+	@OneToOne(mappedBy = "order")
+	private Questionnaire questionnaire;
 
 	public Order() {
 		positions = new HashSet<OrderPosition>();
@@ -126,6 +132,14 @@ public class Order implements Comparable<Order> {
 		this.user = user;
 	}
 
+	public Questionnaire getQuestionnaire() {
+		return questionnaire;
+	}
+
+	public void setQuestionnaire(Questionnaire questionnaire) {
+		this.questionnaire = questionnaire;
+	}
+
 	@Override
 	public String toString() {
 		return "Order [id=" + id + ", date=" + date + ", address=" + address + ", positions=" + positions + ", remark=" + remark + ", orderDate=" + orderDate
@@ -150,6 +164,5 @@ public class Order implements Comparable<Order> {
 		public int compare(Order o1, Order o2) {
 			return o2.getOrderDate().compareTo(o1.getOrderDate());
 		}
-
 	}
 }

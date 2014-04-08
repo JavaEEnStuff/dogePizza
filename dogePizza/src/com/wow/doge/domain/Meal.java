@@ -1,7 +1,6 @@
 package com.wow.doge.domain;
 
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -40,8 +39,6 @@ public class Meal implements Comparable<Meal> {
 	private Double firstPrice;
 	private Double secondPrice;
 	private Double thirdPrice;
-
-	// TODO Erweiterungsmöglichkeiten
 
 	public Meal() {
 		ingredients = new HashSet<Ingredient>();
@@ -179,84 +176,6 @@ public class Meal implements Comparable<Meal> {
 		this.category = category;
 	}
 
-	public static Comparator<Meal> getMealNameComparator() {
-		return new MealNameComparator();
-	}
-
-	private static class MealNameComparator implements Comparator<Meal> {
-
-		@Override
-		public int compare(Meal o1, Meal o2) {
-			return o1.getName().compareTo(o2.getName());
-		}
-
-	}
-
-	public static Comparator<Meal> getMealPriceComparator() {
-		return new MealPriceComparator();
-	}
-
-	private static class MealPriceComparator implements Comparator<Meal> {
-
-		@Override
-		public int compare(Meal o1, Meal o2) {
-			int mealWithHigherPrice = 1;
-			double highestPrice = o1.getFirstPrice();
-			if (o1.getSecondPrice() != null && o1.getSecondPrice() > highestPrice)
-				highestPrice = o1.getSecondPrice();
-			if (o1.getThirdPrice() != null && o1.getThirdPrice() > highestPrice)
-				highestPrice = o1.getThirdPrice();
-
-			if (o2.getFirstPrice() != null && o2.getFirstPrice() > highestPrice) {
-				mealWithHigherPrice = -1;
-				highestPrice = o1.getFirstPrice();
-			}
-			if (o2.getSecondPrice() != null && o2.getSecondPrice() > highestPrice) {
-				mealWithHigherPrice = -1;
-				highestPrice = o1.getSecondPrice();
-			}
-			if (o2.getThirdPrice() != null && o2.getThirdPrice() > highestPrice) {
-				mealWithHigherPrice = -1;
-				highestPrice = o1.getThirdPrice();
-			}
-			return mealWithHigherPrice;
-		}
-
-	}
-
-	public static Comparator<Meal> getReverseMealPriceComparator() {
-		return new ReverseMealPriceComparator();
-	}
-
-	private static class ReverseMealPriceComparator implements Comparator<Meal> {
-
-		private static final int GREATER = 1;
-		private static final int LOWER = -1;
-
-		@Override
-		public int compare(Meal o1, Meal o2) {
-			int mealWithHigherPrice = LOWER;
-			double lowest = o1.getFirstPrice();
-			if (o1.getSecondPrice() != null && o1.getSecondPrice() < lowest)
-				lowest = o1.getSecondPrice();
-			if (o1.getThirdPrice() != null && o1.getThirdPrice() < lowest)
-				lowest = o1.getThirdPrice();
-			if (o2.getFirstPrice() != null && o2.getFirstPrice() < lowest) {
-				mealWithHigherPrice = GREATER;
-				lowest = o1.getFirstPrice();
-			}
-			if (o2.getSecondPrice() != null && o2.getSecondPrice() < lowest) {
-				mealWithHigherPrice = GREATER;
-				lowest = o1.getSecondPrice();
-			}
-			if (o2.getThirdPrice() != null && o2.getThirdPrice() < lowest) {
-				mealWithHigherPrice = GREATER;
-				lowest = o1.getThirdPrice();
-			}
-			return mealWithHigherPrice;
-		}
-
-	}
 
 	@Override
 	public String toString() {

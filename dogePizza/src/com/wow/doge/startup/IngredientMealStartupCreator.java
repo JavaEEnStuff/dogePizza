@@ -23,6 +23,10 @@ public class IngredientMealStartupCreator implements StartupCreator {
 		cheese.setName("Käse");
 		service.saveOrUpdate(cheese);
 		
+		Ingredient fungi = new Ingredient();
+		fungi.setName("Pilze");
+		service.saveOrUpdate(fungi);
+		
 		CategoryService categoryService = new CategoryService();
 		Category nudeln = new Category();
 		nudeln.setName("Nudeln");
@@ -47,6 +51,16 @@ public class IngredientMealStartupCreator implements StartupCreator {
 		pizzaNormale.addIngredient(salami);
 		pizzaNormale.setCategory(pizza);
 		mealService.saveOrUpdate(pizzaNormale);
+		
+		Meal pizzaMargherita = new Meal();
+		pizzaMargherita.setName("Pizza Margherita");
+		pizzaMargherita.setFirstPrice(4d);
+		pizzaMargherita.setSecondPrice(5d);
+		pizzaMargherita.setThirdPrice(6d);
+		pizzaMargherita.setVegeterian(true);
+		pizzaMargherita.addIngredient(cheese);
+		pizzaMargherita.setCategory(pizza);
+		mealService.saveOrUpdate(pizzaMargherita);
 		
 	}
 

@@ -17,6 +17,7 @@ import com.wow.doge.domain.User;
 import com.wow.doge.helper.CategorySelectItemHelper;
 import com.wow.doge.helper.IngredientSelectItemHelper;
 import com.wow.doge.helper.MealEvaluationHelper;
+import com.wow.doge.helper.MealSorting;
 import com.wow.doge.services.CategoryService;
 import com.wow.doge.services.IngredientService;
 import com.wow.doge.services.MealService;
@@ -35,6 +36,8 @@ public class MealBean {
 	// die ausgewählten Ids (rechte Seite, aber nur die, die selektiert wurden)
 	private List<String> selectedIngredientIds;
 	private Integer selectedCategoryId;
+	private Integer selectedComparator;
+	private boolean onlyFavorites;
 
 	@ManagedProperty("#{param.mealId}")
 	private int mealId;
@@ -53,6 +56,8 @@ public class MealBean {
 		meal = new Meal();
 		selectedIngredientIds = new LinkedList<>();
 		selectedCategoryId = CATEGORY_ID_ALL;
+		selectedComparator = MealSorting.NAME_COMP;
+		onlyFavorites = false;
 	}
 
 	public void setId(Integer id) {
@@ -165,6 +170,22 @@ public class MealBean {
 		meal.setThirdPrice(thirdPrice);
 	}
 
+	public boolean isOnlyFavorites() {
+		return onlyFavorites;
+	}
+
+	public void setOnlyFavorites(boolean onlyFavorites) {
+		this.onlyFavorites = onlyFavorites;
+	}
+
+	public Integer getSelectedComparator() {
+		return selectedComparator;
+	}
+
+	public void setSelectedComparator(Integer selectedComparator) {
+		this.selectedComparator = selectedComparator;
+	}
+
 	// ========== FUNKTIONEN ================
 
 	public List<SelectItem> getAllIngredients() {
@@ -189,9 +210,14 @@ public class MealBean {
 		return asSelectItemList;
 	}
 
+	public List<SelectItem> getAllSortings() {
+		return MealSorting.getSortings();
+	}
+
 	public List<MealViewItem> getMeals() {
+		logger.info("Suche nach meals...");
 		MealEvaluationHelper helper = new MealEvaluationHelper();
-		List<Meal> meals = helper.getMealsInPriceRangeAndCategory(fromPrice, toPrice, selectedCategoryId);
+		List<Meal> meals = helper.getMealsInPriceRangeAndCategory(fromPrice, toPrice, selectedCategoryId, selectedComparator, onlyFavorites, sessionBean.getLoggedInUser());
 		List<MealViewItem> elements = new LinkedList<MealViewItem>();
 		for (Meal nextMeal : meals) {
 			if (sessionBean.getLoggedInUser() != null) {
@@ -299,6 +325,8 @@ public class MealBean {
 		fromPrice = null;
 		toPrice = null;
 		selectedCategoryId = CATEGORY_ID_ALL;
+		selectedComparator = MealSorting.NAME_COMP;
+		onlyFavorites = false;
 		return "";
 	}
 }

@@ -15,10 +15,11 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
 import com.wow.doge.hibernate.HibernateUtil;
+import com.wow.doge.services.SelectionHelper.Alias;
 
 public abstract class AbstractService<T> {
 
-	private Logger logger = Logger.getLogger(AbstractService.class);
+	protected Logger logger = Logger.getLogger(AbstractService.class);
 
 	/** Klasse zum Casten */
 	protected abstract Class<T> getHibernateClass();
@@ -186,6 +187,9 @@ public abstract class AbstractService<T> {
 			session.beginTransaction();
 
 			Criteria criteria = session.createCriteria(getHibernateClass());
+			for(Alias alias : helper.getAlias()){
+				criteria.createAlias(alias.getName(), alias.getAlias());
+			}
 			for (Criterion nextCriterion : helper.getCriterions()) {
 				criteria.add(nextCriterion);
 			}
@@ -198,6 +202,7 @@ public abstract class AbstractService<T> {
 			if (helper.getProjectionList().getLength() > 0) {
 				criteria.setProjection(helper.getProjectionList());
 			}
+			logger.info(criteria.toString());
 			List<T> resultList = (ArrayList<T>) criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 			if (helper.getComparator() != null) {
 				Collections.sort(resultList, helper.getComparator());

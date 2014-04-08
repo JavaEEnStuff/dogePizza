@@ -49,6 +49,16 @@
 							<f:selectItems value="#{mealBean.allCategoriesPlusAll}" />
 						</h:selectOneMenu>
 					</div>
+					<div class="input-group">
+						<h:outputLabel class="input-group-addon input-group-addon-width" value="Sortierung " />
+						<h:selectOneMenu type="button" class="btn btn-default dropdown-toggle" value="#{mealBean.selectedComparator}">
+							<f:selectItems value="#{mealBean.allSortings}" />
+						</h:selectOneMenu>
+					</div>
+					<div class="input-group">
+						<h:outputLabel class="input-group-addon input-group-addon-width" value="Favoriten " />
+						<h:selectBooleanCheckbox type="button" class="btn btn-default dropdown-toggle" value="#{mealBean.onlyFavorites}" />
+					</div>
 					<br />
 					<h:commandButton class="btn btn-default" style="margin-right:5px" value="Suchen" action="#{mealBean.search}" />
 					<h:commandButton class="btn btn-default" value="Suche leeren" action="#{mealBean.clearSearch}" />

@@ -206,8 +206,8 @@ public class ShoppingCart {
 	}
 
 	public String showShoppingCart() {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
-		SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm:ss");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm");
 		date = dateFormat.format(new Date().getTime());
 		time = timeFormat.format(new Date().getTime() + (1000 * 60 * 60));
 		return "/resources/javaee/shoppingCart/shoppingCartList.jsf";
@@ -252,9 +252,10 @@ public class ShoppingCart {
 	 */
 	public long getSelectedDateTimeInMillis() {
 		try {
-			SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd hh:mm:ss");
-			Date d = dateFormat.parse(date + " " + time);
-			return d.getTime();
+			SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm");
+			String comb=date + " " + time;
+			Date timestampAsDate = dateFormat.parse(comb);
+			return timestampAsDate.getTime();
 		} catch (ParseException e) {
 			return new Date().getTime() + (1000 * 60 * 60);
 		}

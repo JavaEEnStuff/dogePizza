@@ -39,7 +39,7 @@ h:body {
 
 .img-doge {
 	position: absolute;
-	top: 7em;
+	top: 9em;
 	right: 30em;
 }
 
@@ -59,7 +59,16 @@ h:body {
 }
 
 .img-circle {
+	position: absolute;
 	top: 240px;
+	right: 460px;
+	width: 20em;
+	heigth: 20em;
+}
+
+.img-circle-reg {
+	position: absolute;
+	top: 120px;
 	right: 460px;
 	width: 20em;
 	heigth: 20em;

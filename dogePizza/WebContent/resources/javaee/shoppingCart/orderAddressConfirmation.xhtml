@@ -1,6 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<title>Registrierung</title>
@@ -10,6 +12,16 @@
 
 	<!-- Bootstrap -->
 	<link href="../../css/bootstrap.min.css" rel="stylesheet" />
+
+	<link rel="stylesheet"
+		href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" />
+	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+	<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+	<script>
+		$(function() {
+			$("#datepicker").datepicker();
+		});
+	</script>
 
 	<!-- Custom styles for this template -->
 	<link href="../../css/theme.css" rel="stylesheet" />
@@ -35,62 +47,90 @@
 			<f:view>
 				<h:form class="form-horizontal" role="form">
 					<div class="form-group">
-						<h:outputLabel for="inputRemark" class="col-sm-2 control-label" value="Bemerkung " />
+						<h:outputLabel for="inputRemark" class="col-sm-2 control-label"
+							value="Bemerkung " />
 						<div class="col-sm-10">
-							<h:inputTextarea id="inputRemark" class="form-control" value="#{shoppingCart.remark}" />
+							<h:inputTextarea id="inputRemark" class="form-control"
+								value="#{shoppingCart.remark}" />
 						</div>
 					</div>
 					<div class="form-group">
-						<h:outputLabel for="inputDate" class="col-sm-2 control-label" value="Datum " />
+						<h:outputLabel for="datepicker" class="col-sm-2 control-label"
+							value="Datum " />
 						<div class="col-sm-10">
-							<h:inputTextarea id="inputDate" class="form-control" value="#{shoppingCart.date}" />
+							<input type="text" id="datepicker" class="form-control"
+								value="#{shoppingCart.date}">
+
+							</input>
 						</div>
 					</div>
 					<div class="form-group">
 
-						<h:outputLabel for="inputTime" class="col-sm-2 control-label" value="Uhrzeit " />
+						<h:outputLabel for="inputTime" class="col-sm-2 control-label"
+							value="Uhrzeit " />
 						<div class="col-sm-10">
-							<h:inputTextarea id="inputTime" class="form-control" value="#{shoppingCart.time}" />
+							<h:inputTextarea id="inputTime" class="form-control"
+								value="#{shoppingCart.time}" />
 						</div>
 					</div>
 
-					<h:selectBooleanCheckbox value="#{shoppingCart.useUserAddress}" disabled="#{!shoppingCart.defaultAddressSelectable}"  onchange="submit()"/>
+					<h:selectBooleanCheckbox value="#{shoppingCart.useUserAddress}"
+						disabled="#{!shoppingCart.defaultAddressSelectable}"
+						onchange="submit()" />
 					<h:outputText value="  Normale Adresse verwenden" />
 					<br />
 					<br />
 					<p>alternative Adresse</p>
 					<div class="input-group input-group-width">
-						<h:outputLabel class="input-group-addon input-group-addon-width" value="Postleitzahl " />
-						<h:inputText id="zip" class="form-control form-control-width" value="#{shoppingCart.zipCode}" disabled="#{shoppingCart.useUserAddress}"
-							required="#{!shoppingCart.useUserAddress}" requiredMessage="#{msg.zip_required}">
+						<h:outputLabel class="input-group-addon input-group-addon-width"
+							value="Postleitzahl " />
+						<h:inputText id="zip" class="form-control form-control-width"
+							value="#{shoppingCart.zipCode}"
+							disabled="#{shoppingCart.useUserAddress}"
+							required="#{!shoppingCart.useUserAddress}"
+							requiredMessage="#{msg.zip_required}">
 							<f:validateRequired disabled="#{shoppingCart.useUserAddress}" />
 							<f:validateLongRange minimum="10000" maximum="99999" />
 						</h:inputText>
 					</div>
-						<h:message for="zip" />
+					<h:message for="zip" />
 					<div class="input-group input-group-width">
-						<h:outputLabel class="input-group-addon input-group-addon-width" value="Ort: " />
-						<h:inputText id="city" class="form-control form-control-width" value="#{shoppingCart.city}" disabled="#{shoppingCart.useUserAddress}"
-							required="#{!shoppingCart.useUserAddress}" requiredMessage="#{msg.city_required}" />
+						<h:outputLabel class="input-group-addon input-group-addon-width"
+							value="Ort: " />
+						<h:inputText id="city" class="form-control form-control-width"
+							value="#{shoppingCart.city}"
+							disabled="#{shoppingCart.useUserAddress}"
+							required="#{!shoppingCart.useUserAddress}"
+							requiredMessage="#{msg.city_required}" />
 					</div>
-						<h:message for="city" />
+					<h:message for="city" />
 					<div class="input-group input-group-width">
-						<h:outputLabel class="input-group-addon input-group-addon-width" value="Straße: " />
-						<h:inputText id="street" class="form-control form-control-width" value="#{shoppingCart.streetName}" disabled="#{shoppingCart.useUserAddress}"
-							required="#{!shoppingCart.useUserAddress}" requiredMessage="#{msg.street_required}" />
+						<h:outputLabel class="input-group-addon input-group-addon-width"
+							value="Straße: " />
+						<h:inputText id="street" class="form-control form-control-width"
+							value="#{shoppingCart.streetName}"
+							disabled="#{shoppingCart.useUserAddress}"
+							required="#{!shoppingCart.useUserAddress}"
+							requiredMessage="#{msg.street_required}" />
 					</div>
-						<h:message for="street" />
+					<h:message for="street" />
 					<div class="input-group input-group-width">
-						<h:outputLabel class="input-group-addon input-group-addon-width" value="Hausnummer: " />
-						<h:inputText id="number" class="form-control form-control-width" value="#{shoppingCart.number}" disabled="#{shoppingCart.useUserAddress}"
-							required="#{!shoppingCart.useUserAddress}" requiredMessage="#{msg.number_required}">
+						<h:outputLabel class="input-group-addon input-group-addon-width"
+							value="Hausnummer: " />
+						<h:inputText id="number" class="form-control form-control-width"
+							value="#{shoppingCart.number}"
+							disabled="#{shoppingCart.useUserAddress}"
+							required="#{!shoppingCart.useUserAddress}"
+							requiredMessage="#{msg.number_required}">
 							<f:validateRequired disabled="#{shoppingCart.useUserAddress}" />
 							<f:validateLongRange minimum="1" maximum="10000" />
 						</h:inputText>
 					</div>
-						<h:message for="number" />
+					<h:message for="number" />
 					<br />
-					<h:commandButton class="btn btn-default" value="Bestellung abschicken" action="#{sessionBean.completeOrder}"></h:commandButton>
+					<h:commandButton class="btn btn-default"
+						value="Bestellung abschicken"
+						action="#{sessionBean.completeOrder}"></h:commandButton>
 				</h:form>
 			</f:view>
 		</div>
@@ -98,7 +138,8 @@
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script src="../../js/bootstrap.min.js"></script>
 	<script src="../../js/bootstrap-datepicker.js"></script>
 	<script src="../../js/docs.min.js"></script>

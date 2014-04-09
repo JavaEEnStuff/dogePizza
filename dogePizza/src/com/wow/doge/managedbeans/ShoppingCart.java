@@ -40,7 +40,7 @@ public class ShoppingCart {
 	private boolean useUserAddress = true;
 	private Address address;
 	private String remark;
-	/** YYYY-MM-dd */
+	/** yyyy-MM-dd */
 	private String date;
 	/** HH:mi:ss */
 	private String time;
@@ -206,7 +206,7 @@ public class ShoppingCart {
 	}
 
 	public String showShoppingCart() {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm");
 		date = dateFormat.format(new Date().getTime());
 		time = timeFormat.format(new Date().getTime() + (1000 * 60 * 60));
@@ -252,10 +252,9 @@ public class ShoppingCart {
 	 */
 	public long getSelectedDateTimeInMillis() {
 		try {
-			SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm");
-			String comb=date + " " + time;
-			Date timestampAsDate = dateFormat.parse(comb);
-			return timestampAsDate.getTime();
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+			Date d = dateFormat.parse(date + " " + time);
+			return d.getTime();
 		} catch (ParseException e) {
 			return new Date().getTime() + (1000 * 60 * 60);
 		}

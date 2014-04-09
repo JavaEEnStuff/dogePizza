@@ -1,8 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<title>Frage</title>
@@ -49,18 +47,15 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<h:outputLabel class="col-sm-2 control-label"
-							value="Beschreibung " />
+						<h:outputLabel class="col-sm-2 control-label" value="Beschreibung " />
 						<div class="col-sm-10">
-							<h:outputText class="form-control"
-								value="#{questionBean.description}" />
+							<h:outputText  class="form-control" value="#{questionBean.description}" />
 						</div>
 					</div>
 					<div class="form-group">
 						<h:outputLabel class="col-sm-2 control-label" value="Antwortzahl " />
 						<div class="col-sm-10">
-							<h:outputText class="form-control"
-								value="#{questionBean.answerCount}" />
+							<h:outputText class="form-control" value="#{questionBean.answerCount}" />
 						</div>
 					</div>
 					<br />
@@ -70,9 +65,8 @@
 							<h:outputText value="#{o.text}"></h:outputText>
 						</h:column>
 					</h:dataTable>
-					<br/>
-					<h:commandButton class="btn btn-default" value="Zurück"
-						action="#{questionBean.questionList}" />
+					<br />
+					<h:commandButton class="btn btn-default" value="Zurück" action="#{questionBean.questionList}" />
 				</h:form>
 			</f:view>
 		</div>
@@ -81,8 +75,7 @@
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script src="../../js/bootstrap.min.js"></script>
 	<script src="../../js/docs.min.js"></script>
 </h:body>

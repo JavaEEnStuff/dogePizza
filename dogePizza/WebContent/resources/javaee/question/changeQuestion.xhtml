@@ -1,8 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<title>Frage</title>
@@ -27,7 +25,7 @@
 	<div>
 		<ui:include src="/resources/javaee/navbar.xhtml"></ui:include>
 	</div>
-	
+
 	<div class="container theme-showcase" role="main">
 
 		<!-- Main jumbotron for a primary marketing message or call to action -->
@@ -37,41 +35,35 @@
 			<f:view>
 				<h:form class="form-horizontal" role="form">
 					<div class="form-group">
-						<h:outputLabel class="col-sm-2 control-label"
-							value="ID " />
+						<h:outputLabel class="col-sm-2 control-label" value="ID " />
 						<div class="col-sm-10">
-							<h:outputText class="form-control"
-								value="#{questionBean.id}" />
+							<h:outputText class="form-control" value="#{questionBean.id}" />
 						</div>
 					</div>
 					<div class="form-group">
-						<h:outputLabel for="inputTitle" class="col-sm-2 control-label"
-							value="Titel " />
+						<h:outputLabel class="col-sm-2 control-label" value="Titel " />
 						<div class="col-sm-10">
-							<h:inputText id="inputTitle" class="form-control"
-								value="#{questionBean.title}" />
+							<h:inputText id="title" class="form-control" value="#{questionBean.title}" required="true" requiredMessage="#{msg.answer_title_needed}" />
 						</div>
 					</div>
+					<h:message for="title" />
 					<div class="form-group">
-						<h:outputLabel for="inputDesc" class="col-sm-2 control-label"
-							value="Beschreibung " />
+						<h:outputLabel class="col-sm-2 control-label" value="Beschreibung " />
 						<div class="col-sm-10">
-							<h:inputTextarea id="inputDesc" class="form-control"
-								value="#{questionBean.description}" />
+							<h:inputTextarea id="description" class="form-control" value="#{questionBean.description}" required="true"
+								requiredMessage="#{msg.answer_description_needed}" />
 						</div>
 					</div>
+					<h:message for="description" />
 					<div class="form-group">
-						<h:outputLabel class="col-sm-2 control-label"
-							value="Antwortanzahl " />
+						<h:outputLabel class="col-sm-2 control-label" value="Antwortanzahl " />
 						<div class="col-sm-10">
-							<h:outputText class="form-control"
-								value="#{questionBean.answerCount}" />
+							<h:outputText class="form-control" value="#{questionBean.answerCount}" />
 						</div>
 					</div>
 					<h:inputHidden value="#{questionBean.id}" />
 					<h:commandButton class="btn btn-default" style="margin-right:5px" value="Speichern" action="#{questionBean.save}" />
-					<h:commandButton class="btn btn-default" value="Zurück"
-						action="#{questionBean.questionList}" />
+					<h:commandButton class="btn btn-default" value="Zurück" action="#{questionBean.questionList}" />
 				</h:form>
 			</f:view>
 		</div>
@@ -79,8 +71,7 @@
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script src="../../js/bootstrap.min.js"></script>
 	<script src="../../js/docs.min.js"></script>
 </h:body>

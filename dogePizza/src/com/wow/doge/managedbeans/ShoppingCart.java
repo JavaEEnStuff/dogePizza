@@ -19,7 +19,6 @@ import com.wow.doge.domain.Order;
 import com.wow.doge.domain.OrderPosition;
 import com.wow.doge.domain.User;
 import com.wow.doge.services.MealService;
-import com.wow.doge.services.OrderPositionService;
 import com.wow.doge.services.OrderService;
 
 /**
@@ -46,15 +45,14 @@ public class ShoppingCart {
 	/** HH:mi:ss */
 	private String time;
 
+	private User user;
+
 	private String errorText;
 
 	public ShoppingCart() {
+		logger.info("user: " + user);
 		orderPositions = new LinkedList<>();
 		address = new Address();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
-		SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm:ss");
-		date = dateFormat.format(new Date().getTime());
-		time = timeFormat.format(new Date().getTime() + (1000 * 60 * 60));
 	}
 
 	public String addOrderPosition() {
@@ -203,9 +201,15 @@ public class ShoppingCart {
 	public void clearShoppingCart() {
 		logger.info("Leere Einkaufswagen, aktuelle Anzahl an Positionen: " + orderPositions.size());
 		orderPositions = new LinkedList<>();
+		remark = "";
+		address = new Address();
 	}
 
 	public String showShoppingCart() {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
+		SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm:ss");
+		date = dateFormat.format(new Date().getTime());
+		time = timeFormat.format(new Date().getTime() + (1000 * 60 * 60));
 		return "/resources/javaee/shoppingCart/shoppingCartList.jsf";
 	}
 
@@ -218,17 +222,34 @@ public class ShoppingCart {
 		return toString();
 	}
 
-	public String order() {
+	public boolean getDefaultAddressSelectable() {
+		return user != null;
+	}
+
+	/**
+	 * ein Mindestbestellwert muss erfüllt sein, sonst wird eine Fehlermeldung angezeigt
+	 * @return den Link zur Beställbestätigung
+	 */
+	public String order(User user) {
 		if (getOverallPrice() < MINIMUM_ORDER_VALUE) {
 			errorText = "Der Mindestbestellwert wurde noch nicht erreicht!";
 			return "";
 		} else {
+			this.user = user;
+			if (user == null) {
+				useUserAddress = false;
+			} else {
+				useUserAddress = true;
+			}
 			errorText = "";
-			logger.info("Bestellung!");
+			logger.info("Bestellung mit User " + user);
 			return "orderAddressConfirmation.jsf";
 		}
 	}
 
+	/**
+	 * @return die ausgewählten Felder Lieferdatum und -zeit als long
+	 */
 	public long getSelectedDateTimeInMillis() {
 		try {
 			SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd hh:mm:ss");
@@ -239,27 +260,34 @@ public class ShoppingCart {
 		}
 	}
 
+	/**
+	 * Schließt den Bestellvorgang ab. Hier wird unterschieden zwischen normaler Adresse und alternativer Adresse, 
+	 * sowie zwischen angemeldetem Nutzer und nicht angemeldetem Nutzer.
+	 * @param user der angemeldete Benutzer
+	 */
 	public void completeOrder(User user) {
-
-		OrderPositionService orderPositionService = new OrderPositionService();
 		OrderService orderService = new OrderService();
-		if (user != null && useUserAddress) {
-			logger.info("Bestellung mit normaler default-Adresse!");
-			Order order = new Order();
-			order.setAddress(user.getDefaultAddress());
-			order.setDate(getSelectedDateTimeInMillis());
-			for (OrderPosition position : orderPositions) {
-				orderPositionService.saveOrUpdate(position);
-				order.addPosition(position);
-			}
-			order.setRemark(remark);
-			order.setOrderDate(new Date().getTime());
+		Order order = new Order();
+		if (user != null) {
 			order.setUser(user);
-			orderService.merge(order);
-			clearShoppingCart();
+			if (useUserAddress) {
+				logger.info("Bestellung mit normaler default-Adresse!");
+				order.setAddress(user.getDefaultAddress());
+			} else {
+				logger.info("Bestellung mit alternativer Adresse!");
+				order.setAddress(address);
+			}
 		} else {
 			logger.info("Bestellung mit alternativer Adresse!");
-			// TODO: was da los?
+			order.setAddress(address);
 		}
+		for (OrderPosition position : orderPositions) {
+			order.addPosition(position);
+		}
+		order.setDate(getSelectedDateTimeInMillis());
+		order.setRemark(remark);
+		order.setOrderDate(new Date().getTime());
+		orderService.merge(order);
+		clearShoppingCart();
 	}
 }

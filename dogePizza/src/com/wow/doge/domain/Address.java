@@ -9,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+/**
+ * Eine ganz normale Adresse. Adressen können auch von Aufträgen referenziert werden.
+ */
 @Entity
 public class Address {
 

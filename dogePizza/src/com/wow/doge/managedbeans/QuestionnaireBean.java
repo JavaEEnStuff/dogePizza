@@ -59,6 +59,11 @@ public class QuestionnaireBean {
 		return orderId;
 	}
 
+	/**
+	 * This is where the magic happens. Beim Setzen der AuftragsID müssen die Informationen bezüglich der Bewertung ausgelesen und die Felder entweder vorbelegt
+	 * oder leer belegt werden, je nachdem ob die Informationen bereits vorhanden sind oder nicht.
+	 * @param orderId
+	 */
 	public void setOrderId(int orderId) {
 		logger.info("OrderID:" + orderId);
 		this.orderId = orderId;
@@ -147,20 +152,22 @@ public class QuestionnaireBean {
 		this.questions = questions;
 	}
 
+	// ====== Funktione ============
+
 	public String save() {
 		logger.info("Versuche Questionnaire zu speichern... " + questionnaire);
 		QuestionnaireService service = new QuestionnaireService();
 		OrderService orderService = new OrderService();
-		
+
 		// Questionnaire wegschreiben
 		Order order = orderService.get(orderId);
 		questionnaire.setOrder(order);
 		service.saveOrUpdate(questionnaire);
-		
+
 		// Bestellung wegschreiben
 		order.setQuestionnaire(questionnaire);
 		service.saveOrUpdate(questionnaire);
-		
+
 		// Questions wegschreiben
 		AssessmentQuestionService aqService = new AssessmentQuestionService();
 		for (AssessmentQuestion q : questions) {
@@ -170,12 +177,18 @@ public class QuestionnaireBean {
 		return "../order/orderList.xhtml";
 	}
 
+	// ======= Links =========
+	
 	public String showQuestionnaire() {
 		QuestionnaireService service = new QuestionnaireService();
 		questionnaire = service.get(questionnaireId);
 		return "showQuestionnaire.xhtml";
 	}
 
+	/**
+	 * Je nachdem ob die Bewertung bereits abgegeben wurde, wird entweder nur eine Ansichtsmaske oder die wirkliche Anlege-Maske zurückgegeben
+	 * @return Link zur nächsten Maske
+	 */
 	public String questionnaire() {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		Integer id = Integer.parseInt(facesContext.getExternalContext().getRequestParameterMap().get("orderId"));

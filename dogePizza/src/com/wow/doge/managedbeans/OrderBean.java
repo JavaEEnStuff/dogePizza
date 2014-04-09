@@ -8,21 +8,23 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
+import org.apache.log4j.Logger;
+import org.hibernate.criterion.Restrictions;
+
 import com.wow.doge.domain.Order;
 import com.wow.doge.domain.OrderPosition;
+import com.wow.doge.domain.User;
 import com.wow.doge.services.OrderService;
+import com.wow.doge.services.SelectionHelper;
 
 @ManagedBean
 @RequestScoped
 public class OrderBean {
 
+	private static final Logger logger = Logger.getLogger(OrderBean.class);
+	
 	@ManagedProperty("#{param.orderId}")
 	private int orderId;
-	private Order order;
-
-	public OrderBean() {
-		order = new Order();
-	}
 
 	public int getOrderId() {
 		return orderId;
@@ -33,17 +35,41 @@ public class OrderBean {
 		OrderService service = new OrderService();
 		order = service.get(orderId);
 	}
+	
+	@ManagedProperty(value = "#{sessionBean}")
+	private SessionBean sessionBean;
+
+	public void setSessionBean(SessionBean sessionBean) {
+		this.sessionBean = sessionBean;
+	}
+	
+
+	private Order order;
+
+	public OrderBean() {
+		order = new Order();
+	}
 
 	/**
-	 * umgekehrt sortiert nach Bestelldatum
-	 * @return
+	 * @return alle Aufträge des Benutzers, umgekehrt sortiert nach Bestelldatum
 	 */
 	public List<Order> getAllOrders() {
+		User user = sessionBean.getLoggedInUser();
 		OrderService service = new OrderService();
-		List<Order> list = service.getListWithComparator(Order.getReverseOrderDateComparator());
+		SelectionHelper<Order> selectionHelper = new SelectionHelper<Order>();
+		selectionHelper.setComparator(Order.getReverseOrderDateComparator());
+		// wenn kein admin, dann nur die eigenen Bestellungen ansehen
+		if(!user.isAdmin()){
+			logger.info("Setze EQ für User :"+user);
+			selectionHelper.addCriterion(Restrictions.eq("user", user));
+		}
+		List<Order> list = service.getList(selectionHelper);
 		return list;
 	}
 
+	/**
+	 * @return alle Positionen zum Auftrag
+	 */
 	public List<OrderPosition> getOrderPositionForOrder() {
 		if (order != null) {
 			Set<OrderPosition> positions = order.getPositions();

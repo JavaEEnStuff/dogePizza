@@ -6,6 +6,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * Menüklasse, repräsentiert ein HTML-Menü
+ */
 @Entity
 public class Menu {
 

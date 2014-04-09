@@ -7,12 +7,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+/**
+ * Teilfrage eines Fragebogens
+ */
 @Entity
 public class AssessmentQuestion implements Comparable<AssessmentQuestion> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+	/** die Fragestellung */
 	private String questionText;
 	/** die Note, die vergeben wurde */
 	private int answer;

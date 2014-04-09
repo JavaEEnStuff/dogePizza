@@ -28,6 +28,13 @@ public class MainMenuBean {
 		this.sessionBean = sessionBean;
 	}
 
+	/**
+	 * Hier werden alle Menüs gesucht, die der Benutzer sehen darf. Dabei gelten folgende Unterscheidungen:<br/>
+	 * - Benutzer nicht angemeldet<br/>
+	 * - Benutzer angemeldet und kein Admin<br/>
+	 * - Benutzer angemeldet und Admin<br/>
+	 * @return alle Menüs entsprechend der Berechtigung der Nutzeranmeldung
+	 */
 	public List<Menu> getMenusToShow() {
 		List<Criterion> restrictions = new LinkedList<>();
 		MenuService service = new MenuService();

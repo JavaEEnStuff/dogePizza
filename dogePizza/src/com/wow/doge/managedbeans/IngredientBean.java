@@ -76,6 +76,15 @@ public class IngredientBean {
 		return "ingredientList.xhtml";
 	}
 
+	public String deleteIngredient() {
+		IngredientService service = new IngredientService();
+		Ingredient ingredientToDelete = service.get(ingredientId);
+		service.delete(ingredientToDelete);
+		return ingredientList();
+	}
+	
+	// ====== Links ===========
+
 	public String showIngredient() {
 		IngredientService service = new IngredientService();
 		ingredient = service.get(ingredientId);
@@ -89,13 +98,6 @@ public class IngredientBean {
 		return "changeIngredient.xhtml";
 	}
 
-	public String deleteIngredient() {
-		IngredientService service = new IngredientService();
-		Ingredient ingredientToDelete = service.get(ingredientId);
-		service.delete(ingredientToDelete);
-		return ingredientList();
-	}
-
 	public String createIngredient() {
 		return "createIngredient.xhtml";
 	}
@@ -104,10 +106,13 @@ public class IngredientBean {
 		return "ingredientList.jsf";
 	}
 	
-	public String main(){
-		return "/resources/javaee/main.xhtml";
-	}
-	
+	/**
+	 * der Name sollte nur einmal existieren
+	 * @param context
+	 * @param component
+	 * @param value
+	 * @throws ValidatorException
+	 */
 	public void validateName(FacesContext context, UIComponent component, Object value) throws ValidatorException {
 		IngredientService service = new IngredientService();
 		SelectionHelper<Ingredient> helper = new SelectionHelper<>();

@@ -18,12 +18,17 @@ import org.hibernate.criterion.Projections;
  */
 public class SelectionHelper<T> {
 
+	/** SQL-Sortierung */
 	private Order order;
+	/** Kritieren */
 	private List<Criterion> criterions;
 	/** default = 0 */
 	private int maxResults;
+	/** Java-Sortierung */
 	private Comparator<T> comparator;
+	/** Spalteneinschränkung */
 	private ProjectionList projectionList;
+	/** Alias-Liste */
 	private List<Alias> alias;
 
 	public SelectionHelper() {
@@ -90,11 +95,15 @@ public class SelectionHelper<T> {
 	public void setAlias(List<Alias> alias) {
 		this.alias = alias;
 	}
-	
-	public void addAlias(Alias newAlias){
+
+	public void addAlias(Alias newAlias) {
 		this.alias.add(newAlias);
 	}
 
+	/**
+	 * Repräsentationsklasse eines SQL-Alias. Diese können nur zur Laufzeit "erstellt" werden (über die Session). Daher werden hier die Informationen abgespeichert,
+	 * um das Erstellen möglich zu machen
+	 */
 	public static class Alias {
 		private final String name;
 		private final String alias;
@@ -117,7 +126,5 @@ public class SelectionHelper<T> {
 		public String toString() {
 			return "Alias [name=" + name + ", alias=" + alias + "]";
 		}
-
 	}
-
 }

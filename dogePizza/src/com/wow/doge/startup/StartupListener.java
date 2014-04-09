@@ -9,6 +9,9 @@ import javax.servlet.ServletContextListener;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+/**
+ * Startklasse die beim Start des Anwendungsservers aufgerufen wird und die Anwendung initialisiert.
+ */
 public class StartupListener implements ServletContextListener {
 
 	private List<StartupCreator> startupCreators;

@@ -17,13 +17,23 @@ import org.hibernate.criterion.Restrictions;
 import com.wow.doge.hibernate.HibernateUtil;
 import com.wow.doge.services.SelectionHelper.Alias;
 
+/**
+ * Allmighty Service-Klasse für den Großteil der Datenbankanfragen zuständig ist. Durch Generics wird die Logik dabei zentralisiert und muss nicht für jede Domain-Klasse
+ * neu geschrieben werden. Dabei werden verschiedene grundlegende Funktionen bereit gestellt, die sich um Standard-Datenbankanfragen kümmern.
+ *
+ * @param <T>
+ */
 public abstract class AbstractService<T> {
 
 	protected Logger logger = Logger.getLogger(AbstractService.class);
 
-	/** Klasse zum Casten */
+	/** Klasse zum Casten, wird für Hibernate benötigt, damit das ganze auch mit den Generics klappt. */
 	protected abstract Class<T> getHibernateClass();
 
+	/**
+	 * Löschen eines Objektes
+	 * @param object
+	 */
 	public void delete(T object) {
 		Session session = null;
 
@@ -43,10 +53,8 @@ public abstract class AbstractService<T> {
 	}
 
 	/**
-	 * Sucht ein bestimmtes Objekt mit einer ID aus der Datenbank
-	 * 
-	 * @param id
-	 * @return das gefundene Objekt oder null.
+	 * @param ids
+	 * @return alle Objekte, deren ids in der übergebene Liste sind.
 	 */
 	public List<T> whereIdsIn(List<Integer> ids) {
 		Session session = null;
@@ -59,18 +67,21 @@ public abstract class AbstractService<T> {
 				return new LinkedList<T>();
 			}
 			criteria.add(Restrictions.in("id", ids));
-			List<T> sight = (List<T>) criteria.list();
+			List<T> list = (List<T>) criteria.list();
 			session.getTransaction().commit();
-			return sight;
+			return list;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			// TODO: errorHandling
 			return null;
 		} finally {
 			HibernateUtil.closeSession(session);
 		}
 	}
 
+	/**
+	 * @param ids
+	 * @return alle Objekte, deren Ids NICHT in der übergebenen Liste sind
+	 */
 	public List<T> whereIdsNotIn(List<Integer> ids) {
 		Session session = null;
 
@@ -81,12 +92,11 @@ public abstract class AbstractService<T> {
 			if (ids != null && !ids.isEmpty()) {
 				criteria.add(Restrictions.not(Restrictions.in("id", ids)));
 			}
-			List<T> sight = (List<T>) criteria.list();
+			List<T> list = (List<T>) criteria.list();
 			session.getTransaction().commit();
-			return sight;
+			return list;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			// TODO: errorHandling
 			return null;
 		} finally {
 			HibernateUtil.closeSession(session);
@@ -94,10 +104,8 @@ public abstract class AbstractService<T> {
 	}
 
 	/**
-	 * Sucht ein bestimmtes Objekt mit einer ID aus der Datenbank
-	 * 
 	 * @param id
-	 * @return das gefundene Objekt oder null.
+	 * @return das Objekt mit der übergebenen ID
 	 */
 	public T get(int id) {
 		Session session = null;
@@ -110,7 +118,6 @@ public abstract class AbstractService<T> {
 			return sight;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			// TODO: errorHandling
 			return null;
 		} finally {
 			HibernateUtil.closeSession(session);
@@ -118,14 +125,16 @@ public abstract class AbstractService<T> {
 	}
 
 	/**
-	 * Gibt alle Sehenswürdigkeiten als Liste aus der Datenbank zurück.
-	 * 
-	 * @return Alle Sehenswürdigkeiten.
+	 * @return Liste ALLER Objekte, ausnahmslos
 	 */
 	public List<T> getList() {
 		return getListWithComparator(null);
 	}
 
+	/**
+	 * @param comparator
+	 * @return Liste aller Objekte, sortiert
+	 */
 	public List<T> getListWithComparator(Comparator<T> comparator) {
 		Session session = null;
 
@@ -141,7 +150,6 @@ public abstract class AbstractService<T> {
 			return resultList;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			// TODO: errorHandling
 			return null;
 		} finally {
 			HibernateUtil.closeSession(session);
@@ -149,8 +157,8 @@ public abstract class AbstractService<T> {
 	}
 
 	/**
-	 * @param searchString
-	 * @return all found Objects
+	 * @param criterions
+	 * @return alle Objekte, die den Übergabekriterien entsprechen
 	 */
 	public List<T> getList(Criterion... criterions) {
 		Session session = null;
@@ -168,7 +176,6 @@ public abstract class AbstractService<T> {
 			return resultList;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			// TODO: errorHandling
 			return null;
 		} finally {
 			HibernateUtil.closeSession(session);
@@ -176,8 +183,8 @@ public abstract class AbstractService<T> {
 	}
 
 	/**
-	 * @param searchString
-	 * @return all found Objects
+	 * @param helper spezielle Helperklasse, die verschiedene Einschränkungen bereit stellt.
+	 * @return alle Objekte, die den Einschränkungen durch den SelectionHelper entsprechen.
 	 */
 	public List<T> getList(SelectionHelper<T> helper) {
 		Session session = null;
@@ -187,23 +194,29 @@ public abstract class AbstractService<T> {
 			session.beginTransaction();
 
 			Criteria criteria = session.createCriteria(getHibernateClass());
+			// zunaechst die Aliase
 			for(Alias alias : helper.getAlias()){
 				criteria.createAlias(alias.getName(), alias.getAlias());
 			}
+			// Kriterien
 			for (Criterion nextCriterion : helper.getCriterions()) {
 				criteria.add(nextCriterion);
 			}
+			// LIMIT
 			if (helper.getMaxResults() != 0) {
 				criteria.setMaxResults(helper.getMaxResults());
 			}
+			// Sortierung auf SQL-Ebene
 			if (helper.getOrder() != null) {
 				criteria.addOrder(helper.getOrder());
 			}
+			// Einschränkung der Spalten
 			if (helper.getProjectionList().getLength() > 0) {
 				criteria.setProjection(helper.getProjectionList());
 			}
-			logger.info(criteria.toString());
+			logger.debug(criteria.toString());
 			List<T> resultList = (ArrayList<T>) criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+			// Java-Sortierung
 			if (helper.getComparator() != null) {
 				Collections.sort(resultList, helper.getComparator());
 			}
@@ -211,13 +224,16 @@ public abstract class AbstractService<T> {
 			return resultList;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			// TODO: errorHandling
 			return null;
 		} finally {
 			HibernateUtil.closeSession(session);
 		}
 	}
 
+	/**
+	 * @param criterions
+	 * @return Liste aller Objekte, die die Kriterien erfüllen
+	 */
 	public List<T> getList(Collection<Criterion> criterions) {
 		Session session = null;
 
@@ -234,7 +250,6 @@ public abstract class AbstractService<T> {
 			return resultList;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			// TODO: errorHandling
 			return null;
 		} finally {
 			HibernateUtil.closeSession(session);
@@ -242,8 +257,7 @@ public abstract class AbstractService<T> {
 	}
 	
 	/**
-	 * Speichert eine Sehenswürdigkeit in der Datenbank. Diese Methode erkennt
-	 * selbstständig, ob ein Objekt neu in die Datenbank eingefügt oder dort
+	 * Speichert ein Objekt in der Datenbank. Diese Methode erkennt selbstständig, ob ein Objekt neu in die Datenbank eingefügt oder dort
 	 * aktualisiert werden muss.
 	 * 
 	 * @param t Object to save
@@ -259,17 +273,15 @@ public abstract class AbstractService<T> {
 			session.getTransaction().commit();
 		} catch (HibernateException e) {
 			logger.error("HibernateException", e);
-			e.printStackTrace();
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			// TODO: errorHandling
 		} finally {
 			HibernateUtil.closeSession(session);
 		}
 	}
 
 	/**
-	 * Alternative zu saveOrUpdate, wird verwendet, wenn was mit dem Identifier bei Joins nicht klappt.
+	 * Alternative zu saveOrUpdate. Wird verwendet, wenn was mit dem Identifier bei Joins nicht klappt.
 	 * @param t
 	 */
 	public void merge(T t) {
@@ -282,10 +294,8 @@ public abstract class AbstractService<T> {
 			session.getTransaction().commit();
 		} catch (HibernateException e) {
 			logger.error("HibernateException", e);
-			e.printStackTrace();
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			// TODO: errorHandling
 		} finally {
 			HibernateUtil.closeSession(session);
 		}

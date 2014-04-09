@@ -28,19 +28,31 @@ import com.wow.doge.view.MealViewItem;
 @RequestScoped
 public class MealBean {
 
-	private static final int CATEGORY_ID_ALL = 0;
+	public static final int CATEGORY_ID_ALL = 0;
 
 	private static final Logger logger = Logger.getLogger(MealBean.class);
 
-	private Meal meal;
-	// die ausgewählten Ids (rechte Seite, aber nur die, die selektiert wurden)
-	private List<String> selectedIngredientIds;
-	private Integer selectedCategoryId;
-	private Integer selectedComparator;
-	private boolean onlyFavorites;
+	// ===== Managed Properties ===========
 
 	@ManagedProperty("#{param.mealId}")
 	private int mealId;
+
+	public int getMealId() {
+		return mealId;
+	}
+
+	public void setMealId(int mealId) {
+		this.mealId = mealId;
+		if (mealId != 0) {
+			MealService service = new MealService();
+			this.meal = service.get(mealId);
+			this.selectedIngredientIds = new LinkedList<>();
+			for (Ingredient nextIngredient : meal.getIngredients()) {
+				selectedIngredientIds.add(nextIngredient.getId() + "");
+			}
+			this.selectedCategoryId = meal.getCategory().getId();
+		}
+	}
 
 	@ManagedProperty(value = "#{sessionBean}")
 	private SessionBean sessionBean;
@@ -49,6 +61,16 @@ public class MealBean {
 		this.sessionBean = sessionBean;
 	}
 
+	// ===== Variablen ========
+
+	private Meal meal;
+	/** die ausgewählten Zutaten-IDs */
+	private List<String> selectedIngredientIds;
+	/** selektierte Kateogrie-ID */
+	private Integer selectedCategoryId;
+	/** Selektierte Sortierung */
+	private Integer selectedComparator;
+	private boolean onlyFavorites;
 	private Double fromPrice;
 	private Double toPrice;
 
@@ -104,10 +126,6 @@ public class MealBean {
 		return meal.getCategory().getName();
 	}
 
-	public int getMealId() {
-		return mealId;
-	}
-
 	public Double getFromPrice() {
 		return fromPrice;
 	}
@@ -130,20 +148,6 @@ public class MealBean {
 
 	public void setSelectedCategoryId(Integer selectedCategoryId) {
 		this.selectedCategoryId = selectedCategoryId;
-	}
-
-	public void setMealId(int mealId) {
-		this.mealId = mealId;
-		if (mealId != 0) {
-			MealService service = new MealService();
-			this.meal = service.get(mealId);
-			logger.info("MealID: " + mealId + ", Meal: " + meal);
-			this.selectedIngredientIds = new LinkedList<>();
-			for (Ingredient nextIngredient : meal.getIngredients()) {
-				selectedIngredientIds.add(nextIngredient.getId() + "");
-			}
-			this.selectedCategoryId = meal.getCategory().getId();
-		}
 	}
 
 	public Double getFirstPrice() {
@@ -186,6 +190,14 @@ public class MealBean {
 		this.selectedComparator = selectedComparator;
 	}
 
+	public List<String> getSelectedIngredientIds() {
+		return selectedIngredientIds;
+	}
+
+	public void setSelectedIngredientIds(List<String> selectedIngredientIds) {
+		this.selectedIngredientIds = selectedIngredientIds;
+	}
+
 	// ========== FUNKTIONEN ================
 
 	public List<SelectItem> getAllIngredients() {
@@ -202,11 +214,14 @@ public class MealBean {
 		return asSelectItemList;
 	}
 
+	/**
+	 * @return alle Kategorien und an erster Stelle "Alle"
+	 */
 	public List<SelectItem> getAllCategoriesPlusAll() {
 		CategoryService service = new CategoryService();
 		CategorySelectItemHelper helper = new CategorySelectItemHelper();
 		List<SelectItem> asSelectItemList = helper.asSelectItemList(service.getList());
-		asSelectItemList.add(0, new SelectItem(CATEGORY_ID_ALL, "Alle"));
+		asSelectItemList.add(CATEGORY_ID_ALL, new SelectItem(CATEGORY_ID_ALL, "Alle"));
 		return asSelectItemList;
 	}
 
@@ -214,10 +229,16 @@ public class MealBean {
 		return MealSorting.getSortings();
 	}
 
+	/**
+	 * Hier muss auch nach der Anmeldung unterschieden werden. Es wird dabei ein normales Meal-Element auf ein MealViewItem gemappt, da zusätzlich zu den
+	 * normalen Informationen noch die Informationen des aktuellen Favorite-Status des Meals, sowie der Möglichkeit des Favorisierens hinzukommen. So ist nur
+	 * angemeldeten Benutzern möglich Menüs zu favoriseren.
+	 * @return Liste aller Menüs, die den Selektionskriterien entsprechen
+	 */
 	public List<MealViewItem> getMeals() {
-		logger.info("Suche nach meals...");
 		MealEvaluationHelper helper = new MealEvaluationHelper();
-		List<Meal> meals = helper.getMealsInPriceRangeAndCategory(fromPrice, toPrice, selectedCategoryId, selectedComparator, onlyFavorites, sessionBean.getLoggedInUser());
+		List<Meal> meals = helper.getMealsInPriceRangeAndCategory(fromPrice, toPrice, selectedCategoryId, selectedComparator, onlyFavorites,
+				sessionBean.getLoggedInUser());
 		List<MealViewItem> elements = new LinkedList<MealViewItem>();
 		for (Meal nextMeal : meals) {
 			if (sessionBean.getLoggedInUser() != null) {
@@ -231,14 +252,6 @@ public class MealBean {
 			}
 		}
 		return elements;
-	}
-
-	public List<String> getSelectedIngredientIds() {
-		return selectedIngredientIds;
-	}
-
-	public void setSelectedIngredientIds(List<String> selectedIngredientIds) {
-		this.selectedIngredientIds = selectedIngredientIds;
 	}
 
 	public String deleteMeal() {
@@ -268,6 +281,10 @@ public class MealBean {
 		return mealList();
 	}
 
+	/**
+	 * Favorisieren bzw. Ent-Favorisieren eines Menüs für den Benutzer
+	 * @return Link
+	 */
 	public String favoriteMeal() {
 		MealService mealService = new MealService();
 		UserService userService = new UserService();
@@ -311,10 +328,6 @@ public class MealBean {
 
 	public String mealList() {
 		return "mealList.jsf";
-	}
-
-	public String main() {
-		return "/resources/javaee/main.xhtml";
 	}
 
 	public String search() {

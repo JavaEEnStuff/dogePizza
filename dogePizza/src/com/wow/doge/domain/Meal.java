@@ -15,6 +15,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+/**
+ * Vollständiges Menü. Es wird von Benutzern als Favorit und auch von OrderPositions referenziert.
+ * <p>Die Preisgestaltung sieht so aus, dass es drei feste Preis gibt, die alle belegt werden können. Einem Menü können
+ * also immer drei Preise (haupsächlich für die versch. Größen) zugeordnet werden.</p>
+ */
 @Entity
 public class Meal implements Comparable<Meal> {
 
@@ -33,7 +38,7 @@ public class Meal implements Comparable<Meal> {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Category category;
 
-	@OneToMany(mappedBy = "meal", fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "meal", fetch = FetchType.EAGER)
 	private Set<OrderPosition> positions;
 
 	private Double firstPrice;
@@ -124,7 +129,7 @@ public class Meal implements Comparable<Meal> {
 
 		favoredBy.remove(userToRemove);
 	}
-	
+
 	public boolean isFavoredBy(User user) {
 		for (User nextUser : favoredBy) {
 			if (nextUser.equals(user))
@@ -134,7 +139,23 @@ public class Meal implements Comparable<Meal> {
 		return false;
 	}
 
-	// ============== COMPARATOR ===============
+	public Set<OrderPosition> getPositions() {
+		return positions;
+	}
+
+	public void setPositions(Set<OrderPosition> positions) {
+		this.positions = positions;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	// ========= Preise ==============
 
 	public Double getFirstPrice() {
 		return firstPrice;
@@ -160,23 +181,6 @@ public class Meal implements Comparable<Meal> {
 		this.thirdPrice = thirdPrice;
 	}
 
-	public Set<OrderPosition> getPositions() {
-		return positions;
-	}
-
-	public void setPositions(Set<OrderPosition> positions) {
-		this.positions = positions;
-	}
-
-	public Category getCategory() {
-		return category;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-
-
 	@Override
 	public String toString() {
 		return "Meal [id=" + id + ", name=" + name + ", vegeterian=" + vegeterian + ", description=" + description + ", image=" + Arrays.toString(image)
@@ -184,6 +188,11 @@ public class Meal implements Comparable<Meal> {
 				+ thirdPrice + "]";
 	}
 
+	// ============== COMPARATOR ===============
+
+	/**
+	 * natural order: id
+	 */
 	@Override
 	public int compareTo(Meal o) {
 		if (id == null || o.getId() == null) {

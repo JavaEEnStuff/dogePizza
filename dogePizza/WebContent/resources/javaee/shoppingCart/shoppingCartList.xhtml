@@ -61,7 +61,7 @@
 					<br />
 					<strong><h:outputText class="" value="Mindestelbestellwert #{shoppingCart.minimumOrderValue} €" /></strong>
 					<br />
-					<h:commandButton class="btn btn-default" style="margin-right:5px" value="Bestellen" action="#{shoppingCart.order}"
+					<h:commandButton class="btn btn-default" style="margin-right:5px" value="Bestellen" action="#{sessionBean.order}"
 						disabled="#{shoppingCart.positionCount==0}" />
 					<h:commandButton class="btn btn-default" value="Zurück" action="#{sessionBean.main}" />
 					<br />

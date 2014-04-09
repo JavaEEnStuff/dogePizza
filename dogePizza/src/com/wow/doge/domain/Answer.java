@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * Antwort zu einer Frage
+ */
 @Entity
 public class Answer {
 	

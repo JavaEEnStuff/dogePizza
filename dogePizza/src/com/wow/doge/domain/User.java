@@ -13,15 +13,17 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+/**
+ * Hauptbenutzerobjekt. Der Name "user" ist in PostgreSQL reserviert, weshalb ein alternativer Entitätsname angegeben wird. Ein Benutzer hat eine Standardadresse
+ * und wird von Bestellungen referenziert. Außerdem können einem Benutzer verschiedene Favoriten-Menüs zugeordnet werden.
+ */
 @Entity(name = "dogePizzaUser")
 public class User implements Comparable<User> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	@Column(nullable = false)
 	private String firstName;
-	@Column(nullable = false)
 	private String lastName;
 	@Column(nullable = false)
 	private String emailAddress;
@@ -150,6 +152,9 @@ public class User implements Comparable<User> {
 		return builder.toString();
 	}
 
+	/**
+	 * natural order: id
+	 */
 	@Override
 	public int compareTo(User o) {
 		return Integer.valueOf(id).compareTo(Integer.valueOf(o.getId()));

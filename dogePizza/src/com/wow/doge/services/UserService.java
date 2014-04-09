@@ -9,6 +9,9 @@ public class UserService extends AbstractService<User> {
 		return User.class;
 	}
 
+	/**
+	 * Speichert zusätzlich noch die Adresse weg.
+	 */
 	@Override
 	public void saveOrUpdate(User t) {
 		AddressService addressService = new AddressService();

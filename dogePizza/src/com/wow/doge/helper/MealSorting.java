@@ -8,6 +8,12 @@ import javax.faces.model.SelectItem;
 
 import com.wow.doge.domain.Meal;
 
+/**
+ * Helferklasse für die Sortierung eines Menüs. Beim Menü gibt es verschiedene Möglichkeiten der Sortierung. In dieser Klasse werden dafür versch.
+ * Comparator zur Verfügung gestellt und auch Sortierungsmöglichkeiten für die Oberfläche bereitgestellt.
+ * @author Benne
+ *
+ */
 public class MealSorting {
 
 	public static final int NAME_COMP = 1;
@@ -15,6 +21,9 @@ public class MealSorting {
 	public static final int REV_PRICE_COMP = 3;
 	public static final int REV_ORDER_COUNT_COMP = 4;
 
+	/**
+	 * @return alle Menü-Sortierungsmöglichkeiten in HTML-Struktur. Jeder Möglichkeit ist dabei eine ID zugeordnet, die dann bei Auswahl ausgewertet werden kann.
+	 */
 	public static List<SelectItem> getSortings() {
 		List<SelectItem> items = new LinkedList<>();
 		items.add(new SelectItem(NAME_COMP, "nach Name"));
@@ -24,18 +33,30 @@ public class MealSorting {
 		return items;
 	}
 
+	/**
+	 * @return Comparator für Sortierung nach Name
+	 */
 	public static Comparator<Meal> getMealNameComparator() {
 		return new MealNameComparator();
 	}
 
+	/**
+	 * @return Comparator für Sortierung nach Preis
+	 */
 	public static Comparator<Meal> getMealPriceComparator() {
 		return new MealPriceComparator();
 	}
 
+	/**
+	 * @return Comparator für Sortierung umgekehrt nach Preis
+	 */
 	public static Comparator<Meal> getReverseMealPriceComparator() {
 		return new ReverseMealPriceComparator();
 	}
 
+	/**
+	 * @return Comparator für Sortierung umgekehrt nach Bestellungen
+	 */
 	public static Comparator<Meal> getReverseOrderCountComparator() {
 		return new ReverseOrderCountComparator();
 	}
@@ -116,7 +137,6 @@ public class MealSorting {
 				}
 			}
 		}
-
 	}
 
 }

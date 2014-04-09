@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -18,6 +17,10 @@ import javax.persistence.OneToOne;
 
 import com.wow.doge.domain.questionnaire.Questionnaire;
 
+/**
+ * Bestellungsobjekt. Der Name "order" ist in PostgreSQL reserviert, weshalb der Entität ein anderer Name zugeordnet werden muss.
+ * Es werden zwei Zeiten mitverwaltet, die Lieferzeit und die Bestellzeit. Beide werden als long in der Datenbank gespeichert und bei Bedarf formatiert.
+ */
 @Entity(name = "dogeOrder")
 public class Order implements Comparable<Order> {
 
@@ -31,14 +34,15 @@ public class Order implements Comparable<Order> {
 
 	/** Datum + Lieferuhrzeit */
 	private long date;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	private Address address;
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.EAGER)
 	private Set<OrderPosition> positions;
 	private String remark;
+	/** Bestelldatum, also Zeitstempel aus dem System */
 	private long orderDate;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	private User user;
 
 	@OneToOne(mappedBy = "order")
@@ -116,6 +120,9 @@ public class Order implements Comparable<Order> {
 		return positions.size();
 	}
 
+	/**
+	 * @return Summe aller Teilpreise
+	 */
 	public double getPrice() {
 		double price = 0;
 		for (OrderPosition position : positions) {
@@ -154,6 +161,9 @@ public class Order implements Comparable<Order> {
 		return o.getOrderDate().compareTo(getOrderDate());
 	}
 
+	/**
+	 * @return Comparator für Sortierung umgekehrt nach Bestelldatum
+	 */
 	public static Comparator<Order> getReverseOrderDateComparator() {
 		return new ReverseOrderDateComparator();
 	}

@@ -70,6 +70,15 @@ public class CategoryBean {
 		return categoryList();
 	}
 
+	public String deleteCategory() {
+		CategoryService service = new CategoryService();
+		Category categoryToDelete = service.get(categoryId);
+		service.delete(categoryToDelete);
+		return categoryList();
+	}
+
+	// ======= Links ===============
+
 	public String showCategory() {
 		CategoryService service = new CategoryService();
 		category = service.get(categoryId);
@@ -81,13 +90,6 @@ public class CategoryBean {
 		category = service.get(categoryId);
 		logger.info("Versuche Category zu aendern: " + category);
 		return "changeCategory.jsf";
-	}
-
-	public String deleteCategory() {
-		CategoryService service = new CategoryService();
-		Category categoryToDelete = service.get(categoryId);
-		service.delete(categoryToDelete);
-		return categoryList();
 	}
 
 	public String createCategory() {

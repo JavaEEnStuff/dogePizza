@@ -8,6 +8,9 @@ import org.apache.log4j.Logger;
 
 import com.wow.doge.domain.User;
 
+/**
+ * Zentrale Bean, die die Session und den damit verknüpften Benutzer handelt.
+ */
 @ManagedBean(name = "sessionBean")
 @SessionScoped
 public class SessionBean {
@@ -80,6 +83,15 @@ public class SessionBean {
 		this.shoppingCart = shoppingCart;
 	}
 	
+	public String order(){
+		return shoppingCart.order(loggedInUser);
+	}
+	
+	/**
+	 * muss von hier aus aufgerufen werden, da die SessionBean nicht als ManagedProperty in den Shopping Cart gesetzt werden kann (Zirkel),
+	 * aber trotzdem Informationen über den Benutzer im Shopping Cart benötigt werden.
+	 * @return Link zur nächsten Maske
+	 */
 	public String completeOrder(){
 		shoppingCart.completeOrder(loggedInUser);
 		return "orderFinished.jsf";

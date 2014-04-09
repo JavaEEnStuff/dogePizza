@@ -9,27 +9,38 @@ import org.hibernate.criterion.SimpleExpression;
 import com.wow.doge.domain.Category;
 import com.wow.doge.domain.Meal;
 import com.wow.doge.domain.User;
+import com.wow.doge.managedbeans.MealBean;
 import com.wow.doge.services.CategoryService;
 import com.wow.doge.services.MealService;
 import com.wow.doge.services.SelectionHelper;
 import com.wow.doge.services.SelectionHelper.Alias;
 
+/**
+ * Helferklasse für die komplexeren Datenbankzugriffe für die Menüs. Hier muss u. U. die ausgelesen Datenbestände aufbereitet werden, um den Anforderungen zu entsprechen.
+ */
 public class MealEvaluationHelper {
 
 	private static final Logger logger = Logger.getLogger(MealEvaluationHelper.class);
 	private static final int MAX_COUNT = 10;
 
+	/**
+	 * @return die teuersten Menüs
+	 */
 	public List<Meal> highestPriceMeals() {
 		MealService service = new MealService();
 		SelectionHelper<Meal> mealSelection = new SelectionHelper<>();
 		mealSelection.setComparator(MealSorting.getReverseMealPriceComparator());
 		List<Meal> highestPriceMeals = service.getList(mealSelection);
-		if (highestPriceMeals.size() >= 10) {
+		if (highestPriceMeals.size() >= MAX_COUNT) {
 			highestPriceMeals.subList(0, 9);
 		}
 		return highestPriceMeals;
 	}
 
+	/**
+	 * @param mealsToCheck
+	 * @return die billigsten Menüs
+	 */
 	public List<Meal> getLowestPriceMeals(List<Meal> mealsToCheck) {
 		MealService service = new MealService();
 		SelectionHelper<Meal> mealSelection = new SelectionHelper<>();
@@ -41,8 +52,18 @@ public class MealEvaluationHelper {
 		return lowestPriceMeals;
 	}
 
+	/**
+	 * 
+	 * @param fromPrice
+	 * @param toPrice
+	 * @param categoryId
+	 * @param sort Sortierung
+	 * @param onlyFavorites nur Favoriten suchen?
+	 * @param user Benutzer für die Favoriten
+	 * @return alle Menüs, die den Selektionskriterien entsprechen
+	 */
 	public List<Meal> getMealsInPriceRangeAndCategory(Double fromPrice, Double toPrice, Integer categoryId, Integer sort, boolean onlyFavorites, User user) {
-		logger.info("Sort: " + sort);
+		logger.debug("Sort: " + sort);
 		MealService service = new MealService();
 		SelectionHelper<Meal> mealSelection = new SelectionHelper<>();
 		if (fromPrice != null) {
@@ -57,7 +78,8 @@ public class MealEvaluationHelper {
 			SimpleExpression thirdPrice = Restrictions.le("thirdPrice", toPrice);
 			mealSelection.addCriterion(Restrictions.or(firstPrice, Restrictions.or(secondPrice, thirdPrice)));
 		}
-		if (categoryId != null && categoryId != 0) {
+		// nur nach Kategorie Filtern, wenn nicht "Alle" ausgewählt wurde
+		if (categoryId != null && categoryId != MealBean.CATEGORY_ID_ALL) {
 			CategoryService categoryService = new CategoryService();
 			Category category = categoryService.get(categoryId);
 			mealSelection.addCriterion(Restrictions.eq("category", category));
@@ -67,6 +89,7 @@ public class MealEvaluationHelper {
 			mealSelection.addCriterion(Restrictions.eq("f.id", user.getId()));
 		}
 
+		// SORTIERUNG
 		switch (sort) {
 		case MealSorting.NAME_COMP:
 			mealSelection.setComparator(MealSorting.getMealNameComparator());

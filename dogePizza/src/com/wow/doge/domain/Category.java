@@ -9,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+/**
+ * Kategorie eines Menüs. Eine Kategorie kann auch mehreren Menüs zugeordnet sein.
+ */
 @Entity
 public class Category implements Comparable<Category> {
 
@@ -49,11 +52,17 @@ public class Category implements Comparable<Category> {
 		return "Category [id=" + id + ", name=" + name + "]";
 	}
 
+	/**
+	 * natural order: id
+	 */
 	@Override
 	public int compareTo(Category o) {
 		return getId().compareTo(o.getId());
 	}
 
+	/**
+	 * @return Comparator zur Sortierung nach Namen
+	 */
 	public static Comparator<Category> getCategoryNameComparator() {
 		return new CategoryNameComparator();
 	}

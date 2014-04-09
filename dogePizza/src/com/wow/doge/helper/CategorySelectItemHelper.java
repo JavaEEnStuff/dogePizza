@@ -7,6 +7,9 @@ import javax.faces.model.SelectItem;
 
 import com.wow.doge.domain.Category;
 
+/**
+ * Umformung einer Liste von Kategorien in eine Liste von HTML-SelectItems 
+ */
 public class CategorySelectItemHelper extends SelectItemHelper<Category> {
 
 	@Override

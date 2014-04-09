@@ -1,19 +1,21 @@
 package com.wow.doge.domain;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+/**
+ * Auftragsposition als Teil eines Auftrags.
+ */
 @Entity
 public class OrderPosition implements Comparable<OrderPosition> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	private Meal meal;
 	private Double price;
 
@@ -46,6 +48,9 @@ public class OrderPosition implements Comparable<OrderPosition> {
 		return "OrderPosition [id=" + id + ", meal=" + meal + ", price=" + price + "]";
 	}
 
+	/**
+	 * natürliche Sortierung: id. Ist diese leer, wird nach Meal sortiert.
+	 */
 	@Override
 	public int compareTo(OrderPosition o) {
 		if (id == null || o.getId() == null) {

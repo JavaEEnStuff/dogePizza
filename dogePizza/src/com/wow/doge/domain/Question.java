@@ -10,6 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+/**
+ * Fragestellung mit einer Liste von Antworten.
+ */
 @Entity
 public class Question {
 

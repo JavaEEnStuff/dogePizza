@@ -70,6 +70,24 @@ public class QuestionDraftBean {
 		return questionDraftList();
 	}
 
+	public String deleteQuestionDraft() {
+		QuestionDraftService service = new QuestionDraftService();
+		QuestionDraft questionDraftToDelete = service.get(questionDraftId);
+		logger.info("Versuche QuestionDraf zu löschen: " + questionDraftToDelete);
+		service.delete(questionDraftToDelete);
+		return questionDraftList();
+	}
+
+	// ====== Links ===========
+
+	public String createQuestionDraft() {
+		return "createQuestionDraft.jsf";
+	}
+
+	public String questionDraftList() {
+		return "questionDraftList.xhtml";
+	}
+
 	public String showQuestionDraft() {
 		QuestionDraftService service = new QuestionDraftService();
 		questionDraft = service.get(questionDraftId);
@@ -81,20 +99,5 @@ public class QuestionDraftBean {
 		questionDraft = service.get(questionDraftId);
 		logger.info("Versuche QuestionDraft zu aendern: " + questionDraft);
 		return "changeQuestionDraft.jsf";
-	}
-
-	public String deleteQuestionDraft() {
-		QuestionDraftService service = new QuestionDraftService();
-		QuestionDraft questionDraftToDelete = service.get(questionDraftId);
-		service.delete(questionDraftToDelete);
-		return questionDraftList();
-	}
-
-	public String createQuestionDraft() {
-		return "createQuestionDraft.jsf";
-	}
-
-	public String questionDraftList() {
-		return "questionDraftList.xhtml";
 	}
 }

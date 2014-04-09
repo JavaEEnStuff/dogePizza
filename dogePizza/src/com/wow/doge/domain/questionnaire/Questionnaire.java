@@ -12,6 +12,9 @@ import javax.persistence.OneToOne;
 
 import com.wow.doge.domain.Order;
 
+/**
+ * Vollständiger Bewertungsbogen mit allen benötigten Inhalten. Dieser bezieht sich immer auf einen ganz speziellen Auftrag und hat eine Liste von Teilfragen.
+ */
 @Entity
 public class Questionnaire {
 

@@ -101,6 +101,10 @@ public class UserSignUpBean {
 		this.passwordToCheck = passwortToCheck;
 	}
 
+	/**
+	 * Überprüft die eingebenen Passwörter
+	 * @return Link zur nächsten Maske
+	 */
 	public String tryToSignUp() {
 		if (user.getPassword() != null && !user.getPassword().isEmpty() && user.getPassword().equals(passwordToCheck)) {
 			UserService userService = new UserService();
@@ -111,8 +115,14 @@ public class UserSignUpBean {
 		}
 	}
 
+	/**
+	 * Validiert die eingegebene Email-Adresse auf Eindeutigkeit und korrekte Schreibweise
+	 * @param context
+	 * @param component
+	 * @param value
+	 * @throws ValidatorException
+	 */
 	public void validateEmail(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-
 		ResourceBundle rb = context.getApplication().getResourceBundle(context, "msg");
 		if (!((String) value).matches(".+@.+\\..+")) {
 			throw new ValidatorException(new FacesMessage(rb.getString("email_not_correct")));
@@ -126,5 +136,4 @@ public class UserSignUpBean {
 			throw new ValidatorException(new FacesMessage(rb.getString("email_already_in_use")));
 		}
 	}
-
 }

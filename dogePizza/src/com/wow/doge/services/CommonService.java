@@ -12,6 +12,11 @@ public class CommonService {
 	
 	private static final Logger logger = Logger.getLogger(CommonService.class);
 
+	/**
+	 * führt ein SQL aus, das als Rückgabe eine Liste von IDs hat (Integer)
+	 * @param sql
+	 * @return Liste mit IDs
+	 */
 	public List<Integer> getIds(String sql) {
 		Session session = null;
 
@@ -24,7 +29,6 @@ public class CommonService {
 			return resultList;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			// TODO: errorHandling
 			return null;
 		} finally {
 			HibernateUtil.closeSession(session);

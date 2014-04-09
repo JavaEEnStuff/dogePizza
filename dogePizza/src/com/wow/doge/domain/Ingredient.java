@@ -1,5 +1,6 @@
 package com.wow.doge.domain;
 
+import java.util.Comparator;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -9,8 +10,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+/**
+ * Zutat eines Menüs. Kann auch mehreren Menüs zugeordnet sein.
+ */
 @Entity
-public class Ingredient {
+public class Ingredient implements Comparable<Ingredient> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -47,6 +51,31 @@ public class Ingredient {
 	@Override
 	public String toString() {
 		return "Ingredient [id=" + id + ", name=" + name + "]";
+	}
+
+	/**
+	 * natural order: id
+	 */
+	@Override
+	public int compareTo(Ingredient o) {
+		return Integer.valueOf(id).compareTo(Integer.valueOf(o.getId()));
+	}
+	
+	/**
+	 * @return Comparator zur Sortierung nach Namen
+	 */
+	public static Comparator<Ingredient> getIngredientNameComparator(){
+		return new IngredientNameComparator();
+	}
+	
+	private static class IngredientNameComparator implements Comparator<Ingredient>{
+
+		@Override
+		public int compare(Ingredient o1, Ingredient o2) {
+			// TODO Auto-generated method stub
+			return o1.getName().compareTo(o2.getName());
+		}
+		
 	}
 
 }

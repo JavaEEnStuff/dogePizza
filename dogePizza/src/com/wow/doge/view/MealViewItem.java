@@ -3,7 +3,8 @@ package com.wow.doge.view;
 import com.wow.doge.domain.Meal;
 
 /**
- * Spezielles View-Objekt für die Tabellenansicht zum Suchen nach Meals. Hier werden zusätzliche Informationen verpackt, die im normalen Objekt nicht direkt erfassbar sind.
+ * Spezielles View-Objekt für die Tabellenansicht zum Suchen nach Meals. 
+ * Hier werden zusätzliche Informationen verpackt, die im normalen Objekt nicht direkt erfassbar sind.
  */
 public class MealViewItem {
 

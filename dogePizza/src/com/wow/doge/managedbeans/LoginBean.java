@@ -44,8 +44,6 @@ public class LoginBean {
 	public void setSessionBean(SessionBean sessionBean) {
 		this.sessionBean = sessionBean;
 	}
-	
-	
 
 	public String getErrorText() {
 		return errorText;
@@ -55,12 +53,18 @@ public class LoginBean {
 		this.errorText = errorText;
 	}
 
+	// ===== Funktionen ==============
+	
+	/**
+	 * Versucht den Benutzer einzuloggen. Dafür werden Benutzername(=Mailadresse) und Passwort überprüft.
+	 * @return Link zur nächsten Seite. Gleiche Seite, falls der Login fehlgeschlagen ist.
+	 */
 	public String login() {
 		UserService service = new UserService();
 		List<User> usersWithGivenEmail = service.getList(Restrictions.eq("emailAddress", loginEmail));
 		if (usersWithGivenEmail.size() == 0) {
 			logger.info("Email-Adresse wurde nicht gefunden");
-			errorText="Benutzername wurde nicht gefunden oder das Passwort ist falsch";
+			errorText = "Benutzername wurde nicht gefunden oder das Passwort ist falsch";
 			return "";
 		} else {
 			User user = usersWithGivenEmail.get(0);
@@ -70,7 +74,7 @@ public class LoginBean {
 				return "main.xhtml";
 			} else {
 				logger.error("Passwort ist nicht korrekt!");
-				errorText="Benutzername wurde nicht gefunden oder das Passwort ist falsch";
+				errorText = "Benutzername wurde nicht gefunden oder das Passwort ist falsch";
 				return "";
 			}
 		}

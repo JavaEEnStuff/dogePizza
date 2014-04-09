@@ -5,6 +5,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * Fragevorlagen. Diese werden in der Datenbank hinterlegt und dienen als Grundstock an Fragen für die Questionnaires, wobei aber von dort aus
+ * nur der questionText ausgelesen wird, es aber keine Referenz auf die Objekte selbst gibt, da diese nur "flüchtig" im System vorhanden sein sollen,
+ * also u. U. auch gelöscht werden können.
+ */
 @Entity
 public class QuestionDraft implements Comparable<QuestionDraft> {
 

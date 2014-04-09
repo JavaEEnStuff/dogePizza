@@ -6,7 +6,9 @@ import java.util.List;
 import javax.faces.model.SelectItem;
 
 import com.wow.doge.domain.Ingredient;
-
+/**
+ * Umformung einer Liste von Zutaten in eine Liste von HTML-SelectItems 
+ */
 public class IngredientSelectItemHelper extends SelectItemHelper<Ingredient> {
 
 	@Override

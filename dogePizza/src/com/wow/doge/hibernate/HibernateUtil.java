@@ -13,13 +13,10 @@ public class HibernateUtil {
 
 	static {
 		try {
-			// Create the SessionFactory from hibernate.cfg.xml
-			sessionFactory = new AnnotationConfiguration().configure()
-					.buildSessionFactory();
+			sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
 			logger.info("SessionFactory erzeugt!");
 		} catch (Throwable e) {
 			logger.error(e.getMessage(), e);
-			// Make sure you log the exception, as it might be swallowed
 			throw new ExceptionInInitializerError(e);
 		}
 	}

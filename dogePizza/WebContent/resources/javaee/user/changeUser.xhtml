@@ -51,9 +51,10 @@
 					<div class="form-group">
 						<h:outputLabel class="col-sm-1 control-label" value="Email " />
 						<div class="col-sm-11">
-							<h:inputText class="form-control" value="#{userAdministrationBean.user.emailAddress}" />
+							<h:inputText id="email" class="form-control" value="#{userAdministrationBean.user.emailAddress}" required="true" requiredMessage="#{msg.email_required}" />
 						</div>
 					</div>
+					<h:message for="email"></h:message>
 					<div class="form-group">
 						<div class="col-sm-11">
 							<strong><h:outputText value="#{userAdministrationBean.user.admin?'Der Benutzer ist Administrator':''}" /></strong>

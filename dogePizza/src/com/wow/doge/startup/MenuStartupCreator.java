@@ -34,7 +34,7 @@ public class MenuStartupCreator implements StartupCreator {
 		Menu questions = new Menu();
 		questions.setName("Fragen");
 		questions.setText("Fragen verwalten");
-		questions.setAdminMenu(true);
+		questions.setAdminMenu(false);
 		questions.setLink("/dogePizza/resources/javaee/question/questionList.jsf");
 		questions.setLoginRequired(true);
 		service.saveOrUpdate(questions);

@@ -40,7 +40,7 @@ public class UserStartupCreator implements StartupCreator {
 		} else {
 			logger.info("Admin-User mit Mail " + ADMIN_EMAIL_ADDRESS + " existiert bereits");
 		}
-		
+
 		List<User> usas = userService.getList(Restrictions.eq("emailAddress", USER_EMAIL_ADDRESS));
 		if (usas.size() == 0) {
 			logger.info("Lege neuen Admin-User mit Mail " + USER_EMAIL_ADDRESS + " an...");
